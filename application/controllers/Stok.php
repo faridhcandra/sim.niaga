@@ -7,6 +7,7 @@ class Stok extends CI_Controller {
 		parent::__construct();
 		$this->load->helper(array('url','form','file'));
 		$this->load->model('M_stok');
+		
 	}
 
 	public function index()
@@ -129,6 +130,65 @@ class Stok extends CI_Controller {
 		$this->load->view('stok/barang/view');
 		$this->load->view('stok/template/footer');
 	}
+
+	public function t_barang()
+	{ 
+
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Tambah barang';
+
+		$isi['get_jnsbrng'] = $this->M_stok->get_idjenis();
+		$isi['get_group'] = $this->M_stok->get_idgroup();
+		//$isi['isi'] = $this->M_stok->ve_satuan($id);
+
+		$this->load->view('stok/template/head');
+		$this->load->view('stok/template/navbar');
+		$this->load->view('stok/template/sidebar',$data);
+		$this->load->view('stok/barang/tambah',$isi);
+		$this->load->view('stok/template/footer');
+	}
+
+	public function barang_t()
+	{
+		$cek = $this->db->query("SELECT id_barang FROM tbl_nama_barang where nm_barang='".$this->input->post('nama_barang',TRUE)."'")->num_rows();
+		if($cek <= 0){
+			$data = array ('id_barang' => $this->input->post('id_barang'),
+							'id_jnsbrng' => $this->input->post('id_jnsbrng'),
+							// 'id_jnsbrng' => $this->input->post('id_jnsbrngakt'),
+							'id_group' => $this->input->post('id_group'),
+							'nm_barang' => $this->input->post('nama_barang'),
+							'kel_barang' => $this->input->post('kel_barang'),
+							'ket_barang' => $this->input->post('ket_barang'),
+							'no_barang' => $this->input->post('no_barang'),
+							'sat1_barang' => $this->input->post('sat1'),
+							'sat2_barang' => $this->input->post('sat2'),
+							'hpp_barang' => $this->input->post('hpp_barang'),
+							'harga_barang' => $this->input->post('harga_barang'),
+							'updated_barang' => date('Y-m-d H:i:s')
+               				);
+			$sql = $this->M_stok->s_barang($data);
+
+			$allsql = array($sql);
+			if($allsql){ // Jika sukses
+				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('stok/view_barang')."';</script>";
+			}else{ // Jika gagal
+				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('stok/view_barang')."';</script>";
+			}
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf Nama Satuan Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('stok/view_barang').'")';
+			echo '</script>';
+		}
+	}
+
+
+
+
+
 	// ----------------------------------------------
 	// =========================================================================================================================================
 	// =========================================================== PESANAN =====================================================================

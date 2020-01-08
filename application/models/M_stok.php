@@ -48,6 +48,22 @@ class M_stok extends CI_Model {
 			$this->db->where('id_satuan',$id)->delete('tbl_satuan');
 		}
 	// -----------------------------------------
+	// ---------------BARANG--------------------
+
+		public function s_barang($data){
+			$this->db->insert('tbl_nama_barang ', $data);
+		}
+
+		public function get_idjenis(){
+			return $this->db->order_by('id_jnsbrng','asc')->get('tbl_jenis_barang');
+		}
+
+		public function get_idgroup(){
+			return $this->db->order_by('id_group','asc')->get('tbl_group');
+		}
+	// -----------------------------------------
+
+
 	// =========================================================================================================================================
 
 }
