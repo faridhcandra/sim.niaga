@@ -51,7 +51,7 @@ class Pembelian extends CI_Controller {
 	{
 		$cek = $this->db->query("SELECT nm_jnsbrng FROM tbl_jenis_barang where nm_jnsbrng='".$this->input->post('jenis',TRUE)."'")->num_rows();
 		if($cek <= 0){
-			$data = array ('nm_jnsbrng' => $this->input->post('jenis'));
+			$data = array ('nm_jnsbrng' => $this->input->post('jenis',TRUE));
 			$sql = $this->M_pembelian->s_jenisbrng($data);
 
 			$allsql = array($sql);
@@ -92,7 +92,7 @@ class Pembelian extends CI_Controller {
 			$cek = $this->db->query("SELECT nm_jnsbrng FROM tbl_jenis_barang where nm_jnsbrng='".$this->input->post('jenis',TRUE)."'")->num_rows();
 			if($cek <= 0){
 				$data = array(
-								'nm_jnsbrng' => $this->input->post('jenis')							
+								'nm_jnsbrng' => $this->input->post('jenis',TRUE)							
 							 );
 				$sql = $this->M_pembelian->e_jenisbrng($id, $data);
 				$allsql = array($sql);
@@ -146,8 +146,8 @@ class Pembelian extends CI_Controller {
 		$cek = $this->db->query("SELECT nm_group FROM tbl_group where nm_group='".$this->input->post('group',TRUE)."'")->num_rows();
 		if($cek <= 0){
 		$data = array(
-						'nm_group' => $this->input->post('group'),
-						'rek_group' => $this->input->post('rek')
+						'nm_group' => $this->input->post('group',TRUE),
+						'rek_group' => $this->input->post('rek',TRUE)
 					 );
 		$sql = $this->M_pembelian->s_groupbrng($data);
 		$allsql = array($sql);
@@ -188,8 +188,8 @@ class Pembelian extends CI_Controller {
 			$cek = $this->db->query("SELECT nm_group FROM tbl_group where nm_group='".$this->input->post('group',TRUE)."'")->num_rows();
 			if($cek <= 0){
 				$data = array(
-								'nm_group' => $this->input->post('group'),							
-								'rek_group' => $this->input->post('rek')							
+								'nm_group' => $this->input->post('group',TRUE),							
+								'rek_group' => $this->input->post('rek',TRUE)							
 							 );
 				$sql = $this->M_pembelian->e_groupbrng($id, $data);
 				$allsql = array($sql);
@@ -229,12 +229,12 @@ class Pembelian extends CI_Controller {
 		$data['menu'] = 'Data Master';
 		$data['submenu'] = 'Supplier';
 
-		// $isi['isi'] = $this->M_pembelian->v_metpemb();
+		$isi['isi'] = $this->M_pembelian->v_supplier();
 
 		$this->load->view('pembelian/template/head');
 		$this->load->view('pembelian/template/navbar');
 		$this->load->view('pembelian/template/sidebar',$data);
-		$this->load->view('pembelian/supplier/view');
+		$this->load->view('pembelian/supplier/view',$isi);
 		$this->load->view('pembelian/template/footer');
 	}
 	public function t_supplier()
@@ -251,6 +251,92 @@ class Pembelian extends CI_Controller {
 		$this->load->view('pembelian/template/sidebar',$data);
 		$this->load->view('pembelian/supplier/tambah',$isi);
 		$this->load->view('pembelian/template/footer');
+	}
+	public function supplier_t()
+	{
+		$cek = $this->db->query("SELECT id_supplier FROM tbl_supplier where id_supplier='".$this->input->post('kode',TRUE)."'")->num_rows();
+		if($cek <= 0){
+			$data = array( 'id_supplier' 		=> $this->input->post('kode',TRUE),
+							'nm_supplier' 		=> $this->input->post('nama',TRUE),
+							'notelp_supplier' 	=> $this->input->post('telp',TRUE),
+							'fax_supplier' 		=> $this->input->post('fax',TRUE),
+							'id_provinsi' 		=> $this->input->post('prov',TRUE),
+							'id_kabupaten' 		=> $this->input->post('kab',TRUE),
+							'almt_supplier' 	=> $this->input->post('alamat',TRUE),
+							'email_supplier' 	=> $this->input->post('email',TRUE),
+							'attn_supplier' 	=> $this->input->post('attn',TRUE),
+							'npwp_supplier' 	=> $this->input->post('npwp',TRUE)
+							/*'telppim_supplier' 	=> $this->input->post('telp_pim',TRUE),
+							'nmcp_supplier' 	=> $this->input->post('nama_cp',TRUE),
+							'almtcp_supplier' 	=> $this->input->post('almt_cp',TRUE),
+							'telpcp_supplier' 	=> $this->input->post('telp_cp',TRUE)*/							
+						 );
+			$sql = $this->M_pembelian->s_supplier($data);
+			$allsql = array($sql);
+			if($allsql){ // Jika sukses
+				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+			}else{ // Jika gagal
+				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/t_supplier')."';</script>";
+			}
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf Kode Supplier Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('pembelian/view_supplier').'")';
+			echo '</script>';
+		}
+	}
+	public function u_supplier($id='')
+	{
+		$data['menutitle'] = 'Data Supplier';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Edit Supplier';
+
+		$isi['isi'] = $this->M_pembelian->ve_supplier($id);
+		$isi['get_prov'] = $this->M_pembelian->get_prov();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/supplier/edit',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function supplier_u($id)
+	{
+		$this->form_validation->set_rules('kode','Kode','required');
+		if($this->form_validation->run() == TRUE){
+			/*$cek = $this->db->query("SELECT nm_supplier FROM tbl_supplier where nm_supplier='".$this->input->post('metode',TRUE)."'")->num_rows();
+			if($cek <= 0){*/
+				$data = array(	'id_supplier' 		=> $this->input->post('kode',TRUE),
+								'nm_supplier' 		=> $this->input->post('nama',TRUE),
+								'notelp_supplier' 	=> $this->input->post('telp',TRUE),
+								'fax_supplier' 		=> $this->input->post('fax',TRUE),
+								'id_provinsi' 		=> $this->input->post('prov',TRUE),
+								'id_kabupaten' 		=> $this->input->post('kab',TRUE),
+								'almt_supplier' 	=> $this->input->post('alamat',TRUE),
+								'email_supplier'	=> $this->input->post('email',TRUE),
+								'attn_supplier' 	=> $this->input->post('attn',TRUE),
+								'npwp_supplier' 	=> $this->input->post('npwp',TRUE)
+							 );
+				$sql = $this->M_pembelian->e_supplier($id, $data);
+				$allsql = array($sql); 
+					if($allsql){ // Jika sukses
+						echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+					}else{ // Jika gagal
+						echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+					}
+				/*}else{
+					echo '<script language="javascript">';
+					echo 'alert("Maaf Nmaa Supplier Sudah Ada")';
+					echo '</script>';
+					echo '<script language="javascript">';
+					echo 'window.location=("'.site_url('pembelian/view_metpemb').'")';
+					echo '</script>';
+				}*/
+		}else{
+			echo "<script>alert('Maaf Supplier tidak ditemukan');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+		}
 	}
 	// ------------------------------------------	
 	// ----------- Metode Pembelian -------------
@@ -273,7 +359,7 @@ class Pembelian extends CI_Controller {
 	{
 		$cek = $this->db->query("SELECT nm_metbyr FROM tbl_metode_bayar where nm_metbyr='".$this->input->post('metode',TRUE)."'")->num_rows();
 		if($cek <= 0){
-		$data = array('nm_metbyr' => $this->input->post('metode'));
+		$data = array('nm_metbyr' => $this->input->post('metode',TRUE));
 		$sql = $this->M_pembelian->s_metpemb($data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
@@ -312,7 +398,7 @@ class Pembelian extends CI_Controller {
 		if($this->form_validation->run() == TRUE){
 			$cek = $this->db->query("SELECT nm_metbyr FROM tbl_metode_bayar where nm_metbyr='".$this->input->post('metode',TRUE)."'")->num_rows();
 			if($cek <= 0){
-				$data = array('nm_metbyr' => $this->input->post('metode'));
+				$data = array('nm_metbyr' => $this->input->post('metode',TRUE));
 				$sql = $this->M_pembelian->e_metpemb($id, $data);
 				$allsql = array($sql); 
 					if($allsql){ // Jika sukses

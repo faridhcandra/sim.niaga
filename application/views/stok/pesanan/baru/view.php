@@ -6,7 +6,7 @@
 				<div class="card card-outline card-info">
 					<div class="card-header">
 						<h3 class="card-title">Data Pesanan Baru</h3>
-						<a href="" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus-circle fa-sm"></i>&nbsp;Tambah</a>
+						<a href="<?php echo site_url('stok/t_pesbaru');?>" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus-circle fa-sm"></i>&nbsp;Tambah</a>
 					</div>
 					<div class="card-body">
 						<div class="example1_wrapper" class="dataTables_wrapper">
@@ -17,7 +17,7 @@
 											<tr>
 												<td width="5%;">#</td>
 												<td>Nama Barang</td>
-												<td>Jenis Barang</td>
+												<td>Tanggal Pesan</td>
 												<td>Group Barang</td>
 												<td>Status</td>				         					
 												<td width="10%;">Aksi</td>

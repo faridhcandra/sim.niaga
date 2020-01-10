@@ -100,7 +100,11 @@ class M_pembelian extends CI_Model {
 	// --------------- Supplier ------------------
 	public function v_supplier()
 	{
-		$hasil = $this->db->get('tbl_supplier');
+		$this->db->select('a.id_supplier,a.nm_supplier, a.notelp_supplier,a.almt_supplier,a.email_supplier,a.attn_supplier');
+		$this->db->from('tbl_supplier as a');
+		$this->db->join('tbl_provinsi as b', 'a.id_provinsi = b.id_provinsi');
+		$this->db->join('tbl_kabupaten as c', 'a.id_kabupaten = c.id_kabupaten');
+		$hasil = $this->db->get();
 		if($hasil->num_rows()>0){
 			return $hasil->result();
 		}else{
@@ -114,9 +118,11 @@ class M_pembelian extends CI_Model {
 
 	public function ve_supplier($id)
 	{
-		$this->db->select('*');
-		$this->db->from('tbl_supplier');
-		$this->db->where('id_supplier', $id);
+		$this->db->select('a.id_supplier,a.nm_supplier,a.notelp_supplier,a.fax_supplier,a.id_provinsi,b.nm_provinsi,a.id_kabupaten,c.nm_kabupaten,a.almt_supplier,a.email_supplier,a.attn_supplier,a.npwp_supplier');
+		$this->db->from('tbl_supplier as a');
+		$this->db->join('tbl_provinsi as b', 'a.id_provinsi = b.id_provinsi');
+		$this->db->join('tbl_kabupaten as c', 'a.id_kabupaten = c.id_kabupaten');
+		$this->db->where('a.id_supplier', $id);
 		$hasil = $this->db->get();
 		if($hasil->num_rows()>0){
 			return $hasil->result();

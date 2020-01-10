@@ -16,22 +16,26 @@
 										<thead>
 											<tr>
 												<td width="5%;">#</td>
-												<td>Nama Barang</td>
-												<td>Jenis Barang</td>
-												<td>Group Barang</td>				         					
-												<td width="10%;">Aksi</td>
+												<td>Nama </td>
+												<td>Telpon</td>
+												<td width="30%;">Alamat</td>				         					
+												<td>Email</td>				         					
+												<td>Atas Nama</td>				         					
+												<td width="10%;" align="right">Aksi</td>
 											</tr>
 										</thead>
 										<tbody>
-											<?php for($i=1;$i <= 1000;$i++){?>
+											<?php $i=0; foreach ($isi as $row){ $i++;?>
 											<tr>
 												<td><?php echo $i?></td>
-												<td>perulangan ke <?php echo $i?></td>
-												<td></td>
-												<td></td>
+												<td><?php echo $row->nm_supplier?></td>
+												<td><?php echo $row->notelp_supplier?></td>
+												<td><?php echo $row->almt_supplier?></td>
+												<td><?php echo $row->email_supplier?></td>
+												<td><?php echo $row->attn_supplier?></td>
 												<td class="project-actions text-center">
-												<!-- 	<a href="<?php echo site_url('pembelian//'.$row->id_metbyr)?>" data-toggle="tooltip" data-placement="top" title="Ubah" ><i class="fas fa-pencil-alt fa-sm"></i></a>&ensp;
-												<a href="<?php echo site_url('pembelian/h_metpemb/'.$row->id_metbyr)?>" data-toggle="tooltip" data-placement="top" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a> -->
+												<a href="<?php echo site_url('pembelian/u_supplier/'.$row->id_supplier)?>" data-toggle="tooltip" data-placement="top" title="Ubah" ><i class="fas fa-pencil-alt fa-sm"></i></a>&ensp;
+												<!-- <a href="<?php echo site_url('pembelian//'.$row->id_supplier)?>" data-toggle="tooltip" data-placement="top" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a> -->
 												</td>
 												</tr>
 												<?php } ?>

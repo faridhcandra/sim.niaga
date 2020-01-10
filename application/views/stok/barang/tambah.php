@@ -49,7 +49,7 @@
 						</div> -->
 						<div class="form-group">
 							<!-- <label>ID Jenis Barang Akt</label> -->
-						    <select class="form-control form-control-sm" name="id_jnsbrng" onchange="getText(this)">
+						    <select class="form-control form-control-sm" name="id_group" onchange="getText(this)">
 							<option selected>-- Pilih Group --</option>
 							<option></option>
 						    <?php foreach ($get_group->result_array() as $i) { ?>

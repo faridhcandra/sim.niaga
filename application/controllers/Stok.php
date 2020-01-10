@@ -205,6 +205,22 @@ class Stok extends CI_Controller {
 		$this->load->view('stok/pesanan/baru/view');
 		$this->load->view('stok/template/footer');
 	}
+	public function t_pesbaru()
+	{
+		$data['menutitle'] = 'Data Pemesanan';
+		$data['menu'] = 'Pemesanan';
+		$data['submenu'] = 'Tambah Pesanan Baru';
+
+		// $isi['get_jnsbrng'] = $this->M_stok->get_idjenis();
+		// $isi['get_group'] = $this->M_stok->get_idgroup();
+		//$isi['isi'] = $this->M_stok->ve_satuan($id);
+
+		$this->load->view('stok/template/head');
+		$this->load->view('stok/template/navbar');
+		$this->load->view('stok/template/sidebar',$data);
+		$this->load->view('stok/pesanan/baru/tambah');
+		$this->load->view('stok/template/footer');
+	}
 	// ----------------------------------------------
 
 	// =========================================================================================================================================
