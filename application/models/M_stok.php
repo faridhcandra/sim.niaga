@@ -56,6 +56,37 @@ class M_stok extends CI_Model {
 		}
 	// -----------------------------------------
 	// ---------------BARANG--------------------
+		public function v_barang()
+		{
+			$hasil = $this->db->get('tbl_nama_barang');
+			if($hasil->num_rows()>0){
+				return $hasil->result();
+			}else{
+				return array();
+			}
+		}
+
+		public function ve_barang($id)
+		{
+			$this->db->select('*');
+			$this->db->from('tbl_nama_barang');
+			$this->db->where('id_barang', $id);
+			$hasil = $this->db->get();
+			if($hasil->num_rows()>0){
+				return $hasil->result();
+			}else{
+				return array();
+			}
+		}
+
+		public function e_barang($id,$data){
+			$this->db->where('id_barang',$id)->update('tbl_nama_barang', $data);
+		}
+
+		public function h_barang($id)
+		{
+			$this->db->where('id_barang',$id)->delete('tbl_nama_barang');
+		}
 
 		public function s_barang($data){
 			$this->db->insert('tbl_nama_barang ', $data);
