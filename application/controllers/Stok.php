@@ -22,6 +22,14 @@ class Stok extends CI_Controller {
 		$this->load->view('stok/template/content');
 		$this->load->view('stok/template/footer');
 	}
+
+	// ============== Fungsi Get ====================
+	function get_bagian(){
+		$id = $this->input->post('bag');
+		$data = $this->M_stok->get_bagian($id);
+		echo json_encode($data);
+	}
+	// ==============================================
 	// ======================================================== DATA MASTER ===================================================================
 	// -------------- satuan Barang ------------------
 	public function view_satuan()
@@ -211,14 +219,14 @@ class Stok extends CI_Controller {
 		$data['menu'] = 'Pemesanan';
 		$data['submenu'] = 'Tambah Pesanan Baru';
 
-		// $isi['get_jnsbrng'] = $this->M_stok->get_idjenis();
-		// $isi['get_group'] = $this->M_stok->get_idgroup();
 		//$isi['isi'] = $this->M_stok->ve_satuan($id);
+		$isi['get_unit'] = 'weav';
+		$isi['pesbaru_barang'] = $this->M_stok->pesbaru_barang();
 
 		$this->load->view('stok/template/head');
 		$this->load->view('stok/template/navbar');
 		$this->load->view('stok/template/sidebar',$data);
-		$this->load->view('stok/pesanan/baru/tambah');
+		$this->load->view('stok/pesanan/baru/tambah',$isi);
 		$this->load->view('stok/template/footer');
 	}
 	// ----------------------------------------------

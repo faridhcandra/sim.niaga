@@ -10,6 +10,13 @@ class M_stok extends CI_Model {
 		
 	}
 
+	// =============== Get Fungsi ===============
+		public function get_bagian($id)
+		{
+			$hasil = $this->db->query("SELECT * FROM tbl_bagian WHERE id_unit='$id'");
+			return $hasil->result(); 
+		}
+	// ==========================================
 	// ========================================================= Master Data ===================================================================
 	// --------------- Satuan ------------------
 		public function v_satuan()
@@ -62,10 +69,17 @@ class M_stok extends CI_Model {
 			return $this->db->order_by('id_group','asc')->get('tbl_group');
 		}
 	// -----------------------------------------
+	// =========================================================================================================================================
+	// ========================================================= Pemesanan =====================================================================
+		public function v_pesbaru(){}
 
+		function pesbaru_barang()
+		{
+			$hasil = $this->db->query("SELECT a.id_barang, a.nm_barang, b.nm_jnsbrng, c.nm_group FROM tbl_nama_barang as a join tbl_jenis_barang as b on a.id_jnsbrng=b.id_jnsbrng join tbl_group as c on a.id_group=c.id_group order by a.id_barang, ABS(a.nm_barang)");
+			return $hasil; 
+		}
 
 	// =========================================================================================================================================
-
 }
 
 /* End of file M_stok.php */

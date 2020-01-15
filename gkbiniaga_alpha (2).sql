@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 10, 2020 at 08:03 AM
+-- Generation Time: Jan 15, 2020 at 07:09 PM
 -- Server version: 5.7.10-log
 -- PHP Version: 5.6.17
 
@@ -168,23 +168,22 @@ CREATE TABLE `tbl_dtl_mikeluar` (
 
 CREATE TABLE `tbl_dtl_permintaan` (
   `id_dtl_permintaan` varchar(15) NOT NULL,
-  `id_permintaan` varchar(8) DEFAULT NULL,
+  `id_permintaan` varchar(15) DEFAULT NULL,
   `id_barang` varchar(15) DEFAULT NULL,
   `id_brngmsk` varchar(15) DEFAULT NULL,
   `id_pembelian` varchar(15) DEFAULT NULL,
-  `nota_minta` varchar(20) DEFAULT NULL,
-  `tgl_minta` date DEFAULT NULL,
-  `jml_minta` int(11) DEFAULT NULL,
+  `nota_dtl_minta` varchar(20) DEFAULT NULL,
+  `tgl_dtl_minta` date DEFAULT NULL,
+  `jml_dtl_minta` int(11) DEFAULT NULL,
   `tglreal_minta` date DEFAULT NULL,
   `jmlreal_minta` int(11) DEFAULT NULL,
   `hrgreal_minta` decimal(15,2) DEFAULT NULL,
   `sisabeli_minta` int(11) DEFAULT NULL,
   `lsng_minta` int(11) DEFAULT NULL,
-  `ket_minta` text,
-  `selesai_minta` enum('Y','P','T') DEFAULT 'T',
+  `ket_dtl_minta` text,
+  `selesai_dtl_minta` enum('Y','P','T') DEFAULT 'T',
   `nosrh_minta` varchar(20) DEFAULT NULL,
-  `tglsrh_minta` date DEFAULT NULL,
-  `id_user` tinyint(2) DEFAULT NULL
+  `tglsrh_minta` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -371,6 +370,14 @@ CREATE TABLE `tbl_nama_barang` (
   `updated_barang` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tbl_nama_barang`
+--
+
+INSERT INTO `tbl_nama_barang` (`id_barang`, `id_jnsbrng`, `id_jnsbrngakt`, `id_group`, `nm_barang`, `kel_barang`, `ket_barang`, `no_barang`, `sat1_barang`, `sat2_barang`, `hpp_barang`, `harga_barang`, `updated_barang`) VALUES
+('A', '2', NULL, 4, 'Test Barang ', NULL, 'barang ok ', NULL, '1', '1', '1500.00', '2000.00', '2020-01-10 13:53:34'),
+('NH', '1', NULL, 3, 'Natrium Hipoklorit', NULL, 'Bahan Campuran Pemutih', NULL, '22', '21', NULL, NULL, '2020-01-10 14:07:22');
+
 -- --------------------------------------------------------
 
 --
@@ -502,22 +509,12 @@ CREATE TABLE `tbl_penyerahan` (
 
 CREATE TABLE `tbl_permintaan` (
   `id_permintaan` varchar(15) NOT NULL,
+  `id_unit` varchar(8) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
-  `id_barang` varchar(15) DEFAULT NULL,
-  `id_brngmsk` varchar(15) DEFAULT NULL,
-  `id_pembelian` varchar(15) DEFAULT NULL,
   `nota_minta` varchar(20) DEFAULT NULL,
   `tgl_minta` date DEFAULT NULL,
-  `jml_minta` int(11) DEFAULT NULL,
-  `tglreal_minta` date DEFAULT NULL,
-  `jmlreal_minta` int(11) DEFAULT NULL,
-  `hrgreal_minta` decimal(15,2) DEFAULT NULL,
-  `sisabeli_minta` int(11) DEFAULT NULL,
-  `lsng_minta` int(11) DEFAULT NULL,
   `ket_minta` text,
   `selesai_minta` enum('Y','P','T') DEFAULT 'T',
-  `nosrh_minta` varchar(20) DEFAULT NULL,
-  `tglsrh_minta` date DEFAULT NULL,
   `id_user` tinyint(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -843,6 +840,12 @@ ALTER TABLE `tbl_pengecekan`
 --
 ALTER TABLE `tbl_penyerahan`
   ADD PRIMARY KEY (`id_penyerahan`);
+
+--
+-- Indexes for table `tbl_permintaan`
+--
+ALTER TABLE `tbl_permintaan`
+  ADD PRIMARY KEY (`id_permintaan`);
 
 --
 -- Indexes for table `tbl_provinsi`
