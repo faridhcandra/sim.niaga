@@ -23,7 +23,7 @@
       <ul class="nav navnav-pills nav-sidebar flex-column nav-flat " data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="#l" class="nav-link">
+          <a href="<?php echo site_url('gudang')?>" class="nav-link">
             <i class="nav-icon fas fa-landmark"></i>
             <p>Halaman Utama</p>
           </a>
@@ -39,23 +39,23 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?php echo site_url('gudang/v_koderekakt');?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Kode Rekening Akuntansi</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?php echo site_url('gudang/v_jenisbrngakt');?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Jenis Barang Akuntansi</p>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Data Barang Akuntansi</p>
               </a>
-            </li>
+            </li> -->
           </ul>
         </li>
         <li class="nav-item has-treeview">

@@ -12,7 +12,7 @@
 </body>
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
-<script src="<?php echo base_url();?>assets/plugins/jquery/jquery.min.js"></script>
+<!-- <script src="<?php echo base_url();?>assets/plugins/jquery/jquery.min.js"></script> -->
 <!-- Bootstrap -->
 <script src="<?php echo base_url();?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE -->
@@ -21,6 +21,11 @@
 <script src="<?php echo base_url();?>assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- pace-progress -->
 <script src="<?php echo base_url();?>assets/plugins/pace-progress/pace.min.js"></script>
+<!-- DataTables -->
+<script src="<?php echo base_url();?>assets/plugins/datatables/jquery.dataTables.js"></script>
+<script src="<?php echo base_url();?>assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<!-- Toastr -->
+<!-- <script src="<?php echo base_url();?>assets/plugins/toastr/toastr.min.js"></script> -->
 
 <script>
   // Add active class to the current button (highlight it)
@@ -34,5 +39,20 @@
       this.className += " active";
     });
   }
+
+  // Datatable
+  $(function () {
+    $("#example2").DataTable({
+      "deferRender" : true,
+      "processing"  : true,
+      "order"       : [],
+    });
+  });
+
+  // Totips 
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  })
+
 </script>
 </html>

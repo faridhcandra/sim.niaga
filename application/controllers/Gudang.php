@@ -6,6 +6,7 @@ class Gudang extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(array('url','form','file'));
+		$this->load->model('M_gudang');
 	}
 
 	public function index()
@@ -20,6 +21,233 @@ class Gudang extends CI_Controller {
 		$this->load->view('gudang/template/content');
 		$this->load->view('gudang/template/footer');
 	}
+	// ======================================================== DATA MASTER ===================================================================
+	// ------------------- kode Rekening Akuntansi -----------------
+	public function v_koderekakt()
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Kode Rekening Akuntansi';
+
+		$isi['isi'] = $this->M_gudang->v_koderekakt();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/kode_rekening/view',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+	public function koderekakt_t()
+	{
+		$cek = $this->db->query("SELECT id_rekening,nm_rekening FROM tbl_rekening where id_rekening='".$this->input->post('kode',TRUE)."' OR nm_rekening='".$this->input->post('nama',TRUE)."'")->num_rows();
+		if($cek <= 0){
+			$data = array (	'id_rekening' => $this->input->post('kode'),
+							'nm_rekening' => $this->input->post('nama')
+						  );
+			$sql = $this->M_gudang->s_koderekakt($data);
+
+			$allsql = array($sql);
+			if($allsql){ // Jika sukses
+				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+			}else{ // Jika gagal
+				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+			}
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf Kode atau Nama Rekening Akutansi Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('gudang/v_koderekakt').'")';
+			echo '</script>';
+		}
+	}
+	public function u_koderekakt($id='')
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Ubah Kode Rekening Akuntansi';
+
+		$isi['isi'] = $this->M_gudang->ve_koderekakt($id);
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/kode_rekening/edit',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+	public function koderekakt_u($id)
+	{
+		$this->form_validation->set_rules('kode','Kode','required');
+		if($this->form_validation->run() == TRUE){
+			/*$cek = $this->db->query("SELECT id_rekening FROM tbl_satuan where nm_satuan='".$this->input->post('satuan',TRUE)."'")->num_rows();
+			if($cek <= 0){*/
+				$data = array(	'id_rekening' => $this->input->post('kode'),
+								'nm_rekening' => $this->input->post('nama')							
+							 );
+
+				$sql = $this->M_gudang->e_koderekakt($id, $data);
+				
+				$allsql = array($sql);
+				if($allsql){ // Jika sukses
+					echo "<script>alert('Data berhasil diubah');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+				}else{ // Jika gagal
+					echo "<script>alert('Data gagal diubah');window.location = '".base_url('gudang/u_koderekakt')."';</script>";
+				}
+			/*}else{
+				echo '<script language="javascript">';
+				echo 'alert("Maaf Kode atau Nama Rekening Satuan Sudah Ada")';
+				echo '</script>';
+				echo '<script language="javascript">';
+				echo 'window.location=("'.site_url('stok/view_satuan').'")';
+				echo '</script>';
+			}*/
+		}else{
+			echo "<script>alert('Maaf Kode Rekening Akuntansi tidak ditemukan');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+		}
+	}
+	public function h_koderekakt($id)
+	{
+		$sql = $this->M_gudang->h_koderekakt($id);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+		}
+	}
+	// -------------------------------------------------------------
+	// --------------------- Jenis BArang Akuntansi ----------------
+	public function v_jenisbrngakt()
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Jenis Barang Akuntansi';
+
+		$isi['isi'] = $this->M_gudang->v_jenisbrngakt();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/jenis_barang_akt/view',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+	public function t_jenisbrngakt()
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Tambah Jenis Barang Akuntansi';
+
+		// $isi['isi'] = $this->M_gudang->v_koderekakt();
+		$isi['get_rek'] = $this->M_gudang->get_rekening();
+		$isi['get_unit'] = $this->M_gudang->get_unit();
+		$isi['get_jenis'] = $this->M_gudang->get_jenis_barang();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/jenis_barang_akt/tambah',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+	public function jenisbrngakt_t()
+	{
+			$kd 	= $this->input->post('kode');
+			$nm 	= $this->input->post('nama');
+			$brng 	= $this->input->post('barang');
+			$unit 	= $this->input->post('unit');
+			$rek 	= $this->input->post('rek');
+			/*$kd 	= $this->input->post('nopesbaru');*/
+
+			$data = array();
+			$i = 0;
+			if(is_array($kd)){
+				foreach ($kd as $datakd) {
+					$cek = $this->db->query("SELECT * FROM tbl_barang_akutansi where no_jnsbrngakt='$datakd' ")->num_rows();
+					if($cek <= 0){
+						array_push($data, array(
+							'no_jnsbrngakt'	=> $datakd,
+							'nm_jnsbrngakt'	=> $nm[$i],
+							'id_jnsbrng'	=> $brng[$i],
+							'id_unit'		=> $unit[$i],
+							'no_rekening'	=> $rek[$i]
+						));
+						$i++;
+					}else{
+						echo '<script language="javascript">';
+						echo 'alert("Maaf Kode Jenis Barang Akuntansi Sudah Ada")';
+						echo '</script>';
+						echo '<script language="javascript">';
+						echo 'window.location=("'.site_url('gudang/v_jenisbrngakt').'")';
+						echo '</script>';
+					}
+				}
+			}
+			$sql = $this->M_gudang->s_jenisbrngakt($data);
+
+			$allsql = array($sql);
+			if($allsql){ // Jika sukses
+				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+			}else{ // Jika gagal
+				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+			}
+	}
+	public function u_jenisbrngakt($id='')
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Ubah Jenis Barang Akuntansi';
+
+		$isi['isi'] = $this->M_gudang->ve_jenisbrngakt($id);
+		$isi['get_rek'] = $this->M_gudang->get_rekening();
+		$isi['get_unit'] = $this->M_gudang->get_unit();
+		$isi['get_jenis'] = $this->M_gudang->get_jenis_barang();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/jenis_barang_akt/edit',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+	public function jenisbrngakt_u($id)
+	{
+		$this->form_validation->set_rules('kode','Kode','required');
+		if($this->form_validation->run() == TRUE){
+			$data = array(	'no_jnsbrngakt' => $this->input->post('kode'),
+							'id_jnsbrng' 	=> $this->input->post('barang'),
+							'id_unit' 		=> $this->input->post('unit'),
+							'no_rekening' 	=> $this->input->post('rek'),
+							'nm_jnsbrngakt' => $this->input->post('nama')
+						 );
+			$sql = $this->M_gudang->e_jenisbrngakt($id, $data);
+			
+			$allsql = array($sql);
+			if($allsql){ // Jika sukses
+				echo "<script>alert('Data berhasil diubah');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+			}else{ // Jika gagal
+				echo "<script>alert('Data gagal diubah');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+			}
+		}else{
+			echo "<script>alert('Maaf Kode Jenis Barang Akuntansi tidak ditemukan');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+		}
+	}
+	public function h_jenisbrngakt($id)
+	{
+		$sql = $this->M_gudang->h_jenisbrngakt($id);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+		}
+	}
+	// -------------------------------------------------------------
+	// ========================================================================================================================================
+
+	// ======================================================== Verifikasi Data ===============================================================
+	// --------------------- Pesanan Baru -------------------------
+	
+	// ------------------------------------------------------------
+	// ========================================================================================================================================
+
 
 }
 

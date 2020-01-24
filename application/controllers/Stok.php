@@ -271,14 +271,31 @@ class Stok extends CI_Controller {
 	// ------------------ Baru ----------------------
 	public function view_pesbaru()
 	{
-		$data['menutitle'] = 'Data Pemesanan';
+		$data['menutitle'] = 'Data Pemesanan Baru';
 		$data['menu'] = 'Pemesanan';
 		$data['submenu'] = 'Pesanana Baru';
+
+		$isi['isi'] = $this->M_stok->v_pesbaru();
 
 		$this->load->view('stok/template/head');
 		$this->load->view('stok/template/navbar');
 		$this->load->view('stok/template/sidebar',$data);
-		$this->load->view('stok/pesanan/baru/view');
+		$this->load->view('stok/pesanan/baru/view',$isi);
+		$this->load->view('stok/template/footer');
+	}
+	public function view_dtl_pesbaru($id='')
+	{
+		$data['menutitle'] = 'Detail Data Pemesanan';
+		$data['menu'] = 'Pemesanan';
+		$data['submenu'] = 'Detail Pesanana Baru';
+
+		$isi['judul'] = $this->M_stok->ve_id_pesbar($id);
+		$isi['isi'] = $this->M_stok->v_dtl_pesbar($id);
+
+		$this->load->view('stok/template/head');
+		$this->load->view('stok/template/navbar');
+		$this->load->view('stok/template/sidebar',$data);
+		$this->load->view('stok/pesanan/baru/view_detail',$isi);
 		$this->load->view('stok/template/footer');
 	}
 	public function t_pesbaru()
@@ -288,6 +305,7 @@ class Stok extends CI_Controller {
 		$data['submenu'] = 'Tambah Pesanan Baru';
 
 		//$isi['isi'] = $this->M_stok->ve_satuan($id);
+		$isi['kode'] = $this->M_stok->k_pesbaru();
 		$isi['get_unit'] = 'weav';
 		$isi['pesbaru_barang'] = $this->M_stok->pesbaru_barang();
 
@@ -295,6 +313,144 @@ class Stok extends CI_Controller {
 		$this->load->view('stok/template/navbar');
 		$this->load->view('stok/template/sidebar',$data);
 		$this->load->view('stok/pesanan/baru/tambah',$isi);
+		$this->load->view('stok/template/footer');
+	}
+	public function pesbaru_t()
+	{
+		$cek = $this->db->query("SELECT * FROM tbl_permintaan where nota_minta='".$this->input->post('nopesbaru', TRUE)."' ")->num_rows();
+		if($cek <= 0){
+			$kd 			= $this->input->post('kd');
+			$nopesan 		= $this->input->post('nopesbaru');
+			$tglps 			= $this->input->post('tglpes');
+			$unit 			= $this->input->post('unit');
+			$bagian 		= $this->input->post('bagian');
+			$ket 			= $this->input->post('ket');
+			$barang 		= $this->input->post('barang');
+			/*$stok_unit 		= $this->input->post('stkunit');
+			$stok_gudang 	= $this->input->post('stkgudang');*/
+			$tglperlu 		= $this->input->post('tglperlu');
+			$jumlah 		= $this->input->post('jml');
+			$ketdetail 		= $this->input->post('ketdetail');
+
+			$data1 = array(
+				'id_permintaan' => $kd,
+				'id_unit' 		=> $unit,
+				'id_bagian' 	=> $bagian,
+				'nota_minta' 	=> $nopesan,
+				'tgl_minta' 	=> $tglps,
+				'ket_minta' 	=> $ket,
+				'id_user' 		=> '1'
+			);
+			$sql1 = $this->M_stok->s_pesbar($data1);
+
+			$data2 = array();
+			$i = 0;
+			if(is_array($barang)){
+				foreach ($barang as $databarang) {
+					array_push($data2, array(
+						'id_permintaan'		=> $kd,
+						'id_barang'			=> $databarang,
+						'nota_dtl_minta'	=> $nopesan,
+						'tgl_dtl_perlu'		=> $tglperlu[$i],
+						'jml_dtl_minta'		=> $jumlah[$i],
+						'ket_dtl_minta'		=> $ketdetail[$i]
+					));
+					$i++;
+				}
+			}
+			$sql2 = $this->M_stok->s_pesbar_dtl_batch($data2);
+
+			$allsql = array($sql1,$sql2);
+			if($allsql){ // Jika sukses
+				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+			}else{ // Jika gagal
+				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+			}
+
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf No Permintaan Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('stok/view_pesbaru').'")';
+			echo '</script>';
+		}
+	}
+	public function u_pesbaru($id='')
+	{
+		$data['menutitle'] = 'Data Pemesanan';
+		$data['menu'] = 'Pemesanan';
+		$data['submenu'] = 'Ubah Pesanan Baru';
+
+		$isi['get_unit'] = 'weav';
+		$isi['pesbaru_barang'] = $this->M_stok->pesbaru_barang();
+		$isi['isi'] = $this->M_stok->ve_pesbar($id);
+
+		$this->load->view('stok/template/head');
+		$this->load->view('stok/template/navbar');
+		$this->load->view('stok/template/sidebar',$data);
+		$this->load->view('stok/pesanan/baru/edit',$isi);
+		$this->load->view('stok/template/footer');
+	}
+	public function pesbaru_u($id)
+	{
+		$this->form_validation->set_rules('','','required');
+		if($this->form_validation->run() == TRUE){
+			$cek = $this->db->query("SELECT * where id_barang='".$this->input->post('id_barang',TRUE)."'")->num_rows();
+			if($cek <= 0){
+				$data = array(	'id_barang'		=> $this->input->post('id_jnsbrng'),
+								'tgl_dtl_perlu' => $this->input->post('id_group'),
+								'jml_dtl_minta' => $this->input->post('nama_barang'),
+								'ket_dtl_minta' => $this->input->post('kel_barang'),							
+							 );
+				$sql = $this->M_stok->e_pesbar($id, $data);
+				$allsql = array($sql);
+					if($allsql){ // Jika sukses
+						echo "<script>alert('Data berhasil diubah');window.location = '".base_url('stok/view_barang')."';</script>";
+					}else{ // Jika gagal
+						echo "<script>alert('Data gagal diubah');window.location = '".base_url('stok/u_barang')."';</script>";
+					}
+				}else{
+					echo '<script language="javascript">';
+					echo 'alert("Maaf Nama Barang Sudah Ada")';
+					echo '</script>';
+					echo '<script language="javascript">';
+					echo 'window.location=("'.site_url('stok/view_barang').'")';
+					echo '</script>';
+				}
+		}else{
+			echo "<script>alert('Maaf Nama Barang tidak ditemukan');window.location = '".base_url('stok/view_barang')."';</script>";
+		}
+	}
+	// ----------------------------------------------
+	// ------------------- Selesai ------------------
+	public function view_pesselesai()
+	{
+		$data['menutitle'] = 'Data Pemesanan Selesai';
+		$data['menu'] = 'Pemesanan';
+		$data['submenu'] = 'Pesanana Selesai';
+
+		$isi['isi'] = $this->M_stok->v_pesselesai();
+
+		$this->load->view('stok/template/head');
+		$this->load->view('stok/template/navbar');
+		$this->load->view('stok/template/sidebar',$data);
+		$this->load->view('stok/pesanan/selesai/view',$isi);
+		$this->load->view('stok/template/footer');
+	}
+	public function view_dtl_pesselesai($id='')
+	{
+		$data['menutitle'] = 'Detail Data Pemesanan';
+		$data['menu'] = 'Pemesanan';
+		$data['submenu'] = 'Detail Pesanana Selesai';
+
+		$isi['judul'] = $this->M_stok->ve_id_pessel($id);
+		$isi['isi'] = $this->M_stok->ve_pessel($id);
+
+		$this->load->view('stok/template/head');
+		$this->load->view('stok/template/navbar');
+		$this->load->view('stok/template/sidebar',$data);
+		$this->load->view('stok/pesanan/selesai/view_detail',$isi);
 		$this->load->view('stok/template/footer');
 	}
 	// ----------------------------------------------

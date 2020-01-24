@@ -14,7 +14,8 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label style="font-size: 11pt;">No Permintaan</label>
-									<input class="form-control form-control-sm" type="text" name="nopesbaru" placeholder="ex : xxx_kdunit_bln_thn" required="" autocomplete="off" autofocus="">
+									<input class="form-control form-control-sm" type="text" name="nopesbaru" placeholder="ex : xxx/kdunit/bln/thn" required="" autocomplete="off" autofocus="">
+									<input hidden="" class="form-control form-control-sm" type="text" name="kd" value="<?php echo $kode?>">
 								</div>
 							</div>
 							<div class="col-md-2">
@@ -107,7 +108,7 @@
 		+	"<div class='col-md-4'>"
 		+		"<div class='form-group'>"
 		+			"<label style='font-size: 11pt;'>Nama Barang</label>"
-		+			"<input list='dt_barang' type='test' class='form-control form-control-sm' name='barang[]'>"
+		+			"<input list='dt_barang' type='text' class='form-control form-control-sm' name='barang[]'>"
 		+			"<datalist id='dt_barang'>"
 		+				"<?php foreach ($pesbaru_barang->result() as $row): ?>"
 		+					"<option value='<?php echo $row->id_barang;?>'><?php echo $row->nm_barang;?> | <?php echo $row->nm_group?> | <?php echo $row->nm_jnsbrng;?></option>"
@@ -118,13 +119,13 @@
 		+	"<div class='col-md-1'>"
 		+		"<div class='form-group'>"
 		+			"<label style='font-size: 11pt;'>Stok</label>"
-		+			"<input class='form-control form-control-sm' type='email' name='unit[]' placeholder='Unit' required='' readonly=''>"
+		+			"<input class='form-control form-control-sm' type='email' name='stkunit[]' placeholder='Unit' required='' readonly=''>"
 		+	"</div>"
 		+	"</div>"
 		+	"<div class='col-md-1'>"
 		+		"<div class='form-group'>"
 		+			"<label>&nbsp;</label>"
-		+			"<input class='form-control form-control-sm' type='text' name='gudang[]' placeholder='Gudang' required='' readonly=''>"
+		+			"<input class='form-control form-control-sm' type='text' name='stkgudang[]' placeholder='Gudang' required='' readonly=''>"
 		+	"</div>"
 		+	"</div>"
 		+	"<div class='col-md-2'>"

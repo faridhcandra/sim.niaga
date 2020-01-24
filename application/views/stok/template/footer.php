@@ -42,7 +42,11 @@
 
   // Datatable
   $(function () {
-    $("#example2").DataTable();
+    $("#example2").DataTable({
+      "deferRender" : true,
+      "processing"  : true,
+      "order"       : [],
+    });
   });
 
   // Totips 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 31, 2019 at 09:57 AM
+-- Generation Time: Jan 22, 2020 at 07:30 PM
 -- Server version: 5.7.10-log
 -- PHP Version: 5.6.17
 
@@ -68,11 +68,34 @@ INSERT INTO `tbl_bagian` (`id_bagian`, `id_unit`, `nm_bagian`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_barang_akutansi`
+--
+
+CREATE TABLE `tbl_barang_akutansi` (
+  `id_jnsbrngakt` tinyint(9) NOT NULL,
+  `no_jnsbrngakt` varchar(20) NOT NULL,
+  `id_jnsbrng` varchar(15) DEFAULT NULL,
+  `id_unit` varchar(8) DEFAULT NULL,
+  `no_rekening` tinyint(3) DEFAULT NULL,
+  `nm_jnsbrngakt` varchar(50) DEFAULT NULL,
+  `group_jnsbrngakt` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_barang_akutansi`
+--
+
+INSERT INTO `tbl_barang_akutansi` (`id_jnsbrngakt`, `no_jnsbrngakt`, `id_jnsbrng`, `id_unit`, `no_rekening`, `nm_jnsbrngakt`, `group_jnsbrngakt`) VALUES
+(1, 'A', '1', 'ex', 1, 'A1', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_barang_keluar`
 --
 
 CREATE TABLE `tbl_barang_keluar` (
-  `id_brngkel` varchar(15) DEFAULT NULL,
+  `id_brngkel` varchar(15) NOT NULL,
   `tgl_brngkel` date DEFAULT NULL,
   `stok_brngkel` int(15) DEFAULT NULL,
   `tothrg_brngkel` decimal(15,2) DEFAULT NULL,
@@ -86,7 +109,7 @@ CREATE TABLE `tbl_barang_keluar` (
 --
 
 CREATE TABLE `tbl_barang_masuk` (
-  `id_brngmsk` varchar(15) DEFAULT NULL,
+  `id_brngmsk` varchar(15) NOT NULL,
   `tgl_brngmsk` date DEFAULT NULL,
   `stok_brngmsk` int(15) DEFAULT NULL,
   `tothrg_brngmasuk` decimal(15,2) DEFAULT NULL,
@@ -100,7 +123,7 @@ CREATE TABLE `tbl_barang_masuk` (
 --
 
 CREATE TABLE `tbl_company` (
-  `id_company` varchar(5) DEFAULT NULL,
+  `id_company` varchar(5) NOT NULL,
   `id_provinsi` tinyint(3) DEFAULT NULL,
   `id_kabupaten` tinyint(3) DEFAULT NULL,
   `id_pejabat` varchar(10) DEFAULT NULL,
@@ -127,7 +150,7 @@ INSERT INTO `tbl_company` (`id_company`, `id_provinsi`, `id_kabupaten`, `id_peja
 --
 
 CREATE TABLE `tbl_dtl_barang_keluar` (
-  `id_dtlbrngkel` int(11) DEFAULT NULL,
+  `id_dtlbrngkel` int(11) NOT NULL,
   `id_brngkel` varchar(15) DEFAULT NULL,
   `tgl_brngkel` date DEFAULT NULL,
   `id_stok` int(11) DEFAULT NULL,
@@ -144,7 +167,7 @@ CREATE TABLE `tbl_dtl_barang_keluar` (
 --
 
 CREATE TABLE `tbl_dtl_mikeluar` (
-  `id_dtlmikeluar` int(11) DEFAULT NULL,
+  `id_dtlmikeluar` int(11) NOT NULL,
   `id_mikeluar` varchar(15) DEFAULT NULL,
   `tgl_mikeluar` date DEFAULT NULL,
   `id_supplier` varchar(15) DEFAULT NULL,
@@ -159,6 +182,65 @@ CREATE TABLE `tbl_dtl_mikeluar` (
   `tglmsk_dtlmikeluar` date DEFAULT NULL,
   `ketmsk_dtlmikeluar` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dtl_mutasi_gudang`
+--
+
+CREATE TABLE `tbl_dtl_mutasi_gudang` (
+  `id_dtl_mutasi_gudang` int(11) NOT NULL,
+  `id_mutasi_gudang` varchar(10) NOT NULL,
+  `id_jnsbrngakt` varchar(15) NOT NULL,
+  `id_barang` varchar(20) NOT NULL,
+  `nota_dtl_mutasi_gudang` varchar(20) NOT NULL,
+  `jumlah_dtl_mutasi_gudang` int(11) NOT NULL,
+  `id_kdtransaksi` varchar(5) NOT NULL,
+  `terima_dtl_mutasi_gudang` int(11) NOT NULL,
+  `keluar_dtl_mutasi_gudang` int(11) NOT NULL,
+  `ket_dtl_mutasi_gudang` varchar(200) NOT NULL,
+  `input_dtl_mutasi_gudang` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dtl_permintaan`
+--
+
+CREATE TABLE `tbl_dtl_permintaan` (
+  `id_dtl_permintaan` int(11) NOT NULL,
+  `id_permintaan` varchar(15) DEFAULT NULL,
+  `id_barang` varchar(15) DEFAULT NULL,
+  `id_brngmsk` varchar(15) DEFAULT NULL,
+  `id_pembelian` varchar(15) DEFAULT NULL,
+  `nota_dtl_minta` varchar(20) DEFAULT NULL,
+  `tgl_dtl_perlu` date DEFAULT NULL,
+  `jml_dtl_minta` int(11) DEFAULT NULL,
+  `stkunit_dtl_minta` int(11) NOT NULL DEFAULT '0',
+  `stkgdng_dtl_minta` int(11) NOT NULL DEFAULT '0',
+  `tglreal_minta` date DEFAULT NULL,
+  `jmlreal_minta` int(11) DEFAULT NULL,
+  `hrgreal_minta` decimal(15,2) DEFAULT NULL,
+  `sisabeli_minta` int(11) DEFAULT NULL,
+  `lsng_minta` int(11) DEFAULT NULL,
+  `ket_dtl_minta` text,
+  `selesai_dtl_minta` enum('Y','P','T') DEFAULT 'T',
+  `nosrh_minta` varchar(20) DEFAULT NULL,
+  `tglsrh_minta` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_dtl_permintaan`
+--
+
+INSERT INTO `tbl_dtl_permintaan` (`id_dtl_permintaan`, `id_permintaan`, `id_barang`, `id_brngmsk`, `id_pembelian`, `nota_dtl_minta`, `tgl_dtl_perlu`, `jml_dtl_minta`, `stkunit_dtl_minta`, `stkgdng_dtl_minta`, `tglreal_minta`, `jmlreal_minta`, `hrgreal_minta`, `sisabeli_minta`, `lsng_minta`, `ket_dtl_minta`, `selesai_dtl_minta`, `nosrh_minta`, `tglsrh_minta`) VALUES
+(1, 'PR0000000000001', 'A', NULL, NULL, '0001/weav/I/01/2020', '2020-01-17', 10, 0, 0, NULL, NULL, NULL, NULL, NULL, 'habis', 'T', NULL, NULL),
+(2, 'PR0000000000001', 'NH', NULL, NULL, '0001/weav/I/01/2020', '2020-01-18', 20, 0, 0, NULL, NULL, NULL, NULL, NULL, 'stok terbatas', 'T', NULL, NULL),
+(3, 'PR0000000000002', 'A', NULL, NULL, '0002/weav/I/01/2020', '2020-01-17', 20, 0, 0, NULL, NULL, NULL, NULL, NULL, 'Pembelian langsung', 'Y', NULL, NULL),
+(4, 'PR0000000000002', 'NH', NULL, NULL, '0002/weav/I/01/2020', '2020-01-17', 30, 0, 0, NULL, NULL, NULL, NULL, NULL, 'Pembelian Langsung', 'Y', NULL, NULL),
+(5, 'PR0000000000003', 'NH', NULL, NULL, '0003/weav/I/01/2020', '2020-01-19', 30, 0, 0, NULL, NULL, NULL, NULL, NULL, 'tinggal sedikit', 'T', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -230,22 +312,6 @@ INSERT INTO `tbl_jenis_barang` (`id_jnsbrng`, `nm_jnsbrng`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_jns_barang_akutansi`
---
-
-CREATE TABLE `tbl_jns_barang_akutansi` (
-  `id_jnsbrngakt` varchar(15) DEFAULT NULL,
-  `id_jnsbrng` varchar(15) DEFAULT NULL,
-  `id_unit` varchar(8) DEFAULT NULL,
-  `id_group` tinyint(3) DEFAULT NULL,
-  `nm_jnsbrngakt` varchar(50) DEFAULT NULL,
-  `group_jnsbrngakt` varchar(50) DEFAULT NULL,
-  `rek_jnsbrngakt` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tbl_kabupaten`
 --
 
@@ -265,6 +331,27 @@ INSERT INTO `tbl_kabupaten` (`id_kabupaten`, `id_provinsi`, `nm_kabupaten`) VALU
 (3, 1, 'Gunung Kidul'),
 (4, 1, 'Bantul'),
 (5, 1, 'Kota Yogyakarta');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_kdtransaksi`
+--
+
+CREATE TABLE `tbl_kdtransaksi` (
+  `id_kdtransaksi` varchar(2) NOT NULL,
+  `nm_kdtransaksi` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_kdtransaksi`
+--
+
+INSERT INTO `tbl_kdtransaksi` (`id_kdtransaksi`, `nm_kdtransaksi`) VALUES
+('1', 'PENERIMAAN BARANG'),
+('2', 'PEMAKAIAN BON'),
+('3', 'PENYESUAIAN STOCK [+]'),
+('4', 'PENYESUAIAN STOCK [-]');
 
 -- --------------------------------------------------------
 
@@ -290,6 +377,15 @@ CREATE TABLE `tbl_metode_bayar` (
   `nm_metbyr` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tbl_metode_bayar`
+--
+
+INSERT INTO `tbl_metode_bayar` (`id_metbyr`, `nm_metbyr`) VALUES
+(2, 'Cash'),
+(3, 'Credit'),
+(4, 'Barter');
+
 -- --------------------------------------------------------
 
 --
@@ -297,7 +393,7 @@ CREATE TABLE `tbl_metode_bayar` (
 --
 
 CREATE TABLE `tbl_mikeluar` (
-  `id_mikeluar` varchar(15) DEFAULT NULL,
+  `id_mikeluar` varchar(15) NOT NULL,
   `tgl_mikeluar` date DEFAULT NULL,
   `nota_mikeluar` varchar(20) DEFAULT NULL,
   `id_supplier` varchar(15) DEFAULT NULL,
@@ -316,11 +412,25 @@ CREATE TABLE `tbl_mikeluar` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_mutasi_gudang`
+--
+
+CREATE TABLE `tbl_mutasi_gudang` (
+  `id_mutasi_gudang` varchar(10) NOT NULL,
+  `tgl_mutasi_gudang` date NOT NULL,
+  `nota_mutasi_gudang` varchar(20) NOT NULL,
+  `id_unit` varchar(8) NOT NULL,
+  `id_bagian` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_nama_barang`
 --
 
 CREATE TABLE `tbl_nama_barang` (
-  `id_barang` varchar(20) DEFAULT NULL,
+  `id_barang` varchar(20) NOT NULL,
   `id_jnsbrng` varchar(15) DEFAULT NULL,
   `id_jnsbrngakt` varchar(15) DEFAULT NULL,
   `id_group` tinyint(3) DEFAULT NULL,
@@ -334,6 +444,14 @@ CREATE TABLE `tbl_nama_barang` (
   `harga_barang` decimal(15,2) DEFAULT NULL,
   `updated_barang` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_nama_barang`
+--
+
+INSERT INTO `tbl_nama_barang` (`id_barang`, `id_jnsbrng`, `id_jnsbrngakt`, `id_group`, `nm_barang`, `kel_barang`, `ket_barang`, `no_barang`, `sat1_barang`, `sat2_barang`, `hpp_barang`, `harga_barang`, `updated_barang`) VALUES
+('A', '2', NULL, 4, 'Test Barang ', NULL, 'barang ok ', NULL, '1', '1', '1500.00', '2000.00', '2020-01-10 13:53:34'),
+('NH', '1', NULL, 3, 'Natrium Hipoklorit', NULL, 'Bahan Campuran Pemutih', NULL, '22', '21', '900.00', '1500.00', '2020-01-17 14:37:36');
 
 -- --------------------------------------------------------
 
@@ -369,7 +487,7 @@ INSERT INTO `tbl_pejabat` (`id_pejabat`, `nm_pejabat1`, `posisi_pejabat1`, `nm_p
 --
 
 CREATE TABLE `tbl_pembelian` (
-  `tbl_pembelian` varchar(15) DEFAULT NULL,
+  `tbl_pembelian` varchar(15) NOT NULL,
   `id_permintaan` varchar(15) DEFAULT NULL,
   `id_jenis_barang` varchar(15) DEFAULT NULL,
   `nota_beli` varchar(20) DEFAULT NULL,
@@ -394,7 +512,7 @@ CREATE TABLE `tbl_pembelian` (
 --
 
 CREATE TABLE `tbl_penerimaan` (
-  `id_penerimaan` varchar(15) DEFAULT NULL,
+  `id_penerimaan` varchar(15) NOT NULL,
   `id_pembelian` varchar(15) DEFAULT NULL,
   `id_barang` varchar(15) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
@@ -419,7 +537,7 @@ CREATE TABLE `tbl_penerimaan` (
 --
 
 CREATE TABLE `tbl_pengecekan` (
-  `id_pengecekan` varchar(15) DEFAULT NULL,
+  `id_pengecekan` varchar(15) NOT NULL,
   `id_penyerahan` varchar(15) DEFAULT NULL,
   `id_penerimaan` varchar(15) DEFAULT NULL,
   `id_pembelian` varchar(15) DEFAULT NULL,
@@ -443,7 +561,7 @@ CREATE TABLE `tbl_pengecekan` (
 --
 
 CREATE TABLE `tbl_penyerahan` (
-  `id_penyerahan` varchar(15) DEFAULT NULL,
+  `id_penyerahan` varchar(15) NOT NULL,
   `id_pembelian` varchar(15) DEFAULT NULL,
   `id_barang` varchar(15) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
@@ -465,25 +583,24 @@ CREATE TABLE `tbl_penyerahan` (
 --
 
 CREATE TABLE `tbl_permintaan` (
-  `id_permintaan` varchar(15) DEFAULT NULL,
+  `id_permintaan` varchar(15) NOT NULL,
+  `id_unit` varchar(8) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
-  `id_barang` varchar(15) DEFAULT NULL,
-  `id_brngmsk` varchar(15) DEFAULT NULL,
-  `id_pembelian` varchar(15) DEFAULT NULL,
   `nota_minta` varchar(20) DEFAULT NULL,
   `tgl_minta` date DEFAULT NULL,
-  `jml_minta` int(11) DEFAULT NULL,
-  `tglreal_minta` date DEFAULT NULL,
-  `jmlreal_minta` int(11) DEFAULT NULL,
-  `hrgreal_minta` decimal(15,2) DEFAULT NULL,
-  `sisabeli_minta` int(11) DEFAULT NULL,
-  `lsng_minta` int(11) DEFAULT NULL,
   `ket_minta` text,
-  `selesai_minta` enum('Y','T') DEFAULT NULL,
-  `nosrh_minta` varchar(20) DEFAULT NULL,
-  `tglsrh_minta` date DEFAULT NULL,
+  `selesai_minta` enum('Y','P','T') DEFAULT 'T',
   `id_user` tinyint(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_permintaan`
+--
+
+INSERT INTO `tbl_permintaan` (`id_permintaan`, `id_unit`, `id_bagian`, `nota_minta`, `tgl_minta`, `ket_minta`, `selesai_minta`, `id_user`) VALUES
+('PR0000000000001', 'weav', '512', '0001/weav/I/01/2020', '2020-01-17', 'mendesak', 'T', 1),
+('PR0000000000002', 'weav', '511', '0002/weav/I/01/2020', '2020-01-17', 'langsung', 'Y', 1),
+('PR0000000000003', 'weav', '513', '0003/weav/I/01/2020', '2020-01-19', 'stok bulanan ', 'P', 1);
 
 -- --------------------------------------------------------
 
@@ -505,6 +622,26 @@ INSERT INTO `tbl_provinsi` (`id_provinsi`, `nm_provinsi`) VALUES
 (2, 'Jawa Tengah'),
 (3, 'Jawa Timur'),
 (4, 'Jawa Barat');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_rekening`
+--
+
+CREATE TABLE `tbl_rekening` (
+  `no_rekening` tinyint(3) NOT NULL,
+  `id_rekening` varchar(15) NOT NULL,
+  `nm_rekening` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_rekening`
+--
+
+INSERT INTO `tbl_rekening` (`no_rekening`, `id_rekening`, `nm_rekening`) VALUES
+(1, '1 1 3 5 0 0', 'BAHAN PENOL U/ GDG UMUM'),
+(2, '1 1 3 5 0 1', 'SPAREPART U / GDG UMUM');
 
 -- --------------------------------------------------------
 
@@ -610,7 +747,7 @@ INSERT INTO `tbl_satuan` (`id_satuan`, `nm_satuan`) VALUES
 --
 
 CREATE TABLE `tbl_stok_barang` (
-  `id_stok` int(11) DEFAULT NULL,
+  `id_stok` int(11) NOT NULL,
   `id_barang` varchar(15) DEFAULT NULL,
   `id_brngmsk` varchar(15) DEFAULT NULL,
   `tgl_brngmsk` date DEFAULT NULL,
@@ -627,21 +764,25 @@ CREATE TABLE `tbl_stok_barang` (
 --
 
 CREATE TABLE `tbl_supplier` (
-  `id_supplier` varchar(15) DEFAULT NULL,
+  `id_supplier` varchar(15) NOT NULL,
   `nm_supplier` varchar(80) DEFAULT NULL,
   `notelp_supplier` varchar(20) DEFAULT NULL,
   `fax_supplier` varchar(20) DEFAULT NULL,
-  `id_provinsi` tinyint(3) DEFAULT NULL,
-  `id_kabupaten` tinyint(3) DEFAULT NULL,
+  `id_provinsi` tinyint(3) DEFAULT '0',
+  `id_kabupaten` tinyint(3) DEFAULT '0',
   `almt_supplier` text,
   `email_supplier` varchar(30) DEFAULT NULL,
-  `nmpim_supplier` varchar(50) DEFAULT NULL,
-  `almtpim_supplier` text,
-  `telppim_supplier` varchar(20) DEFAULT NULL,
-  `nmcp_supplier` varchar(50) DEFAULT NULL,
-  `almtcp_supplier` text,
-  `telpcp_supplier` varchar(20) DEFAULT NULL
+  `attn_supplier` varchar(50) DEFAULT NULL,
+  `npwp_supplier` text,
+  `status_supplier` enum('1','0') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_supplier`
+--
+
+INSERT INTO `tbl_supplier` (`id_supplier`, `nm_supplier`, `notelp_supplier`, `fax_supplier`, `id_provinsi`, `id_kabupaten`, `almt_supplier`, `email_supplier`, `attn_supplier`, `npwp_supplier`, `status_supplier`) VALUES
+('AAB', 'PT Paijo', '0274 889 665 223', '0274 889', 1, 1, 'Jl. kenari No 12 Halinung, Sosoko, Yogyakarta', 'paijo@email.com', 'Bpk. Paijo', '01.556.889.8-9', '1');
 
 -- --------------------------------------------------------
 
@@ -697,6 +838,54 @@ ALTER TABLE `tbl_bagian`
   ADD PRIMARY KEY (`id_bagian`);
 
 --
+-- Indexes for table `tbl_barang_akutansi`
+--
+ALTER TABLE `tbl_barang_akutansi`
+  ADD PRIMARY KEY (`id_jnsbrngakt`);
+
+--
+-- Indexes for table `tbl_barang_keluar`
+--
+ALTER TABLE `tbl_barang_keluar`
+  ADD PRIMARY KEY (`id_brngkel`);
+
+--
+-- Indexes for table `tbl_barang_masuk`
+--
+ALTER TABLE `tbl_barang_masuk`
+  ADD PRIMARY KEY (`id_brngmsk`);
+
+--
+-- Indexes for table `tbl_company`
+--
+ALTER TABLE `tbl_company`
+  ADD PRIMARY KEY (`id_company`);
+
+--
+-- Indexes for table `tbl_dtl_barang_keluar`
+--
+ALTER TABLE `tbl_dtl_barang_keluar`
+  ADD PRIMARY KEY (`id_dtlbrngkel`);
+
+--
+-- Indexes for table `tbl_dtl_mikeluar`
+--
+ALTER TABLE `tbl_dtl_mikeluar`
+  ADD PRIMARY KEY (`id_dtlmikeluar`);
+
+--
+-- Indexes for table `tbl_dtl_mutasi_gudang`
+--
+ALTER TABLE `tbl_dtl_mutasi_gudang`
+  ADD PRIMARY KEY (`id_dtl_mutasi_gudang`);
+
+--
+-- Indexes for table `tbl_dtl_permintaan`
+--
+ALTER TABLE `tbl_dtl_permintaan`
+  ADD PRIMARY KEY (`id_dtl_permintaan`);
+
+--
 -- Indexes for table `tbl_group`
 --
 ALTER TABLE `tbl_group`
@@ -715,10 +904,28 @@ ALTER TABLE `tbl_kabupaten`
   ADD PRIMARY KEY (`id_kabupaten`);
 
 --
+-- Indexes for table `tbl_kdtransaksi`
+--
+ALTER TABLE `tbl_kdtransaksi`
+  ADD PRIMARY KEY (`id_kdtransaksi`);
+
+--
 -- Indexes for table `tbl_metode_bayar`
 --
 ALTER TABLE `tbl_metode_bayar`
   ADD PRIMARY KEY (`id_metbyr`);
+
+--
+-- Indexes for table `tbl_mikeluar`
+--
+ALTER TABLE `tbl_mikeluar`
+  ADD PRIMARY KEY (`id_mikeluar`);
+
+--
+-- Indexes for table `tbl_nama_barang`
+--
+ALTER TABLE `tbl_nama_barang`
+  ADD PRIMARY KEY (`id_barang`);
 
 --
 -- Indexes for table `tbl_pejabat`
@@ -727,16 +934,64 @@ ALTER TABLE `tbl_pejabat`
   ADD PRIMARY KEY (`id_pejabat`);
 
 --
+-- Indexes for table `tbl_pembelian`
+--
+ALTER TABLE `tbl_pembelian`
+  ADD PRIMARY KEY (`tbl_pembelian`);
+
+--
+-- Indexes for table `tbl_penerimaan`
+--
+ALTER TABLE `tbl_penerimaan`
+  ADD PRIMARY KEY (`id_penerimaan`);
+
+--
+-- Indexes for table `tbl_pengecekan`
+--
+ALTER TABLE `tbl_pengecekan`
+  ADD PRIMARY KEY (`id_pengecekan`);
+
+--
+-- Indexes for table `tbl_penyerahan`
+--
+ALTER TABLE `tbl_penyerahan`
+  ADD PRIMARY KEY (`id_penyerahan`);
+
+--
+-- Indexes for table `tbl_permintaan`
+--
+ALTER TABLE `tbl_permintaan`
+  ADD PRIMARY KEY (`id_permintaan`);
+
+--
 -- Indexes for table `tbl_provinsi`
 --
 ALTER TABLE `tbl_provinsi`
   ADD PRIMARY KEY (`id_provinsi`);
 
 --
+-- Indexes for table `tbl_rekening`
+--
+ALTER TABLE `tbl_rekening`
+  ADD PRIMARY KEY (`no_rekening`);
+
+--
 -- Indexes for table `tbl_satuan`
 --
 ALTER TABLE `tbl_satuan`
   ADD PRIMARY KEY (`id_satuan`);
+
+--
+-- Indexes for table `tbl_stok_barang`
+--
+ALTER TABLE `tbl_stok_barang`
+  ADD PRIMARY KEY (`id_stok`);
+
+--
+-- Indexes for table `tbl_supplier`
+--
+ALTER TABLE `tbl_supplier`
+  ADD PRIMARY KEY (`id_supplier`);
 
 --
 -- Indexes for table `tbl_unit`
@@ -748,6 +1003,21 @@ ALTER TABLE `tbl_unit`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `tbl_barang_akutansi`
+--
+ALTER TABLE `tbl_barang_akutansi`
+  MODIFY `id_jnsbrngakt` tinyint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `tbl_dtl_mutasi_gudang`
+--
+ALTER TABLE `tbl_dtl_mutasi_gudang`
+  MODIFY `id_dtl_mutasi_gudang` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tbl_dtl_permintaan`
+--
+ALTER TABLE `tbl_dtl_permintaan`
+  MODIFY `id_dtl_permintaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tbl_group`
 --
@@ -764,10 +1034,20 @@ ALTER TABLE `tbl_jenis_barang`
 ALTER TABLE `tbl_kabupaten`
   MODIFY `id_kabupaten` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `tbl_metode_bayar`
+--
+ALTER TABLE `tbl_metode_bayar`
+  MODIFY `id_metbyr` tinyint(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `tbl_provinsi`
 --
 ALTER TABLE `tbl_provinsi`
   MODIFY `id_provinsi` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `tbl_rekening`
+--
+ALTER TABLE `tbl_rekening`
+  MODIFY `no_rekening` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tbl_satuan`
 --

@@ -80,7 +80,7 @@
               </a>
             </li> -->
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?php echo site_url('stok/view_pesselesai');?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Pesanan Selesai</p>
                 <span class="right badge badge-danger">New</span>
