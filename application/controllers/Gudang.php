@@ -244,7 +244,50 @@ class Gudang extends CI_Controller {
 
 	// ======================================================== Verifikasi Data ===============================================================
 	// --------------------- Pesanan Baru -------------------------
-	
+	public function v_verpesbaru()
+	{
+		$data['menutitle'] = 'Verifikasi Data Pesanan';
+		$data['menu'] = 'Verifilkasi';
+		$data['submenu'] = 'Pesanan Ke Gudang';
+
+		$isi['isi'] = $this->M_gudang->v_verpesbar();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/pesanan_baru/view',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+	public function v_ver_pesbaru($id)
+	{
+		$data['menutitle'] = 'Detail Data Pesanan';
+		$data['menu'] = 'Verifikasi';
+		$data['submenu'] = 'Verifikasi Detail Pesanan';
+
+		$isi['judul'] = $this->M_gudang->v_ver_idpesbar($id);
+		$isi['isi'] = $this->M_gudang->v_ver_dtlpesbar($id);
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/pesanan_baru/view_detail',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+	public function ver_konfirmasi($id)
+	{
+		$id 	= $this->input->post('kode');
+		$verif 	= $this->input->post('verif');
+		$idper 	= $this->input->post('kode_permin');
+
+		$data 	= array('selesai_dtl_minta' => $verif);
+		$sql 	= $this->M_gudang->ver_konfirmasi($id,$data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".base_url('gudang/v_ver_pesbaru/'.$idper)."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".base_url('gudang/v_ver_pesbaru/'.$idper)."';</script>";
+		}
+	}
 	// ------------------------------------------------------------
 	// ========================================================================================================================================
 

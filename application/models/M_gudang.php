@@ -102,10 +102,42 @@ class M_gudang extends CI_Model {
 		
 	// ======================================================== Verifikasi Data ===============================================================
 	// --------------------- Pesanan Baru -------------------------
-	
+		public function v_verpesbar()
+		{
+			$sql = "SELECT a.id_permintaan,a.nota_minta,a.tgl_minta,b.nm_bagian,a.ket_minta,a.selesai_minta FROM tbl_permintaan as a join tbl_bagian as b on a.id_bagian=b.id_bagian order by a.tgl_minta desc";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+		function v_ver_idpesbar($id)
+		{
+			$this->db->select('id_permintaan,tgl_minta,nota_minta');
+			$this->db->from('tbl_permintaan');
+			$this->db->where('id_permintaan', $id);
+			$this->db->limit(1);
+			$hasil = $this->db->get();
+			if($hasil->num_rows()>0){
+				return $hasil->result();
+			}else{
+				return array();
+			}
+		}
+		function v_ver_dtlpesbar($id)
+		{
+			$sql = "SELECT a.id_dtl_permintaan,a.id_permintaan,a.tgl_dtl_perlu,a.jml_dtl_minta,b.nm_barang,a.ket_dtl_minta,a.selesai_dtl_minta,a.stkgdng_dtl_minta,a.stkunit_dtl_minta
+					FROM tbl_dtl_permintaan as a 
+					join tbl_nama_barang as b on a.id_barang=b.id_barang 
+					where a.id_permintaan = '$id'
+					order by a.tgl_dtl_perlu asc";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+		function ver_konfirmasi($id,$data)
+		{
+			$this->db->where('id_dtl_permintaan', $id)
+					 ->update('tbl_dtl_permintaan',$data);
+		}
 	// ------------------------------------------------------------
 	// ========================================================================================================================================
-
 }
 
 /* End of file M_gudang.php */

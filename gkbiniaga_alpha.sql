@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 22, 2020 at 07:30 PM
+-- Generation Time: Jan 30, 2020 at 08:58 PM
 -- Server version: 5.7.10-log
 -- PHP Version: 5.6.17
 
@@ -211,7 +211,7 @@ CREATE TABLE `tbl_dtl_mutasi_gudang` (
 
 CREATE TABLE `tbl_dtl_permintaan` (
   `id_dtl_permintaan` int(11) NOT NULL,
-  `id_permintaan` varchar(15) DEFAULT NULL,
+  `id_permintaan` varchar(10) DEFAULT NULL,
   `id_barang` varchar(15) DEFAULT NULL,
   `id_brngmsk` varchar(15) DEFAULT NULL,
   `id_pembelian` varchar(15) DEFAULT NULL,
@@ -226,7 +226,7 @@ CREATE TABLE `tbl_dtl_permintaan` (
   `sisabeli_minta` int(11) DEFAULT NULL,
   `lsng_minta` int(11) DEFAULT NULL,
   `ket_dtl_minta` text,
-  `selesai_dtl_minta` enum('Y','P','T') DEFAULT 'T',
+  `selesai_dtl_minta` enum('Y','P','T','DT','M') DEFAULT 'T',
   `nosrh_minta` varchar(20) DEFAULT NULL,
   `tglsrh_minta` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -236,11 +236,11 @@ CREATE TABLE `tbl_dtl_permintaan` (
 --
 
 INSERT INTO `tbl_dtl_permintaan` (`id_dtl_permintaan`, `id_permintaan`, `id_barang`, `id_brngmsk`, `id_pembelian`, `nota_dtl_minta`, `tgl_dtl_perlu`, `jml_dtl_minta`, `stkunit_dtl_minta`, `stkgdng_dtl_minta`, `tglreal_minta`, `jmlreal_minta`, `hrgreal_minta`, `sisabeli_minta`, `lsng_minta`, `ket_dtl_minta`, `selesai_dtl_minta`, `nosrh_minta`, `tglsrh_minta`) VALUES
-(1, 'PR0000000000001', 'A', NULL, NULL, '0001/weav/I/01/2020', '2020-01-17', 10, 0, 0, NULL, NULL, NULL, NULL, NULL, 'habis', 'T', NULL, NULL),
-(2, 'PR0000000000001', 'NH', NULL, NULL, '0001/weav/I/01/2020', '2020-01-18', 20, 0, 0, NULL, NULL, NULL, NULL, NULL, 'stok terbatas', 'T', NULL, NULL),
-(3, 'PR0000000000002', 'A', NULL, NULL, '0002/weav/I/01/2020', '2020-01-17', 20, 0, 0, NULL, NULL, NULL, NULL, NULL, 'Pembelian langsung', 'Y', NULL, NULL),
-(4, 'PR0000000000002', 'NH', NULL, NULL, '0002/weav/I/01/2020', '2020-01-17', 30, 0, 0, NULL, NULL, NULL, NULL, NULL, 'Pembelian Langsung', 'Y', NULL, NULL),
-(5, 'PR0000000000003', 'NH', NULL, NULL, '0003/weav/I/01/2020', '2020-01-19', 30, 0, 0, NULL, NULL, NULL, NULL, NULL, 'tinggal sedikit', 'T', NULL, NULL);
+(1, 'PR20010001', 'A', NULL, NULL, '0001/weav/I/01/2020', '2020-01-17', 10, 0, 0, NULL, NULL, NULL, NULL, NULL, 'habis', 'T', NULL, NULL),
+(2, 'PR20010001', 'NH', NULL, NULL, '0001/weav/I/01/2020', '2020-01-18', 20, 0, 0, NULL, NULL, NULL, NULL, NULL, 'stok terbatas', 'P', NULL, NULL),
+(3, 'PR20010002', 'A', NULL, NULL, '0002/weav/I/01/2020', '2020-01-17', 20, 0, 0, NULL, NULL, NULL, NULL, NULL, 'Pembelian langsung', 'Y', NULL, NULL),
+(4, 'PR20010002', 'NH', NULL, NULL, '0002/weav/I/01/2020', '2020-01-17', 30, 0, 0, NULL, NULL, NULL, NULL, NULL, 'Pembelian Langsung', 'M', NULL, NULL),
+(5, 'PR20010003', 'NH', NULL, NULL, '0003/weav/I/01/2020', '2020-01-19', 30, 0, 0, NULL, NULL, NULL, NULL, NULL, 'tinggal sedikit', 'DT', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -440,8 +440,8 @@ CREATE TABLE `tbl_nama_barang` (
   `no_barang` varchar(5) DEFAULT NULL,
   `sat1_barang` varchar(20) DEFAULT NULL,
   `sat2_barang` varchar(20) DEFAULT NULL,
-  `hpp_barang` decimal(15,2) DEFAULT NULL,
-  `harga_barang` decimal(15,2) DEFAULT NULL,
+  `hpp_barang` decimal(15,2) DEFAULT '0.00',
+  `harga_barang` decimal(15,2) DEFAULT '0.00',
   `updated_barang` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -450,8 +450,8 @@ CREATE TABLE `tbl_nama_barang` (
 --
 
 INSERT INTO `tbl_nama_barang` (`id_barang`, `id_jnsbrng`, `id_jnsbrngakt`, `id_group`, `nm_barang`, `kel_barang`, `ket_barang`, `no_barang`, `sat1_barang`, `sat2_barang`, `hpp_barang`, `harga_barang`, `updated_barang`) VALUES
-('A', '2', NULL, 4, 'Test Barang ', NULL, 'barang ok ', NULL, '1', '1', '1500.00', '2000.00', '2020-01-10 13:53:34'),
-('NH', '1', NULL, 3, 'Natrium Hipoklorit', NULL, 'Bahan Campuran Pemutih', NULL, '22', '21', '900.00', '1500.00', '2020-01-17 14:37:36');
+('A', '2', NULL, 4, 'Test Barang ', NULL, 'barang ok ', NULL, '1', '5', '1500.00', '2000.00', '2020-01-30 15:07:44'),
+('NH', '1', NULL, 3, 'Natrium Hipoklorit', NULL, 'Bahan Campuran Pemutih', NULL, '10', '20', '900.00', '1500.00', '2020-01-30 15:07:41');
 
 -- --------------------------------------------------------
 
@@ -583,7 +583,7 @@ CREATE TABLE `tbl_penyerahan` (
 --
 
 CREATE TABLE `tbl_permintaan` (
-  `id_permintaan` varchar(15) NOT NULL,
+  `id_permintaan` varchar(10) NOT NULL,
   `id_unit` varchar(8) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
   `nota_minta` varchar(20) DEFAULT NULL,
@@ -598,9 +598,9 @@ CREATE TABLE `tbl_permintaan` (
 --
 
 INSERT INTO `tbl_permintaan` (`id_permintaan`, `id_unit`, `id_bagian`, `nota_minta`, `tgl_minta`, `ket_minta`, `selesai_minta`, `id_user`) VALUES
-('PR0000000000001', 'weav', '512', '0001/weav/I/01/2020', '2020-01-17', 'mendesak', 'T', 1),
-('PR0000000000002', 'weav', '511', '0002/weav/I/01/2020', '2020-01-17', 'langsung', 'Y', 1),
-('PR0000000000003', 'weav', '513', '0003/weav/I/01/2020', '2020-01-19', 'stok bulanan ', 'P', 1);
+('PR20010001', 'weav', '512', '0001/weav/I/01/2020', '2020-01-17', 'mendesak', 'P', 1),
+('PR20010002', 'weav', '511', '0002/weav/I/01/2020', '2020-01-17', 'langsung', 'Y', 1),
+('PR20010003', 'weav', '513', '0003/weav/I/01/2020', '2020-01-19', 'stok bulanan ', 'P', 1);
 
 -- --------------------------------------------------------
 

@@ -46,7 +46,6 @@ class Stok extends CI_Controller {
 		$this->load->view('stok/satuan/view',$isi);
 		$this->load->view('stok/template/footer');
 	}
-
 	public function t_satuan()
 	{
 		$cek = $this->db->query("SELECT nm_satuan FROM tbl_satuan where nm_satuan='".$this->input->post('satuan',TRUE)."'")->num_rows();
@@ -69,7 +68,6 @@ class Stok extends CI_Controller {
 			echo '</script>';
 		}
 	}
-
 	public function u_satuan($id='')
 	{
 		$data['menutitle'] = 'Data Master';
@@ -84,7 +82,6 @@ class Stok extends CI_Controller {
 		$this->load->view('stok/satuan/edit',$isi);
 		$this->load->view('stok/template/footer');
 	}
-
 	public function satuan_u($id)
 	{
 		$this->form_validation->set_rules('satuan','Satuan','required');
@@ -113,7 +110,6 @@ class Stok extends CI_Controller {
 			echo "<script>alert('Maaf Nama Satuan tidak ditemukan');window.location = '".base_url('stok/view_satuan')."';</script>";
 		}
 	}
-
 	public function h_satuan($id)
 	{
 		$sql = $this->M_stok->h_satuan($id);
@@ -140,7 +136,6 @@ class Stok extends CI_Controller {
 		$this->load->view('stok/barang/view',$isi);
 		$this->load->view('stok/template/footer');
 	}
-
 	public function t_barang()
 	{ 
 
@@ -150,7 +145,7 @@ class Stok extends CI_Controller {
 
 		$isi['get_jnsbrng'] = $this->M_stok->get_idjenis();
 		$isi['get_group'] = $this->M_stok->get_idgroup();
-		//$isi['isi'] = $this->M_stok->ve_satuan($id);
+		$isi['get_satuan'] = $this->M_stok->get_satuan();
 
 		$this->load->view('stok/template/head');
 		$this->load->view('stok/template/navbar');
@@ -158,14 +153,12 @@ class Stok extends CI_Controller {
 		$this->load->view('stok/barang/tambah',$isi);
 		$this->load->view('stok/template/footer');
 	}
-
 	public function barang_t()
 	{
-		$cek = $this->db->query("SELECT id_barang FROM tbl_nama_barang where nm_barang='".$this->input->post('nama_barang',TRUE)."'")->num_rows();
+		$cek = $this->db->query("SELECT id_barang FROM tbl_nama_barang where id_barang='".$this->input->post('id_barang',TRUE)."' OR nm_barang='".$this->input->post('nama_barang',TRUE)."'")->num_rows();
 		if($cek <= 0){
 			$data = array ('id_barang' => $this->input->post('id_barang'),
 							'id_jnsbrng' => $this->input->post('id_jnsbrng'),
-							// 'id_jnsbrng' => $this->input->post('id_jnsbrngakt'),
 							'id_group' => $this->input->post('id_group'),
 							'nm_barang' => $this->input->post('nama_barang'),
 							'kel_barang' => $this->input->post('kel_barang'),
@@ -173,8 +166,6 @@ class Stok extends CI_Controller {
 							'no_barang' => $this->input->post('no_barang'),
 							'sat1_barang' => $this->input->post('sat1'),
 							'sat2_barang' => $this->input->post('sat2'),
-							'hpp_barang' => $this->input->post('hpp_barang'),
-							'harga_barang' => $this->input->post('harga_barang'),
 							'updated_barang' => date('Y-m-d')
                				);
 			$sql = $this->M_stok->s_barang($data);
@@ -194,7 +185,6 @@ class Stok extends CI_Controller {
 			echo '</script>';
 		}
 	}
-
 	public function u_barang($id='')
 	{
 		$data['menutitle'] = 'Data Master';
@@ -203,6 +193,7 @@ class Stok extends CI_Controller {
 
 		$isi['get_jnsbrng'] = $this->M_stok->get_idjenis();
 		$isi['get_group'] = $this->M_stok->get_idgroup();
+		$isi['get_satuan'] = $this->M_stok->get_satuan();
 		$isi['isi'] = $this->M_stok->ve_barang($id);
 
 		$this->load->view('stok/template/head');
@@ -211,16 +202,15 @@ class Stok extends CI_Controller {
 		$this->load->view('stok/barang/edit',$isi);
 		$this->load->view('stok/template/footer');
 	}
-
 	public function barang_u($id)
 	{
-		$this->form_validation->set_rules('id_barang','required');
+		$this->form_validation->set_rules('id_barang','id_barang','required');
 		if($this->form_validation->run() == TRUE){
-			$cek = $this->db->query("SELECT id_jnsbrng, id_group, nm_barang, kel_barang, ket_barang, no_barang, sat1_barang, sat2_barang, hpp_barang, harga_barang, updated_barang FROM tbl_nama_barang where id_barang='".$this->input->post('id_barang',TRUE)."'")->num_rows();
-			if($cek <= 0){
+			/*$cek = $this->db->query("SELECT id_barang FROM tbl_nama_barang where id_barang='".$this->input->post('id_barang',TRUE)."'")->num_rows();
+			if($cek <= 0){*/
 				$data = array(
+							'id_barang' => $this->input->post('id_barang'),
 							'id_jnsbrng' => $this->input->post('id_jnsbrng'),
-							//  'id_jnsbrng' => $this->input->post('id_jnsbrngakt'),
 							'id_group' => $this->input->post('id_group'),
 							'nm_barang' => $this->input->post('nama_barang'),
 							'kel_barang' => $this->input->post('kel_barang'),
@@ -228,30 +218,27 @@ class Stok extends CI_Controller {
 							'no_barang' => $this->input->post('no_barang'),
 							'sat1_barang' => $this->input->post('sat1'),
 							'sat2_barang' => $this->input->post('sat2'),
-							'hpp_barang' => $this->input->post('hpp_barang'),
-							'harga_barang' => $this->input->post('harga_barang'),
 							'updated_barang' => date('Y-m-d')							
 							 );
 				$sql = $this->M_stok->e_barang($id, $data);
 				$allsql = array($sql);
-					if($allsql){ // Jika sukses
-						echo "<script>alert('Data berhasil diubah');window.location = '".base_url('stok/view_barang')."';</script>";
-					}else{ // Jika gagal
-						echo "<script>alert('Data gagal diubah');window.location = '".base_url('stok/u_barang')."';</script>";
-					}
-				}else{
-					echo '<script language="javascript">';
-					echo 'alert("Maaf Nama Barang Sudah Ada")';
-					echo '</script>';
-					echo '<script language="javascript">';
-					echo 'window.location=("'.site_url('stok/view_barang').'")';
-					echo '</script>';
+				if($allsql){ // Jika sukses
+					echo "<script>alert('Data berhasil diubah');window.location = '".base_url('stok/view_barang')."';</script>";
+				}else{ // Jika gagal
+					echo "<script>alert('Data gagal diubah');window.location = '".base_url('stok/u_barang')."';</script>";
 				}
+			/*}else{
+				echo '<script language="javascript">';
+				echo 'alert("Maaf Id Barang Sudah Ada")';
+				echo '</script>';
+				echo '<script language="javascript">';
+				echo 'window.location=("'.site_url('stok/view_barang').'")';
+				echo '</script>';
+			}*/
 		}else{
 			echo "<script>alert('Maaf Nama Barang tidak ditemukan');window.location = '".base_url('stok/view_barang')."';</script>";
 		}
 	}
-
 	public function h_barang($id)
 	{
 		$sql = $this->M_stok->h_barang($id);
@@ -262,9 +249,6 @@ class Stok extends CI_Controller {
 			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('stok/view_barang')."';</script>";
 		}
 	}
-
-
-
 	// ----------------------------------------------
 	// =========================================================================================================================================
 	// =========================================================== PESANAN =====================================================================
@@ -394,32 +378,53 @@ class Stok extends CI_Controller {
 	}
 	public function pesbaru_u($id)
 	{
-		$this->form_validation->set_rules('','','required');
+		$this->form_validation->set_rules('nopesbaru','Nopesbaru','required');
 		if($this->form_validation->run() == TRUE){
-			$cek = $this->db->query("SELECT * where id_barang='".$this->input->post('id_barang',TRUE)."'")->num_rows();
-			if($cek <= 0){
-				$data = array(	'id_barang'		=> $this->input->post('id_jnsbrng'),
-								'tgl_dtl_perlu' => $this->input->post('id_group'),
-								'jml_dtl_minta' => $this->input->post('nama_barang'),
-								'ket_dtl_minta' => $this->input->post('kel_barang'),							
+			/*$cek = $this->db->query("SELECT * FROM tbl_dtl_permintaan where id_barang='".$this->input->post('id_barang',TRUE)."'")->num_rows();
+			if($cek <= 0){*/
+				$data = array(	'id_barang'		=> $this->input->post('barang'),
+								'tgl_dtl_perlu' => $this->input->post('tglperlu'),
+								'jml_dtl_minta' => $this->input->post('jml'),
+								'ket_dtl_minta' => $this->input->post('ketdetail'),							
 							 );
 				$sql = $this->M_stok->e_pesbar($id, $data);
 				$allsql = array($sql);
 					if($allsql){ // Jika sukses
-						echo "<script>alert('Data berhasil diubah');window.location = '".base_url('stok/view_barang')."';</script>";
+						echo "<script>alert('Data berhasil diubah');window.location = '".base_url('stok/view_pesbaru')."';</script>";
 					}else{ // Jika gagal
 						echo "<script>alert('Data gagal diubah');window.location = '".base_url('stok/u_barang')."';</script>";
 					}
-				}else{
+				/*}else{
 					echo '<script language="javascript">';
 					echo 'alert("Maaf Nama Barang Sudah Ada")';
 					echo '</script>';
 					echo '<script language="javascript">';
-					echo 'window.location=("'.site_url('stok/view_barang').'")';
+					echo 'window.location=("'.site_url('stok/view_pesbaru').'")';
 					echo '</script>';
-				}
+				}*/
 		}else{
-			echo "<script>alert('Maaf Nama Barang tidak ditemukan');window.location = '".base_url('stok/view_barang')."';</script>";
+			echo "<script>alert('Maaf No Pemesanan tidak ditemukan');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+		}
+	}
+	public function pesbar_h($id)
+	{
+		$sql = $this->M_stok->h_pesbar($id);
+		$sql2 = $this->M_stok->h_pesbardet($id);
+		$allsql = array($sql,$sql2);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+		}
+	}
+	public function perbar_detail_h($id)
+	{
+		$sql = $this->M_stok->h_pesbar_detail($id);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('stok/view_pesbaru')."';</script>";
 		}
 	}
 	// ----------------------------------------------

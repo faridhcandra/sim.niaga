@@ -8,12 +8,10 @@
   
   <title>Sistem Informasi Pembelian | GKBI</title>
 
-  <!-- Font Awesome Icons -->
+ <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/adminlte.min.css">
-  <!-- custom -->
-  <!-- <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/my.css"> -->
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Google Font: Source Sans Pro -->
@@ -22,6 +20,10 @@
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/pace-progress/themes/white/pace-theme-flat-top.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+  <!-- Toastr -->
+  <!-- <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/toastr/toastr.min.css"> -->
+  <!-- javascript -->
+  <script src="<?php echo base_url();?>assets/plugins/jquery/jquery.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">

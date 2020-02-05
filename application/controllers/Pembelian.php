@@ -431,6 +431,55 @@ class Pembelian extends CI_Controller {
 	}
 	// ------------------------------------------
 	// =========================================================================================================================================
+
+	// ======================================================== Verifikasi Data ===============================================================
+	// --------------------- Pesanan Baru -------------------------
+	public function v_verpesbaru()
+	{
+		$data['menutitle'] = 'Verifikasi Data Pesanan';
+		$data['menu'] = 'Verifilkasi';
+		$data['submenu'] = 'Pesanan Ke Pembelian';
+
+		$isi['isi'] = $this->M_pembelian->v_verpesbar();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/pesanan_baru/view',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function v_ver_pesbaru($id)
+	{
+		$data['menutitle'] = 'Detail Data Pesanan';
+		$data['menu'] = 'Verifikasi';
+		$data['submenu'] = 'Verifikasi Detail Pesanan';
+
+		$isi['judul'] = $this->M_pembelian->v_ver_idpesbar($id);
+		$isi['isi'] = $this->M_pembelian->v_ver_dtlpesbar($id);
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/pesanan_baru/view_detail',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function ver_konfirmasi($id)
+	{
+		$id 	= $this->input->post('kode');
+		$verif 	= $this->input->post('verif');
+		$idper 	= $this->input->post('kode_permin');
+
+		$data 	= array('selesai_dtl_minta' => $verif);
+		$sql 	= $this->M_pembelian->ver_konfirmasi($id,$data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".base_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".base_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
+		}
+	}
+	// ------------------------------------------------------------
+	// ========================================================================================================================================
 }
 
 /* End of file Pembelian.php */

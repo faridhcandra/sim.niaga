@@ -10,7 +10,7 @@
 					<div class="card-body">
 						<?php foreach ($isi as $key => $row): ?>
 						<?php echo validation_errors();?>
-						<?php echo form_open('stok/pesbaru_u/'. $row->id_dtl_permintaan)?>
+						<?php echo form_open('stok/pesbaru_u/'.$row->id_dtl_permintaan)?>
 						<div class="row">
 							<div class="col-md-3">
 								<div class="form-group">

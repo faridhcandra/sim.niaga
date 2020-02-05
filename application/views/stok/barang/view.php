@@ -18,9 +18,9 @@
 												<td width="10%;">ID Barang</td>
 												<td width="20%;">Nama Barang</td>
 												<td width="13%;">Jenis Barang</td>
-												<td width="13%;">Group Barang</td>	
-												<td width="10%;">HPP Barang</td>
-												<td width="11%;">Harga Barang</td>	         					
+												<td width="13%;">kel Barang</td>		         					
+												<td width="13%;">Satuan 1</td>		         					
+												<td width="13%;">satuan 2</td>		         					
 												<td width="8%;">Aksi</td>
 											</tr>
 										</thead>
@@ -29,10 +29,10 @@
 											<tr>
 												<td><?php echo $row->id_barang?></td>
 												<td><?php echo $row->nm_barang?></td>
-												<td><?php echo $row->id_jnsbrng?></td>
-												<td><?php echo $row->id_group?></td>
-												<td><?php echo $row->hpp_barang?></td>
-												<td><?php echo $row->harga_barang?></td>
+												<td><?php echo $row->nm_jnsbrng?></td>
+												<td><?php echo $row->kel_barang?></td>
+												<td><?php echo $row->nm_satuan?></td>
+												<td><?php echo $row->nm_satuan2?></td>
 												<td class="project-actions text-center">
 													<a  data-toggle="tooltip" data-placement="top" title="Ubah" href="<?php echo site_url('stok/u_barang/'.$row->id_barang)?>"><i class="fas fa-pencil-alt fa-sm"></i></a>&ensp;
 													<a  data-toggle="tooltip" data-placement="top" title="Hapus" href="<?php echo site_url('stok/h_barang/'.$row->id_barang)?>"><i class="fas fa-trash fa-sm"></i></a>
