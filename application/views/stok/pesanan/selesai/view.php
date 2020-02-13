@@ -20,7 +20,7 @@
 												<td>Bagian</td>
 												<td>Status</td>
 												<td>Keterangan</td>				         					
-												<td width="10%;" align="center">Proses</td>
+												<td width="10%;" align="center"></td>
 											</tr>
 										</thead>
 										<tbody>
@@ -41,7 +41,7 @@
 												</td>
 												<td><?php echo $row->ket_minta?></td>
 												<td class="project-actions text-center">
-													<a  data-toggle="tooltip" data-placement="top" title="Detail" href="<?php echo site_url('stok/view_dtl_pesselesai/'.$row->id_permintaan)?>"><i class="fas fa-align-justify fa-sm"></i></a>&ensp;
+													<a  data-toggle="tooltip" data-placement="top" title="Detail" href="<?php echo site_url('stok/view_dtl_pesselesai/'.$row->id_permintaan)?>"><i class="fas fa-align-justify fa-sm"></i></a>&nbsp;
 													<!-- <a  data-toggle="tooltip" data-placement="top" title="Hapus" href="#" onclick="return confirm('Konfirmasi Hapus Data ?')"><i class="fas fa-trash fa-sm"></i></a> -->
 												</td>
 												</tr>

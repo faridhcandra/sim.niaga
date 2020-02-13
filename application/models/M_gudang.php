@@ -131,6 +131,11 @@ class M_gudang extends CI_Model {
 			$data = $this->db->query($sql);
 			return $data->result();
 		}
+		function v_ver_konfirmasi($id,$data)
+		{
+			$this->db->where('id_permintaan', $id)
+					 ->update('tbl_permintaan',$data);
+		}
 		function ver_konfirmasi($id,$data)
 		{
 			$this->db->where('id_dtl_permintaan', $id)

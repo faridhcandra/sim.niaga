@@ -48,7 +48,7 @@
 				         					<td><?php echo $i?></td>
 				         					<td><?php echo $row->nm_metbyr?></td>
 				         					<td class="project-actions text-center">
-												<a href="<?php echo site_url('pembelian/u_metpemb/'.$row->id_metbyr)?>" data-toggle="tooltip" data-placement="top" title="Ubah" ><i class="fas fa-pencil-alt fa-sm fa-green"></i></a>&ensp;
+												<a href="<?php echo site_url('pembelian/u_metpemb/'.$row->id_metbyr)?>" data-toggle="tooltip" data-placement="top" title="Ubah" ><i class="fas fa-pencil-alt fa-sm fa-green"></i></a>&nbsp;
 												<!-- <a href="<?php echo site_url('pembelian/h_metpemb/'.$row->id_metbyr)?>" data-toggle="tooltip" data-placement="top" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a> -->
 											</td>
 				         				</tr>

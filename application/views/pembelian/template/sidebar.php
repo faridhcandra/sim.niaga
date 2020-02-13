@@ -23,7 +23,7 @@
       <ul class="nav navnav-pills nav-sidebar flex-column nav-flat " data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class  with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="#l" class="nav-link">
+          <a href="<?php echo site_url('pembelian');?>" class="nav-link">
             <i class="nav-icon fas fa-landmark"></i>
             <p>Halaman Utama</p>
           </a>
@@ -98,12 +98,12 @@
                 <span class="right badge badge-danger">New</span>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Pesanan Datang</p>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -123,9 +123,15 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
+              <a href="<?php echo site_url('pembelian/v_pembelian')?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Renc. Pembelian</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Pembelian</p>
+                <p>Surat Pesanan Barang</p>
               </a>
             </li>
             <li class="nav-item">

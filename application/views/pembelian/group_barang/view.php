@@ -54,7 +54,7 @@
 											<td><?php echo $row->nm_group?></td>
 											<td><?php echo $row->rek_group?></td>
 											<td class="project-actions text-center">
-												<a href="<?php echo site_url('pembelian/u_groupbrng/'.$row->id_group)?>" data-toggle="tooltip" data-placement="top" title="Ubah" ><i class="fas fa-pencil-alt fa-sm"></i></a>&ensp;
+												<a href="<?php echo site_url('pembelian/u_groupbrng/'.$row->id_group)?>" data-toggle="tooltip" data-placement="top" title="Ubah" ><i class="fas fa-pencil-alt fa-sm"></i></a>&nbsp;
 												<a href="<?php echo site_url('pembelian/h_groupbrng/'.$row->id_group)?>" data-toggle="tooltip" data-placement="top" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a>
 											</td>
 										</tr>

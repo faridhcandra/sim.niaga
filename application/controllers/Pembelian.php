@@ -463,6 +463,20 @@ class Pembelian extends CI_Controller {
 		$this->load->view('pembelian/pesanan_baru/view_detail',$isi);
 		$this->load->view('pembelian/template/footer');
 	}
+	public function v_ver_konfirmasi($id)
+	{
+		$id 	= $this->input->post('kode');
+		$verif 	= $this->input->post('verif');
+
+		$data 	= array('selesai_minta' => $verif);
+		$sql 	= $this->M_pembelian->v_ver_konfirmasi($id,$data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".site_url('pembelian/v_verpesbaru')."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".site_url('pembelian/v_verpesbaru')."';</script>";
+		}
+	}
 	public function ver_konfirmasi($id)
 	{
 		$id 	= $this->input->post('kode');
@@ -473,9 +487,126 @@ class Pembelian extends CI_Controller {
 		$sql 	= $this->M_pembelian->ver_konfirmasi($id,$data);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".base_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
+			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".site_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".base_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
+			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".site_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
+		}
+	}
+	// ------------------------------------------------------------
+	// ========================================================================================================================================
+
+	// ========================================================== Data Transaksi ==============================================================
+	// ----------------------- Rencana Pembelian ------------------
+	public function v_pembelian()
+	{
+		$data['menutitle'] = 'Transaksi Pembelian';
+		$data['menu'] = 'Transaksi';
+		$data['submenu'] = 'Pembelian';
+
+		$isi['isi'] = $this->M_pembelian->v_pembelian();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/pembelian/view',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function t_pembelian()
+	{
+		$data['menutitle'] = 'Tambah Transaksi Pembelian';
+		$data['menu'] = 'Pembelian';
+		$data['submenu'] = 'Tambah Pembelian';
+
+		$isi['kode'] = $this->M_pembelian->k_pembelian();
+		$isi['get_mint'] = $this->M_pembelian->get_pembpes();
+		$isi['get_dtlmint'] = $this->M_pembelian->get_pembdtlpes('');
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/pembelian/tambah',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function pembelian_t()
+	{
+		$cek = $this->db->query("SELECT * FROM tbl_pembelian where nota_beli='".$this->input->post('nopesbaru', TRUE)."' ")->num_rows();
+		if($cek <= 0){
+			$kd 		= $this->input->post('kode');
+			$notabeli 	= $this->input->post('nobeli');
+			$tglbeli 	= $this->input->post('tglbeli');
+			$ket 		= $this->input->post('ket');
+			$idpes 		= $this->input->post('idpes');
+			$idunit 	= $this->input->post('idunit');
+			$idbag 		= $this->input->post('idbag');
+			$iddtlpes 	= $this->input->post('iddtlpes');
+			$idbrng 	= $this->input->post('idbrng');
+			$jmlpes 	= $this->input->post('jmlpes');
+			$jmlrenbeli = $this->input->post('jmlrenbeli');
+			$hrgrencbeli = $this->input->post('hrgrencbeli');
+			$tglrenc 	= $this->input->post('tglrenc');
+			$sungbeli 	= $this->input->post('sungbeli');
+			$ketdtlbeli = $this->input->post('ketdtlbeli');
+			// sub beli
+			$subpemb 	= $this->input->post('subpemb');
+			$subppnpemb = $this->input->post('subppnpemb');
+			$subtotpemb = $this->input->post('subtotpemb');
+			// total beli
+			$subtotal 	= $this->input->post('subrencbeli');
+			$ppn 		= $this->input->post('ppnrencbeli');
+			$total 		= $this->input->post('totrencbeli');
+
+			$data1 = array(
+							'id_pembelian' 	=> $kd,
+							'id_permintaan' => $idpes,
+							'id_bagian' 	=> $idbag,
+							'id_unit' 		=> $idunit,
+							'nota_beli' 	=> $notabeli,
+							'tgl_beli' 		=> $tglbeli,
+							'ppn_beli' 		=> $ppn,
+							'total_beli'	=> $subtotal,
+							'ket_pembelian'	=> $ket,
+							'ket_dtl_beli'	=> $ketdtlbeli,
+							'totalhrg_beli' => $total
+			);
+			$sql1 = $this->M_pembelian->s_pembelian($data1);
+
+			$data2 = array();
+			$i = 0;
+			if(is_array($iddtlpes)){
+				foreach ($iddtlpes as $datadtlpes) {
+					array_push($data2, array(
+						'id_pembelian' 		=> $kd,
+						'id_dtl_permintaan' => $datadtlpes,
+						'id_barang' 		=> $idbag[$i],
+						'nota_dtl_beli' 	=> $notabeli,
+						'jml_dtl_minta' 	=> $jmlpes[$i],
+						'ppn_dtl_beli' 		=> $subppnpemb[$i],
+						'total_dtl_beli' 	=> $subpemb[$i],
+						'totalhrg_dtl_beli' => $subtotpemb[$i],
+						'tgl_renc_beli' 	=> $tglrenc[$i],
+						'jml_renc_beli' 	=> $jmlrenbeli[$i],
+						'ket_dtl_beli'		=> $ketdtlbeli[$i],
+						'langsung_beli'		=> $sungbeli[$i]
+					));
+					$i++;
+				}
+			}
+			$sql2 = $this->M_pembelian->s_dtl_pembelian_batch($data2);
+
+			$allsql = array($sql1,$sql2);
+			if($allsql){ // Jika sukses
+				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			}else{ // Jika gagal
+				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			}
+
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf No Pembelian Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('pembelian/v_pembelian').'")';
+			echo '</script>';
 		}
 	}
 	// ------------------------------------------------------------

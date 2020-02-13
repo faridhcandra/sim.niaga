@@ -10,7 +10,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<div class="bg-info text-white text-center">
+							<div class="bg-success text-white text-center">
 								<?php foreach ($judul as $i) { ?>
 								<label>No Permintaan <?php echo $i->nota_minta?></label> - 
 								<label>Tanggal Permintaan <?php echo date("d/m/Y",strtotime($i->tgl_minta))?></label>
@@ -59,16 +59,18 @@
 								                    <?php }elseif($row->selesai_dtl_minta == 'T'){ ?>
 								                      <span class="badge bg-warning" data-toggle="tooltip" data-placement="top" title="Pesanan Dalam Antrian">Menunggu</span>
 								                    <?php }elseif($row->selesai_dtl_minta == 'M'){ ?>
-												      <span class="badge bg-info" data-toggle="tooltip" data-placement="top" title="Mutasi Stok">Mutasi</span>
+												      <span class="badge bg-secondary" data-toggle="tooltip" data-placement="top" title="Mutasi Stok">Mutasi</span>
 								                    <?php }elseif($row->selesai_dtl_minta == 'DT'){ ?>
 								                      <span class="badge bg-danger" data-toggle="tooltip" data-placement="top" title="Pesanan Tidak Disetujui">Tidak Disetujui</span>
+								                    <?php }elseif($row->selesai_dtl_minta == 'A'){ ?>
+									                  <span class="badge bg-info" data-toggle="tooltip" data-placement="top" title="Pesanan Disetujui">Disetujui</span>
 								                    <?php } ?>
 												</td>
 												<td align="center">
-													<a  data-toggle="modal" data-target="#a<?php echo $row->id_dtl_permintaan?>"><i class="fas fa-user-check fa-sm" data-toggle="tooltip" data-placement="top" title="verifikasi"></i></i></a>&ensp;
+													<a  data-toggle="modal" data-target="#b<?php echo $row->id_dtl_permintaan?>"><i class="fas fa-user-check fa-sm" data-toggle="tooltip" data-placement="top" title="verifikasi"></i></i></a>&nbsp;
 													<div class="text-left">
 													<!-- modal -->
-													<div class="modal fade" id="a<?php echo $row->id_dtl_permintaan?>">
+													<div class="modal fade" id="b<?php echo $row->id_dtl_permintaan?>">
 													    <div class="modal-dialog  modal-md">
 													      <div class="modal-content">
 													        <div class="modal-header">
@@ -78,7 +80,7 @@
 													          </button>
 													        </div>
 													        <div class="modal-body"><?php $id_detail = $row->id_dtl_permintaan ?>
-																<?php echo form_open('gudang/ver_konfirmasi/'.$id_detail);?>
+																<?php echo form_open('pembelian/ver_konfirmasi/'.$id_detail);?>
 																<div class="form-group">
 																	<label>Nama Barang</label>
 																	<input class="form-control form-control-sm" type="text" name="nama" readonly="" placeholder="xxxxx" value="<?php echo $row->nm_barang?>">
@@ -98,11 +100,14 @@
 													                    <option selected="" value="<?php echo $row->selesai_dtl_minta?>">Mutasi</option>
 													                    <?php }elseif($row->selesai_dtl_minta == 'DT'){ ?>
 													                    <option selected="" value="<?php echo $row->selesai_dtl_minta?>">Tidak Disetujui</option>
+													                    <?php }elseif($row->selesai_dtl_minta == 'A'){ ?>
+													                    <option selected="" value="<?php echo $row->selesai_dtl_minta?>">Disetujui</option>
 													                    <?php } ?>
 																		<option value="">-- Pilih Verifikasi --</option>
 																		<option value="A">Disetujui</option>
-																		<option value="P">Diproses</option>
+																		<option value="Y">Selesai</option>
 																		<option value="DT">Tidak Disetujui</option>
+																		<option value="P">Diproses</option>
 																	</select>
 																</div>
 																<hr>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 30, 2020 at 08:58 PM
+-- Generation Time: Feb 13, 2020 at 11:45 AM
 -- Server version: 5.7.10-log
 -- PHP Version: 5.6.17
 
@@ -151,9 +151,9 @@ INSERT INTO `tbl_company` (`id_company`, `id_provinsi`, `id_kabupaten`, `id_peja
 
 CREATE TABLE `tbl_dtl_barang_keluar` (
   `id_dtlbrngkel` int(11) NOT NULL,
+  `id_stok` int(11) DEFAULT NULL,
   `id_brngkel` varchar(15) DEFAULT NULL,
   `tgl_brngkel` date DEFAULT NULL,
-  `id_stok` int(11) DEFAULT NULL,
   `id_barang` varchar(15) DEFAULT NULL,
   `subhrg_dtlbrngkel` decimal(15,2) DEFAULT NULL,
   `tgl_brngmsk` date DEFAULT NULL,
@@ -169,6 +169,7 @@ CREATE TABLE `tbl_dtl_barang_keluar` (
 CREATE TABLE `tbl_dtl_mikeluar` (
   `id_dtlmikeluar` int(11) NOT NULL,
   `id_mikeluar` varchar(15) DEFAULT NULL,
+  `nota_mikeluar` varchar(50) NOT NULL,
   `tgl_mikeluar` date DEFAULT NULL,
   `id_supplier` varchar(15) DEFAULT NULL,
   `selesai_dtlmikeluar` enum('Y','T') DEFAULT NULL,
@@ -194,7 +195,7 @@ CREATE TABLE `tbl_dtl_mutasi_gudang` (
   `id_mutasi_gudang` varchar(10) NOT NULL,
   `id_jnsbrngakt` varchar(15) NOT NULL,
   `id_barang` varchar(20) NOT NULL,
-  `nota_dtl_mutasi_gudang` varchar(20) NOT NULL,
+  `nota_dtl_mutasi_gudang` varchar(50) NOT NULL,
   `jumlah_dtl_mutasi_gudang` int(11) NOT NULL,
   `id_kdtransaksi` varchar(5) NOT NULL,
   `terima_dtl_mutasi_gudang` int(11) NOT NULL,
@@ -202,6 +203,40 @@ CREATE TABLE `tbl_dtl_mutasi_gudang` (
   `ket_dtl_mutasi_gudang` varchar(200) NOT NULL,
   `input_dtl_mutasi_gudang` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dtl_pembelian`
+--
+
+CREATE TABLE `tbl_dtl_pembelian` (
+  `id_dtl_pembelian` int(11) NOT NULL,
+  `id_pembelian` varchar(10) NOT NULL,
+  `id_dtl_permintaan` int(11) DEFAULT NULL,
+  `id_barang` varchar(20) DEFAULT NULL,
+  `nota_dtl_beli` varchar(50) DEFAULT NULL,
+  `jml_dtl_minta` int(11) NOT NULL,
+  `ppn_dtl_beli` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_dtl_beli` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `totalhrg_dtl_beli` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `tgl_renc_beli` date DEFAULT NULL,
+  `jml_renc_beli` int(11) DEFAULT NULL,
+  `jml_real_bel` int(11) DEFAULT NULL,
+  `hrg_beli` decimal(15,2) NOT NULL,
+  `lunas_dtl_beli` enum('Y','T') DEFAULT NULL,
+  `ket_dtl_beli` text NOT NULL,
+  `langsung_beli` enum('Y','T') NOT NULL DEFAULT 'T',
+  `id_user` tinyint(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_dtl_pembelian`
+--
+
+INSERT INTO `tbl_dtl_pembelian` (`id_dtl_pembelian`, `id_pembelian`, `id_dtl_permintaan`, `id_barang`, `nota_dtl_beli`, `jml_dtl_minta`, `ppn_dtl_beli`, `total_dtl_beli`, `totalhrg_dtl_beli`, `tgl_renc_beli`, `jml_renc_beli`, `jml_real_bel`, `hrg_beli`, `lunas_dtl_beli`, `ket_dtl_beli`, `langsung_beli`, `id_user`) VALUES
+(1, 'PB20020001', 1, '5', '0001/WEAV-PEMB/02/2020', 10, '2000.00', '20000.00', '22000.00', '2020-02-13', 10, NULL, '0.00', NULL, '', 'T', NULL),
+(2, 'PB20020001', 2, '1', '0001/WEAV-PEMB/02/2020', 20, '3000.00', '30000.00', '33000.00', '2020-02-12', 20, NULL, '0.00', NULL, '', 'T', NULL);
 
 -- --------------------------------------------------------
 
@@ -215,7 +250,7 @@ CREATE TABLE `tbl_dtl_permintaan` (
   `id_barang` varchar(15) DEFAULT NULL,
   `id_brngmsk` varchar(15) DEFAULT NULL,
   `id_pembelian` varchar(15) DEFAULT NULL,
-  `nota_dtl_minta` varchar(20) DEFAULT NULL,
+  `nota_dtl_minta` varchar(50) DEFAULT NULL,
   `tgl_dtl_perlu` date DEFAULT NULL,
   `jml_dtl_minta` int(11) DEFAULT NULL,
   `stkunit_dtl_minta` int(11) NOT NULL DEFAULT '0',
@@ -226,7 +261,7 @@ CREATE TABLE `tbl_dtl_permintaan` (
   `sisabeli_minta` int(11) DEFAULT NULL,
   `lsng_minta` int(11) DEFAULT NULL,
   `ket_dtl_minta` text,
-  `selesai_dtl_minta` enum('Y','P','T','DT','M') DEFAULT 'T',
+  `selesai_dtl_minta` enum('Y','A','P','T','DT','M') DEFAULT 'T',
   `nosrh_minta` varchar(20) DEFAULT NULL,
   `tglsrh_minta` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -236,11 +271,13 @@ CREATE TABLE `tbl_dtl_permintaan` (
 --
 
 INSERT INTO `tbl_dtl_permintaan` (`id_dtl_permintaan`, `id_permintaan`, `id_barang`, `id_brngmsk`, `id_pembelian`, `nota_dtl_minta`, `tgl_dtl_perlu`, `jml_dtl_minta`, `stkunit_dtl_minta`, `stkgdng_dtl_minta`, `tglreal_minta`, `jmlreal_minta`, `hrgreal_minta`, `sisabeli_minta`, `lsng_minta`, `ket_dtl_minta`, `selesai_dtl_minta`, `nosrh_minta`, `tglsrh_minta`) VALUES
-(1, 'PR20010001', 'A', NULL, NULL, '0001/weav/I/01/2020', '2020-01-17', 10, 0, 0, NULL, NULL, NULL, NULL, NULL, 'habis', 'T', NULL, NULL),
+(1, 'PR20010001', 'A', NULL, NULL, '0001/weav/I/01/2020', '2020-01-17', 10, 0, 0, NULL, NULL, NULL, NULL, NULL, 'habis', 'A', NULL, NULL),
 (2, 'PR20010001', 'NH', NULL, NULL, '0001/weav/I/01/2020', '2020-01-18', 20, 0, 0, NULL, NULL, NULL, NULL, NULL, 'stok terbatas', 'P', NULL, NULL),
 (3, 'PR20010002', 'A', NULL, NULL, '0002/weav/I/01/2020', '2020-01-17', 20, 0, 0, NULL, NULL, NULL, NULL, NULL, 'Pembelian langsung', 'Y', NULL, NULL),
 (4, 'PR20010002', 'NH', NULL, NULL, '0002/weav/I/01/2020', '2020-01-17', 30, 0, 0, NULL, NULL, NULL, NULL, NULL, 'Pembelian Langsung', 'M', NULL, NULL),
-(5, 'PR20010003', 'NH', NULL, NULL, '0003/weav/I/01/2020', '2020-01-19', 30, 0, 0, NULL, NULL, NULL, NULL, NULL, 'tinggal sedikit', 'DT', NULL, NULL);
+(5, 'PR20010003', 'NH', NULL, NULL, '0003/weav/I/01/2020', '2020-01-19', 30, 0, 0, NULL, NULL, NULL, NULL, NULL, 'tinggal sedikit', 'P', NULL, NULL),
+(8, 'PR20020001', 'A.I', NULL, NULL, '0005/weav/II/2020', '2020-02-04', 20, 0, 0, NULL, NULL, NULL, NULL, NULL, 'sd', 'T', NULL, NULL),
+(9, 'PR20020001', 'NH', NULL, NULL, '0005/weav/II/2020', '2020-02-05', 25, 0, 0, NULL, NULL, NULL, NULL, NULL, 'hg', 'T', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -451,6 +488,7 @@ CREATE TABLE `tbl_nama_barang` (
 
 INSERT INTO `tbl_nama_barang` (`id_barang`, `id_jnsbrng`, `id_jnsbrngakt`, `id_group`, `nm_barang`, `kel_barang`, `ket_barang`, `no_barang`, `sat1_barang`, `sat2_barang`, `hpp_barang`, `harga_barang`, `updated_barang`) VALUES
 ('A', '2', NULL, 4, 'Test Barang ', NULL, 'barang ok ', NULL, '1', '5', '1500.00', '2000.00', '2020-01-30 15:07:44'),
+('A.I', '2', NULL, 4, 'Alkaline A3', 'person', 'PERSONALIA', 'A1', '4', '11', '0.00', '0.00', '2020-01-31 00:00:00'),
 ('NH', '1', NULL, 3, 'Natrium Hipoklorit', NULL, 'Bahan Campuran Pemutih', NULL, '10', '20', '900.00', '1500.00', '2020-01-30 15:07:41');
 
 -- --------------------------------------------------------
@@ -487,23 +525,26 @@ INSERT INTO `tbl_pejabat` (`id_pejabat`, `nm_pejabat1`, `posisi_pejabat1`, `nm_p
 --
 
 CREATE TABLE `tbl_pembelian` (
-  `tbl_pembelian` varchar(15) NOT NULL,
-  `id_permintaan` varchar(15) DEFAULT NULL,
-  `id_jenis_barang` varchar(15) DEFAULT NULL,
-  `nota_beli` varchar(20) DEFAULT NULL,
+  `id_pembelian` varchar(10) NOT NULL,
+  `id_permintaan` varchar(10) DEFAULT NULL,
+  `id_bagian` varchar(8) NOT NULL,
+  `id_unit` varchar(8) NOT NULL,
+  `nota_beli` varchar(50) DEFAULT NULL,
   `tgl_beli` date DEFAULT NULL,
-  `jml_beli` int(11) DEFAULT NULL,
-  `jml_real_bel` int(11) DEFAULT NULL,
-  `ppn_beli` decimal(15,2) DEFAULT NULL,
-  `total_beli` decimal(15,2) DEFAULT NULL,
-  `tothrg_beli` decimal(15,2) DEFAULT NULL,
-  `jmlbyr_beli` decimal(15,2) DEFAULT NULL,
-  `saldo_beli` decimal(15,2) DEFAULT NULL,
-  `lunas_beli` enum('Y','T') DEFAULT NULL,
-  `fakturpjk_beli` varchar(20) DEFAULT NULL,
-  `tglfakturpjk_beli` date DEFAULT NULL,
+  `ppn_beli` decimal(15,2) NOT NULL,
+  `total_beli` decimal(15,2) NOT NULL,
+  `totalhrg_beli` decimal(15,2) NOT NULL,
+  `selesai_beli` enum('Y','T') NOT NULL DEFAULT 'T',
+  `ket_pembelian` text NOT NULL,
   `id_user` tinyint(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_pembelian`
+--
+
+INSERT INTO `tbl_pembelian` (`id_pembelian`, `id_permintaan`, `id_bagian`, `id_unit`, `nota_beli`, `tgl_beli`, `ppn_beli`, `total_beli`, `totalhrg_beli`, `selesai_beli`, `ket_pembelian`, `id_user`) VALUES
+('PB20020001', 'PR20010001', '512', 'weav', '0001/WEAV-PEMB/02/2020', '2020-02-13', '5000.00', '50000.00', '55000.00', 'T', 'a', NULL);
 
 -- --------------------------------------------------------
 
@@ -520,7 +561,7 @@ CREATE TABLE `tbl_penerimaan` (
   `id_jenis_barang` tinyint(3) DEFAULT NULL,
   `tgl_terima` date DEFAULT NULL,
   `tgl_beli` date DEFAULT NULL,
-  `nota_terima` varchar(20) DEFAULT NULL,
+  `nota_terima` varchar(50) DEFAULT NULL,
   `jml_terima` int(11) DEFAULT NULL,
   `jml_real_beli` int(11) DEFAULT NULL,
   `bayar` decimal(15,2) DEFAULT NULL,
@@ -543,7 +584,7 @@ CREATE TABLE `tbl_pengecekan` (
   `id_pembelian` varchar(15) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
   `id_unit` varchar(8) DEFAULT NULL,
-  `nota_cek` varchar(20) DEFAULT NULL,
+  `nota_cek` varchar(50) DEFAULT NULL,
   `tgl_cek` date DEFAULT NULL,
   `jml_cek` int(11) DEFAULT NULL,
   `jml_lolos_cek` int(11) DEFAULT NULL,
@@ -566,7 +607,7 @@ CREATE TABLE `tbl_penyerahan` (
   `id_barang` varchar(15) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
   `id_pengecekan` varchar(15) DEFAULT NULL,
-  `nota_serah` varchar(20) DEFAULT NULL,
+  `nota_serah` varchar(50) DEFAULT NULL,
   `tgl_serah` date DEFAULT NULL,
   `jml_serah` int(11) DEFAULT NULL,
   `surat_jln_serah` varchar(20) DEFAULT NULL,
@@ -586,7 +627,7 @@ CREATE TABLE `tbl_permintaan` (
   `id_permintaan` varchar(10) NOT NULL,
   `id_unit` varchar(8) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
-  `nota_minta` varchar(20) DEFAULT NULL,
+  `nota_minta` varchar(50) DEFAULT NULL,
   `tgl_minta` date DEFAULT NULL,
   `ket_minta` text,
   `selesai_minta` enum('Y','P','T') DEFAULT 'T',
@@ -600,7 +641,8 @@ CREATE TABLE `tbl_permintaan` (
 INSERT INTO `tbl_permintaan` (`id_permintaan`, `id_unit`, `id_bagian`, `nota_minta`, `tgl_minta`, `ket_minta`, `selesai_minta`, `id_user`) VALUES
 ('PR20010001', 'weav', '512', '0001/weav/I/01/2020', '2020-01-17', 'mendesak', 'P', 1),
 ('PR20010002', 'weav', '511', '0002/weav/I/01/2020', '2020-01-17', 'langsung', 'Y', 1),
-('PR20010003', 'weav', '513', '0003/weav/I/01/2020', '2020-01-19', 'stok bulanan ', 'P', 1);
+('PR20010003', 'weav', '513', '0003/weav/I/01/2020', '2020-01-19', 'stok bulanan ', 'P', 1),
+('PR20020001', 'weav', '513', '0005/weav/II/2020', '2020-02-04', 'dd', 'T', 1);
 
 -- --------------------------------------------------------
 
@@ -880,6 +922,12 @@ ALTER TABLE `tbl_dtl_mutasi_gudang`
   ADD PRIMARY KEY (`id_dtl_mutasi_gudang`);
 
 --
+-- Indexes for table `tbl_dtl_pembelian`
+--
+ALTER TABLE `tbl_dtl_pembelian`
+  ADD PRIMARY KEY (`id_dtl_pembelian`);
+
+--
 -- Indexes for table `tbl_dtl_permintaan`
 --
 ALTER TABLE `tbl_dtl_permintaan`
@@ -937,7 +985,7 @@ ALTER TABLE `tbl_pejabat`
 -- Indexes for table `tbl_pembelian`
 --
 ALTER TABLE `tbl_pembelian`
-  ADD PRIMARY KEY (`tbl_pembelian`);
+  ADD PRIMARY KEY (`id_pembelian`);
 
 --
 -- Indexes for table `tbl_penerimaan`
@@ -1014,10 +1062,15 @@ ALTER TABLE `tbl_barang_akutansi`
 ALTER TABLE `tbl_dtl_mutasi_gudang`
   MODIFY `id_dtl_mutasi_gudang` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `tbl_dtl_pembelian`
+--
+ALTER TABLE `tbl_dtl_pembelian`
+  MODIFY `id_dtl_pembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `tbl_dtl_permintaan`
 --
 ALTER TABLE `tbl_dtl_permintaan`
-  MODIFY `id_dtl_permintaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_dtl_permintaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tbl_group`
 --

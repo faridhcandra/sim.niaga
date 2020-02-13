@@ -252,7 +252,7 @@ class M_stok extends CI_Model {
 		}
 		function ve_pessel($id)
 		{
-			$sql = "SELECT a.id_dtl_permintaan,a.id_permintaan,a.tgl_dtl_perlu,a.jml_dtl_minta,b.nm_barang,a.ket_dtl_minta,c.selesai_minta
+			$sql = "SELECT a.id_dtl_permintaan,a.id_permintaan,a.tgl_dtl_perlu,a.jml_dtl_minta,b.nm_barang,a.ket_dtl_minta,c.selesai_minta,a.selesai_dtl_minta
 					FROM tbl_dtl_permintaan as a 
 					join tbl_nama_barang as b on a.id_barang=b.id_barang 
 					join tbl_permintaan as c on a.id_permintaan=c.id_permintaan

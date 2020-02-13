@@ -10,7 +10,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<div class="bg-info text-white text-center">
+							<div class="bg-primary text-white text-center">
 								<?php foreach ($judul as $i) { ?>
 								<label>No Permintaan <?php echo $i->nota_minta?></label> - 
 								<label>Tanggal Permintaan <?php echo date("d/m/Y",strtotime($i->tgl_minta))?></label>
@@ -29,7 +29,7 @@
 												<td colspan="2">Stok</td>
 												<td colspan="2">Verifikasi</td>
 											</tr>
-											<tr class="bg-primary">
+											<tr class="bg-success">
 												<td width="5%;">Id</td>
 												<td>Nama Barang</td>
 												<td>Tanggal Diperlukan</td>
@@ -59,13 +59,17 @@
 								                    <?php }elseif($row->selesai_dtl_minta == 'T'){ ?>
 								                      <span class="badge bg-warning" data-toggle="tooltip" data-placement="top" title="Pesanan Dalam Antrian">Menunggu</span>
 								                    <?php }elseif($row->selesai_dtl_minta == 'M'){ ?>
-												      <span class="badge bg-info" data-toggle="tooltip" data-placement="top" title="Mutasi Stok">Mutasi</span>
+												      <span class="badge bg-secondary" data-toggle="tooltip" data-placement="top" title="Mutasi Stok">Mutasi</span>
 								                    <?php }elseif($row->selesai_dtl_minta == 'DT'){ ?>
 								                      <span class="badge bg-danger" data-toggle="tooltip" data-placement="top" title="Pesanan Tidak Disetujui">Tidak Disetujui</span>
+								                    <?php }elseif($row->selesai_dtl_minta == 'A'){ ?>
+									                  <span class="badge bg-info" data-toggle="tooltip" data-placement="top" title="Pesanan Disetujui">Disetujui</span>
 								                    <?php } ?>
 												</td>
 												<td align="center">
+													<?php if($row->selesai_dtl_minta != 'A' AND $row->selesai_dtl_minta != 'M' AND $row->selesai_dtl_minta != 'Y' ){?>
 													<a  data-toggle="modal" data-target="#a<?php echo $row->id_dtl_permintaan?>"><i class="fas fa-user-check fa-sm" data-toggle="tooltip" data-placement="top" title="verifikasi"></i></i></a>&ensp;
+													<?php } ?>
 													<div class="text-left">
 													<!-- modal -->
 													<div class="modal fade" id="a<?php echo $row->id_dtl_permintaan?>">

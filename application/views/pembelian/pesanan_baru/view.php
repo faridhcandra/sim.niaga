@@ -40,11 +40,61 @@
 												</td>
 												<td><?php echo $row->ket_minta?></td>
 												<td class="project-actions text-center">
-													<a  data-toggle="tooltip" data-placement="top" title="Cetak Nota" href="#"><i class="fas fa-print fa-sm"></i></a>
-													&ensp;
-													<a  data-toggle="tooltip" data-placement="top" title="Detail verifikasi" href="<?php echo site_url('pembelian/v_ver_pesbaru/'.$row->id_permintaan)?>"><i class="fas fa-align-justify fa-sm"></i></a>
-													<!-- &ensp;
+													<a data-toggle="tooltip" data-placement="top" title="Cetak Nota" href="#"><i class="fas fa-print fa-sm"></i></a>
+													&nbsp;
+													<a data-toggle="tooltip" data-placement="top" title="Detail verifikasi" href="<?php echo site_url('pembelian/v_ver_pesbaru/'.$row->id_permintaan)?>"><i class="fas fa-align-justify fa-sm"></i></a>&nbsp;
+													<!-- &nbsp;
 													<a  data-toggle="tooltip" data-placement="top" title="Hapus" href="#" onclick="return confirm('Konfirmasi Hapus Data ?')"><i class="fas fa-trash fa-sm"></i></a> -->
+													<a data-toggle="modal" data-target="#c<?php echo $row->id_permintaan?>" href=""><i class="far fa-check-circle" data-toggle="tooltip" data-placement="top" title="Ubah Status"></i></i></a>&nbsp;
+													<div class="text-left">
+													<!-- modal -->
+													<div class="modal fade" id="c<?php echo $row->id_permintaan?>">
+													    <div class="modal-dialog  modal-md">
+													      <div class="modal-content">
+													        <div class="modal-header">
+													          <h4 class="modal-title">Verifikasi Data Pesanan</h4>
+													          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													            <span aria-hidden="true">&times;</span>
+													          </button>
+													        </div>
+													        <div class="modal-body"><?php $id = $row->id_permintaan ?>
+																<?php echo form_open('pembelian/v_ver_konfirmasi/'.$id);?>
+																<div class="form-group">
+																	<label>No Pemesan</label>
+																	<input class="form-control form-control-sm" type="text" readonly="" placeholder="xxxxx" value="<?php echo $row->nota_minta?>">
+																	<input class="form-control form-control-sm" type="text" name="kode" readonly="" hidden=""  value="<?php echo $row->id_permintaan?>">
+																</div>
+																<div class="form-group">
+																	<label>Bagian</label>
+																	<input class="form-control form-control-sm" type="text" readonly="" placeholder="xxxxx" value="<?php echo $row->nm_bagian?>">
+																</div>
+																<div class="form-group">
+																	<label>Verifikasi</label>
+																	<select class="form-control form-control-sm" name="verif" required="">
+													                    <?php if($row->selesai_minta == 'Y'){ ?>
+													                    <option selected="" value="<?php echo $row->selesai_minta?>">Selesai</option>
+													                    <?php }elseif($row->selesai_minta == 'P'){ ?>
+													                    <option selected="" value="<?php echo $row->selesai_minta?>">Diproses</option>
+													                    <?php }else{ ?>
+													                    <option selected="" value="<?php echo $row->selesai_minta?>">Menunggu</option>
+													                    <?php } ?>
+																		<option value="">-- Pilih Status --</option>
+																		<option value="Y">Selesai</option>
+																		<option value="P">Diproses</option>
+																	</select>
+																</div>
+																<hr>
+																<div class="for-group">
+													            	<input type="submit" class="btn btn-primary btn-sm float-right toaster" value="Simpan">
+																</div>
+																</form>
+													        </div>
+													      </div>
+													      <!-- /.modal-content -->
+													    </div>
+													    <!-- /.modal-dialog -->
+													  </div>
+													  <!-- /.modal -->
 												</td>
 											</tr>
 											<?php } ?>

@@ -55,9 +55,9 @@ class Stok extends CI_Controller {
 
 			$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('stok/view_satuan')."';</script>";
+				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('stok/view_satuan')."';</script>";
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('stok/view_satuan')."';</script>";
+				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('stok/view_satuan')."';</script>";
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -94,9 +94,9 @@ class Stok extends CI_Controller {
 				$sql = $this->M_stok->e_satuan($id, $data);
 				$allsql = array($sql);
 					if($allsql){ // Jika sukses
-						echo "<script>alert('Data berhasil diubah');window.location = '".base_url('stok/view_satuan')."';</script>";
+						echo "<script>alert('Data berhasil diubah');window.location = '".site_url('stok/view_satuan')."';</script>";
 					}else{ // Jika gagal
-						echo "<script>alert('Data gagal diubah');window.location = '".base_url('stok/u_satuan')."';</script>";
+						echo "<script>alert('Data gagal diubah');window.location = '".site_url('stok/u_satuan')."';</script>";
 					}
 				}else{
 					echo '<script language="javascript">';
@@ -107,7 +107,7 @@ class Stok extends CI_Controller {
 					echo '</script>';
 				}
 		}else{
-			echo "<script>alert('Maaf Nama Satuan tidak ditemukan');window.location = '".base_url('stok/view_satuan')."';</script>";
+			echo "<script>alert('Maaf Nama Satuan tidak ditemukan');window.location = '".site_url('stok/view_satuan')."';</script>";
 		}
 	}
 	public function h_satuan($id)
@@ -115,9 +115,9 @@ class Stok extends CI_Controller {
 		$sql = $this->M_stok->h_satuan($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('stok/view_satuan')."';</script>";
+			echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('stok/view_satuan')."';</script>";
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('stok/view_satuan')."';</script>";
+			echo "<script>alert('Data gagal di hapus');window.location = '".site_url('stok/view_satuan')."';</script>";
 		}
 	}
 	// ----------------------------------------------
@@ -172,9 +172,9 @@ class Stok extends CI_Controller {
 
 			$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('stok/view_barang')."';</script>";
+				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('stok/view_barang')."';</script>";
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('stok/view_barang')."';</script>";
+				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('stok/view_barang')."';</script>";
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -223,9 +223,9 @@ class Stok extends CI_Controller {
 				$sql = $this->M_stok->e_barang($id, $data);
 				$allsql = array($sql);
 				if($allsql){ // Jika sukses
-					echo "<script>alert('Data berhasil diubah');window.location = '".base_url('stok/view_barang')."';</script>";
+					echo "<script>alert('Data berhasil diubah');window.location = '".site_url('stok/view_barang')."';</script>";
 				}else{ // Jika gagal
-					echo "<script>alert('Data gagal diubah');window.location = '".base_url('stok/u_barang')."';</script>";
+					echo "<script>alert('Data gagal diubah');window.location = '".site_url('stok/u_barang')."';</script>";
 				}
 			/*}else{
 				echo '<script language="javascript">';
@@ -236,7 +236,7 @@ class Stok extends CI_Controller {
 				echo '</script>';
 			}*/
 		}else{
-			echo "<script>alert('Maaf Nama Barang tidak ditemukan');window.location = '".base_url('stok/view_barang')."';</script>";
+			echo "<script>alert('Maaf Nama Barang tidak ditemukan');window.location = '".site_url('stok/view_barang')."';</script>";
 		}
 	}
 	public function h_barang($id)
@@ -244,9 +244,9 @@ class Stok extends CI_Controller {
 		$sql = $this->M_stok->h_barang($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('stok/view_barang')."';</script>";
+			echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('stok/view_barang')."';</script>";
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('stok/view_barang')."';</script>";
+			echo "<script>alert('Data gagal di hapus');window.location = '".site_url('stok/view_barang')."';</script>";
 		}
 	}
 	// ----------------------------------------------
@@ -257,7 +257,7 @@ class Stok extends CI_Controller {
 	{
 		$data['menutitle'] = 'Data Pemesanan Baru';
 		$data['menu'] = 'Pemesanan';
-		$data['submenu'] = 'Pesanana Baru';
+		$data['submenu'] = 'Pemesanan Baru';
 
 		$isi['isi'] = $this->M_stok->v_pesbaru();
 
@@ -271,7 +271,7 @@ class Stok extends CI_Controller {
 	{
 		$data['menutitle'] = 'Detail Data Pemesanan';
 		$data['menu'] = 'Pemesanan';
-		$data['submenu'] = 'Detail Pesanana Baru';
+		$data['submenu'] = 'Detail Pemesanan Baru';
 
 		$isi['judul'] = $this->M_stok->ve_id_pesbar($id);
 		$isi['isi'] = $this->M_stok->v_dtl_pesbar($id);
@@ -286,7 +286,7 @@ class Stok extends CI_Controller {
 	{
 		$data['menutitle'] = 'Data Pemesanan';
 		$data['menu'] = 'Pemesanan';
-		$data['submenu'] = 'Tambah Pesanan Baru';
+		$data['submenu'] = 'Tambah Pemesanan Baru';
 
 		//$isi['isi'] = $this->M_stok->ve_satuan($id);
 		$isi['kode'] = $this->M_stok->k_pesbaru();
@@ -346,9 +346,9 @@ class Stok extends CI_Controller {
 
 			$allsql = array($sql1,$sql2);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('stok/view_pesbaru')."';</script>";
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('stok/view_pesbaru')."';</script>";
 			}
 
 		}else{
@@ -390,9 +390,9 @@ class Stok extends CI_Controller {
 				$sql = $this->M_stok->e_pesbar($id, $data);
 				$allsql = array($sql);
 					if($allsql){ // Jika sukses
-						echo "<script>alert('Data berhasil diubah');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+						echo "<script>alert('Data berhasil diubah');window.location = '".site_url('stok/view_pesbaru')."';</script>";
 					}else{ // Jika gagal
-						echo "<script>alert('Data gagal diubah');window.location = '".base_url('stok/u_barang')."';</script>";
+						echo "<script>alert('Data gagal diubah');window.location = '".site_url('stok/u_barang')."';</script>";
 					}
 				/*}else{
 					echo '<script language="javascript">';
@@ -403,7 +403,7 @@ class Stok extends CI_Controller {
 					echo '</script>';
 				}*/
 		}else{
-			echo "<script>alert('Maaf No Pemesanan tidak ditemukan');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+			echo "<script>alert('Maaf No Pemesanan tidak ditemukan');window.location = '".site_url('stok/view_pesbaru')."';</script>";
 		}
 	}
 	public function pesbar_h($id)
@@ -412,9 +412,9 @@ class Stok extends CI_Controller {
 		$sql2 = $this->M_stok->h_pesbardet($id);
 		$allsql = array($sql,$sql2);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+			echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('stok/view_pesbaru')."';</script>";
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+			echo "<script>alert('Data gagal di hapus');window.location = '".site_url('stok/view_pesbaru')."';</script>";
 		}
 	}
 	public function perbar_detail_h($id)
@@ -422,9 +422,9 @@ class Stok extends CI_Controller {
 		$sql = $this->M_stok->h_pesbar_detail($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+			echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('stok/view_pesbaru')."';</script>";
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('stok/view_pesbaru')."';</script>";
+			echo "<script>alert('Data gagal di hapus');window.location = '".site_url('stok/view_pesbaru')."';</script>";
 		}
 	}
 	// ----------------------------------------------
