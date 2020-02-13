@@ -264,6 +264,47 @@ class M_stok extends CI_Model {
 		}
 	// -----------------------------------------
 	// =========================================================================================================================================
+
+	// --------------- Stok Barang ------------------
+		public function v_stok()
+		{
+			$sql = "SELECT a.id_stok,a.id_barang,c.nm_barang,a.id_brngmsk,a.tgl_brngmsk,a.stok_masuk,a.stok_keluar,a.hrg_stok,a.id_bagian 
+				FROM tbl_stok_barang as a 
+				JOIN tbl_bagian AS b ON a.id_bagian=b.id_bagian 
+				JOIN tbl_nama_barang AS c ON a.id_barang=c.id_barang
+				order by a.tgl_brngmsk desc";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+
+	// -----------------------------------------
+	// =========================================================================================================================================
+
+	// --------------- Barang Masuk ------------------
+		public function v_barangmasuk()
+		{
+			$sql = "SELECT a.id_brngmsk,c.nm_barang,a.tgl_brngmsk,a.stok_brngmsk,a.tothrg_brngmasuk,a.id_bagian
+					FROM tbl_barang_masuk AS a
+					JOIN tbl_stok_barang AS b ON a.id_brngmsk=b.id_brngmsk
+					JOIN tbl_nama_barang AS c ON c.id_barang=b.id_barang
+					ORDER BY a.tgl_brngmsk DESC";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+
+	// -----------------------------------------
+	// =========================================================================================================================================
+
+	// --------------- Barang Keluar ------------------
+		public function v_barangkeluar()
+		{
+			$sql = "SELECT a.id_dtlbrngkel,a.id_brngkel,a.tgl_brngkel,a.id_stok,a.id_barang,b.nm_barang,a.subhrg_dtlbrngkel,a.tgl_brngmsk,a.id_bagian
+					FROM tbl_dtl_barang_keluar AS a
+					JOIN tbl_nama_barang AS b ON a.`id_barang`=b.`id_barang`
+					ORDER BY a.tgl_brngmsk DESC";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
 }
 
 /* End of file M_stok.php */

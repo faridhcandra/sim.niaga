@@ -99,19 +99,19 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?php echo site_url('stok/view_stok');?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Stok Barang</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?php echo site_url('stok/view_barangmasuk');?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Barang Masuk</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?php echo site_url('stok/view_barangkeluar');?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Barang Keluar</p>
               </a>
