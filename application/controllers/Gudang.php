@@ -48,9 +48,9 @@ class Gudang extends CI_Controller {
 
 			$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('gudang/v_koderekakt')."';</script>";
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('gudang/v_koderekakt')."';</script>";
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -89,9 +89,9 @@ class Gudang extends CI_Controller {
 				
 				$allsql = array($sql);
 				if($allsql){ // Jika sukses
-					echo "<script>alert('Data berhasil diubah');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+					echo "<script>alert('Data berhasil diubah');window.location = '".site_url('gudang/v_koderekakt')."';</script>";
 				}else{ // Jika gagal
-					echo "<script>alert('Data gagal diubah');window.location = '".base_url('gudang/u_koderekakt')."';</script>";
+					echo "<script>alert('Data gagal diubah');window.location = '".site_url('gudang/u_koderekakt')."';</script>";
 				}
 			/*}else{
 				echo '<script language="javascript">';
@@ -102,7 +102,7 @@ class Gudang extends CI_Controller {
 				echo '</script>';
 			}*/
 		}else{
-			echo "<script>alert('Maaf Kode Rekening Akuntansi tidak ditemukan');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+			echo "<script>alert('Maaf Kode Rekening Akuntansi tidak ditemukan');window.location = '".site_url('gudang/v_koderekakt')."';</script>";
 		}
 	}
 	public function h_koderekakt($id)
@@ -110,9 +110,9 @@ class Gudang extends CI_Controller {
 		$sql = $this->M_gudang->h_koderekakt($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+			echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('gudang/v_koderekakt')."';</script>";
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('gudang/v_koderekakt')."';</script>";
+			echo "<script>alert('Data gagal di hapus');window.location = '".site_url('gudang/v_koderekakt')."';</script>";
 		}
 	}
 	// -------------------------------------------------------------
@@ -185,9 +185,9 @@ class Gudang extends CI_Controller {
 
 			$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('gudang/v_jenisbrngakt')."';</script>";
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('gudang/v_jenisbrngakt')."';</script>";
 			}
 	}
 	public function u_jenisbrngakt($id='')
@@ -221,12 +221,12 @@ class Gudang extends CI_Controller {
 			
 			$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil diubah');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+				echo "<script>alert('Data berhasil diubah');window.location = '".site_url('gudang/v_jenisbrngakt')."';</script>";
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal diubah');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+				echo "<script>alert('Data gagal diubah');window.location = '".site_url('gudang/v_jenisbrngakt')."';</script>";
 			}
 		}else{
-			echo "<script>alert('Maaf Kode Jenis Barang Akuntansi tidak ditemukan');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+			echo "<script>alert('Maaf Kode Jenis Barang Akuntansi tidak ditemukan');window.location = '".site_url('gudang/v_jenisbrngakt')."';</script>";
 		}
 	}
 	public function h_jenisbrngakt($id)
@@ -234,9 +234,9 @@ class Gudang extends CI_Controller {
 		$sql = $this->M_gudang->h_jenisbrngakt($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+			echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('gudang/v_jenisbrngakt')."';</script>";
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('gudang/v_jenisbrngakt')."';</script>";
+			echo "<script>alert('Data gagal di hapus');window.location = '".site_url('gudang/v_jenisbrngakt')."';</script>";
 		}
 	}
 	// -------------------------------------------------------------
@@ -273,6 +273,20 @@ class Gudang extends CI_Controller {
 		$this->load->view('gudang/pesanan_baru/view_detail',$isi);
 		$this->load->view('gudang/template/footer');
 	}
+	public function v_ver_konfirmasi($id)
+	{
+		$id 	= $this->input->post('kode');
+		$verif 	= $this->input->post('verif');
+
+		$data 	= array('selesai_minta' => $verif);
+		$sql 	= $this->M_gudang->v_ver_konfirmasi($id,$data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".site_url('gudang/v_verpesbaru')."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".site_url('gudang/v_verpesbaru')."';</script>";
+		}
+	}
 	public function ver_konfirmasi($id)
 	{
 		$id 	= $this->input->post('kode');
@@ -283,9 +297,9 @@ class Gudang extends CI_Controller {
 		$sql 	= $this->M_gudang->ver_konfirmasi($id,$data);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".base_url('gudang/v_ver_pesbaru/'.$idper)."';</script>";
+			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".site_url('gudang/v_ver_pesbaru/'.$idper)."';</script>";
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".base_url('gudang/v_ver_pesbaru/'.$idper)."';</script>";
+			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".site_url('gudang/v_ver_pesbaru/'.$idper)."';</script>";
 		}
 	}
 	// ------------------------------------------------------------

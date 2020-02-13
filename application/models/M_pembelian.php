@@ -210,10 +210,90 @@ class M_pembelian extends CI_Model {
 			$data = $this->db->query($sql);
 			return $data->result();
 		}
+		function v_ver_konfirmasi($id,$data)
+		{
+			$this->db->where('id_permintaan', $id)
+					 ->update('tbl_permintaan',$data);
+		}
 		function ver_konfirmasi($id,$data)
 		{
 			$this->db->where('id_dtl_permintaan', $id)
 					 ->update('tbl_dtl_permintaan',$data);
+		}
+	// ------------------------------------------------------------
+	// ========================================================================================================================================
+
+	// ====================================================== Data Transaksi ==================================================================
+	// --------------------- Rencana Pembelian --------------------
+		// *********** Get ***********
+		function get_pembpes()
+		{
+			$sql = "SELECT a.id_permintaan,a.nota_minta,a.tgl_minta,a.id_unit,a.id_bagian,b.nm_unit,c.nm_bagian
+					FROM tbl_permintaan as a
+					join tbl_unit as b on a.id_unit=b.id_unit
+					join tbl_bagian as c on a.id_bagian=c.id_bagian
+					WHERE a.selesai_minta = 'P'";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+		function get_pembdtlpes()
+		{
+			$sql = "SELECT a.id_dtl_permintaan,a.nota_dtl_minta,a.id_barang,a.jml_dtl_minta,a.ket_dtl_minta,b.nm_barang,b.harga_barang,d.nm_bagian
+					FROM tbl_dtl_permintaan as a
+					join tbl_nama_barang as b on a.id_barang=b.id_barang
+					join tbl_permintaan as c on a.id_permintaan=c.id_permintaan
+					join tbl_bagian as d on c.id_bagian=d.id_bagian
+					WHERE a.selesai_dtl_minta != 'T' AND a.selesai_dtl_minta != 'M' AND a.selesai_dtl_minta != 'Y'";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+		// *****************************
+		function k_pembelian()
+		{
+	 		$CI =& get_instance();
+			$CI->load->database('default');
+			//rancangan kode GL
+			$kode_PB="PB".date('ym')."%";
+			$sql="SELECT SUBSTRING(MAX(id_pembelian),7,4) AS maxNo FROM tbl_pembelian where id_pembelian like('$kode_PB')";
+			$row = $CI->db->query($sql);
+			foreach ($row->result_array() as $rowmax)
+			{	
+			}
+			//buat noPO baru dengan noPO terbesar+1
+			$noPB_tmp		=$rowmax['maxNo'];
+			$noPB			=$noPB_tmp+1;	
+			$kode_tanggal	=date("ym");
+			if(strlen($noPB)==1){
+				$kode_pembelian="PB".$kode_tanggal."000".$noPB;
+			}elseif(strlen($noPB)==2){
+				$kode_pembelian="PB".$kode_tanggal."00".$noPB;
+			}elseif(strlen($noPB)==3){
+				$kode_pembelian="PB".$kode_tanggal."0".$noPB;
+			}elseif(strlen($noPB)==4){
+				$kode_pembelian="PB".$kode_tanggal.$noPB;
+			}
+			
+			return $kode_pembelian;
+		}
+		public function v_pembelian()
+		{
+			$sql = "SELECT * FROM tbl_pembelian";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+		public function v_dtl_pembelian()
+		{
+			$sql = "SELECT * FROM tbl_dtl_pembelian";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+		function s_pembelian($data)
+		{
+			return $this->db->insert('tbl_pembelian', $data);
+		}
+		function s_dtl_pembelian_batch($data)
+		{
+			return $this->db->insert_batch('tbl_dtl_pembelian', $data);
 		}
 	// ------------------------------------------------------------
 	// ========================================================================================================================================

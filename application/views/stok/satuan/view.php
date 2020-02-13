@@ -48,7 +48,7 @@
 				         					<td><?php echo $i?></td>
 				         					<td><?php echo $row->nm_satuan?></td>
 				         					<td class="project-actions text-center">
-												<a  data-toggle="tooltip" data-placement="top" title="Ubah" href="<?php echo site_url('stok/u_satuan/'.$row->id_satuan)?>"><i class="fas fa-pencil-alt fa-sm"></i></a>&ensp;
+												<a  data-toggle="tooltip" data-placement="top" title="Ubah" href="<?php echo site_url('stok/u_satuan/'.$row->id_satuan)?>"><i class="fas fa-pencil-alt fa-sm"></i></a>&nbsp;
 												<a  data-toggle="tooltip" data-placement="top" title="Hapus" href="<?php echo site_url('stok/h_satuan/'.$row->id_satuan)?>" onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a>
 											</td>
 				         				</tr>

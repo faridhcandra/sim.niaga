@@ -23,6 +23,7 @@
   <!-- Toastr -->
   <!-- <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/toastr/toastr.min.css"> -->
   <!-- javascript -->
+  <noscript><p align="center">Your browser does not support JavaScript!</p></noscript>
   <script src="<?php echo base_url();?>assets/plugins/jquery/jquery.min.js"></script>
 </head>
 
