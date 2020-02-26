@@ -461,6 +461,55 @@ class Stok extends CI_Controller {
 	// ----------------------------------------------
 
 	// =========================================================================================================================================
+
+
+		// -------------- Stok Barang ------------------
+	public function view_stok()
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Stok Barang';
+
+		$isi['isi'] = $this->M_stok->v_stok();
+
+		$this->load->view('stok/template/head');
+		$this->load->view('stok/template/navbar');
+		$this->load->view('stok/template/sidebar',$data);
+		$this->load->view('stok/transaksi/stok_barang/view',$isi);
+		$this->load->view('stok/template/footer');
+	}
+
+			// -------------- Barang Masuk ------------------
+	public function view_barangmasuk()
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Barang Masuk';
+
+		$isi['isi'] = $this->M_stok->v_barangmasuk();
+
+		$this->load->view('stok/template/head');
+		$this->load->view('stok/template/navbar');
+		$this->load->view('stok/template/sidebar',$data);
+		$this->load->view('stok/transaksi/barang_masuk/view',$isi);
+		$this->load->view('stok/template/footer');
+	}
+
+				// -------------- Barang Keluar ------------------
+	public function view_barangkeluar()
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Barang Keluar';
+
+		$isi['isi'] = $this->M_stok->v_barangkeluar();
+
+		$this->load->view('stok/template/head');
+		$this->load->view('stok/template/navbar');
+		$this->load->view('stok/template/sidebar',$data);
+		$this->load->view('stok/transaksi/barang_keluar/view',$isi);
+		$this->load->view('stok/template/footer');
+	}
 }
 
 /* End of file stok.php */
