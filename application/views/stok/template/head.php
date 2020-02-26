@@ -24,7 +24,6 @@
   <!-- <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/toastr/toastr.min.css"> -->
   <!-- javascript -->
   <script src="<?php echo base_url();?>assets/plugins/jquery/jquery.min.js"></script>
-</head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

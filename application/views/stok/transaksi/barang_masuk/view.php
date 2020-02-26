@@ -18,7 +18,8 @@
 												<td width="10%;">ID Barang Masuk</td>
 												<td width="20%;">Nama Barang</td>
 												<td width="13%;">Tgl Masuk</td>
-												<td width="13%;">Stok Barang Masuk</td>		   
+												<td width="13%;">Stok Masuk</td>		
+												<td width="13%">Harga</td>   
 												<td width="13%;">Total Harga</td>		 
 											</tr>
 										</thead>
@@ -29,6 +30,7 @@
 												<td><?php echo $row->nm_barang?></td>
 												<td><?php echo $row->tgl_brngmsk?></td>
 												<td><?php echo $row->stok_brngmsk?></td>
+												<td><?php echo $row->hrg_stok?></td>
 												<td><?php echo $row->tothrg_brngmasuk?></td>
 												</td>
 											</tr>

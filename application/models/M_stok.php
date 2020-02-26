@@ -268,11 +268,13 @@ class M_stok extends CI_Model {
 	// --------------- Stok Barang ------------------
 		public function v_stok()
 		{
-			$sql = "SELECT a.id_stok,a.id_barang,c.nm_barang,a.id_brngmsk,a.tgl_brngmsk,a.stok_masuk,a.stok_keluar,a.hrg_stok,a.id_bagian 
-				FROM tbl_stok_barang as a 
-				JOIN tbl_bagian AS b ON a.id_bagian=b.id_bagian 
-				JOIN tbl_nama_barang AS c ON a.id_barang=c.id_barang
-				order by a.tgl_brngmsk desc";
+			$sql = "SELECT a.id_stok,a.id_barang,c.nm_barang,a.id_brngmsk,
+					SUM(a.stok_masuk) AS sisa_stok,SUM(a.stok_keluar) AS stok_keluar,a.id_bagian 
+					FROM tbl_stok_barang AS a 
+					JOIN tbl_nama_barang AS c ON a.id_barang=c.id_barang
+					JOIN tbl_barang_masuk AS b ON a.id_brngmsk=b.id_brngmsk
+					GROUP BY a.id_barang
+					ORDER BY a.tgl_brngmsk DESC";
 			$data = $this->db->query($sql);
 			return $data->result();
 		}
@@ -283,7 +285,7 @@ class M_stok extends CI_Model {
 	// --------------- Barang Masuk ------------------
 		public function v_barangmasuk()
 		{
-			$sql = "SELECT a.id_brngmsk,c.nm_barang,a.tgl_brngmsk,a.stok_brngmsk,a.tothrg_brngmasuk,a.id_bagian
+			$sql = "SELECT a.id_brngmsk,c.nm_barang,a.tgl_brngmsk,a.stok_brngmsk,b.hrg_stok,a.tothrg_brngmasuk,a.id_bagian
 					FROM tbl_barang_masuk AS a
 					JOIN tbl_stok_barang AS b ON a.id_brngmsk=b.id_brngmsk
 					JOIN tbl_nama_barang AS c ON c.id_barang=b.id_barang
@@ -298,12 +300,134 @@ class M_stok extends CI_Model {
 	// --------------- Barang Keluar ------------------
 		public function v_barangkeluar()
 		{
-			$sql = "SELECT a.id_dtlbrngkel,a.id_brngkel,a.tgl_brngkel,a.id_stok,a.id_barang,b.nm_barang,a.subhrg_dtlbrngkel,a.tgl_brngmsk,a.id_bagian
+			$sql = "SELECT a.id_brngkel,a.tgl_brngkel,b.nm_barang,c.jumlah_brngkel,c.tothrg_brngkel
 					FROM tbl_dtl_barang_keluar AS a
-					JOIN tbl_nama_barang AS b ON a.`id_barang`=b.`id_barang`
+					JOIN tbl_nama_barang AS b ON a.id_barang=b.id_barang
+					JOIN tbl_barang_keluar AS c ON a.id_brngkel=c.id_brngkel
+					GROUP BY a.id_brngkel
 					ORDER BY a.tgl_brngmsk DESC";
 			$data = $this->db->query($sql);
 			return $data->result();
+
+		}
+
+		function k_barkel()
+		{
+			$CI =& get_instance();
+			$CI->load->database('default');
+			//rancangan kode GL
+			$kode_BK="BK".date('ym')."%";
+			$sql="SELECT SUBSTRING(MAX(id_brngkel),7,5) AS maxNo FROM tbl_barang_keluar where id_brngkel like('$kode_BK')";
+			$row = $CI->db->query($sql);
+			foreach ($row->result_array() as $rowmax)
+			{	
+			}
+			//buat noPO baru dengan noPO terbesar+1
+			$noBK_tmp		=$rowmax['maxNo'];
+			$noBK			=$noBK_tmp+1;	
+			$kode_tanggal	=date("ym");
+			if(strlen($noBK)==1){
+				$kode_brgkel="BK".$kode_tanggal."0000".$noBK;
+			}elseif(strlen($noBK)==2){
+				$kode_brgkel="BK".$kode_tanggal."000".$noBK;
+			}elseif(strlen($noBK)==3){
+				$kode_brgkel="BK".$kode_tanggal."00".$noBK;
+			}elseif(strlen($noBK)==4){
+				$kode_brgkel="BK".$kode_tanggal."0".$noBK;
+			}elseif(strlen($noBK)==5){
+				$kode_brgkel="BK".$kode_tanggal.$noBK;
+			}
+			
+			return $kode_brgkel;
+		}
+
+		function barkel_barang()
+		{
+			$sql = "SELECT a.id_brngmsk,c.id_barang,c.nm_barang,a.tgl_brngmsk,b.id_stok,sum(b.stok_masuk) as stok_masuk,b.hrg_stok
+			FROM tbl_barang_masuk AS a
+			JOIN tbl_stok_barang AS b ON a.id_brngmsk=b.id_brngmsk
+			JOIN tbl_nama_barang AS c ON b.id_barang=c.id_barang
+			Where b.stok_masuk > 0
+			GROUP BY b.id_barang";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+
+		public function get_cek_ketersedian()
+		{
+			$this->db->select('id_barang,sum(stok_masuk) as stok');
+			$this->db->from('tbl_stok_barang');
+			$this->db->group_by('id_barang');
+			$query = $this->db->get(); 
+	        return $query->result();
+		}
+
+				// perhitungan barang keluar
+		public function jmlh_stok($id_barang)
+		{
+			$sql = "SELECT SUM(stok_masuk) AS stok FROM tbl_stok_barang WHERE id_barang = '$id_barang'";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+
+		public function stok_urut_tgl($id_barang)
+		{
+			$sql = "SELECT id_brngmsk,id_stok,tgl_brngmsk,stok_masuk,id_barang,hrg_stok FROM tbl_stok_barang WHERE id_barang = '$id_barang' AND stok_masuk > 0 ORDER BY tgl_brngmsk ASC";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+
+		public function simpan_dtl_barang_kel($data)
+		{
+			$this->db->insert('tbl_dtl_barang_keluar', $data);
+		}
+
+		public function simpan_barang_keluar($data)
+		{
+			$this->db->insert('tbl_barang_keluar', $data);
+		}
+
+		public function delete_barang_keluar($id)
+		{
+			$this->db->where('id_brngkel', $id)
+			->delete('tbl_barang_keluar');
+		}
+
+		public function delete_dtl_stok_barang($id)
+		{
+			$this->db->where('id_brngkel', $id)
+			->delete('tbl_dtl_barang_keluar');
+		}
+
+
+		function ve_brngkel($id)
+		{
+			$sql = "SELECT a.id_brngkel,a.tgl_brngkel,a.jumlah_brngkel,c.nm_barang,b.id_barang,SUM(d.stok_masuk) AS stok_masuk
+					FROM tbl_barang_keluar AS a 
+					JOIN tbl_dtl_barang_keluar AS b ON a.id_brngkel=b.id_brngkel
+					JOIN tbl_nama_barang AS c ON b.id_barang=c.id_barang
+					JOIN tbl_stok_barang AS d ON b.id_stok=d.id_stok
+					where a.id_brngkel = '$id'
+					GROUP BY a.id_brngkel,a.tgl_brngkel,a.jumlah_brngkel";
+			$data = $this->db->query($sql);
+			return $data->result();
+			// $sql = "SELECT b.id_dtlbrngkel,a.id_brngkel,a.tgl_brngkel,b.id_barang,c.nm_barang,b.stok_brngkel,
+			// 		b.harga_dtlbrngkel,b.id_brngmsk,b.subhrg_dtlbrngkel,d.id_stok,d.stok_masuk,d.stok_keluar,d.tgl_brngmsk
+			// 		FROM tbl_barang_keluar AS a
+			// 		JOIN tbl_dtl_barang_keluar AS b ON a.id_brngkel=b.id_brngkel
+			// 		JOIN tbl_nama_barang AS c ON b.id_barang=c.id_barang
+			// 		JOIN tbl_stok_barang AS d ON b.id_stok=d.id_stok
+			// 		JOIN tbl_barang_masuk AS e ON d.id_brngmsk=e.id_brngmsk
+			// 		where a.id_brngkel = '$id'
+			// 		GROUP BY b.id_dtlbrngkel,a.id_brngkel,a.tgl_brngkel,b.id_barang,c.nm_barang,b.stok_brngkel,
+			// 		b.harga_dtlbrngkel,b.id_brngmsk,b.subhrg_dtlbrngkel,d.id_stok,d.stok_masuk,d.stok_keluar,d.tgl_brngmsk";
+			// $data = $this->db->query($sql);
+			// return $data->result();
+		}
+
+		function e_brngkel($id,$data)
+		{
+			$this->db->where('id_brngkel',$id)->update('tbl_barang_keluar', $data);
 		}
 }
 

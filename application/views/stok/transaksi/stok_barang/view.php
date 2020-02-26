@@ -15,25 +15,19 @@
 									<table id="example2" class="table table-sm table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
 										<thead>
 											<tr>
-												<td width="10%;">ID Stok</td>
 												<td width="10%;">ID Barang</td>
 												<td width="20%;">Nama Barang</td>
-												<td width="13%;">Tgl Masuk</td>
-												<td width="13%;">Barang Masuk</td>		   
-												<td width="13%;">Barang Keluar</td>		         		
-												<td width="13%;">Harga</td>		  
+												<td width="13%;">Sisa Stok</td>		   
+												<td width="13%;">Barang Keluar</td>		 
 											</tr>
 										</thead>
 										<tbody>
 											<?php $i=0; foreach ($isi as $row){ $i++;?>
 											<tr>
-												<td><?php echo $row->id_stok?></td>
 												<td><?php echo $row->id_barang?></td>
 												<td><?php echo $row->nm_barang?></td>
-												<td><?php echo $row->tgl_brngmsk?></td>
-												<td><?php echo $row->stok_masuk?></td>
+												<td><?php echo $row->sisa_stok?></td>
 												<td><?php echo $row->stok_keluar?></td>
-												<td><?php echo $row->hrg_stok?></td>
 											</tr>
 											<?php } ?>
 											</tbody>
