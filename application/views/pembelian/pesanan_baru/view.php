@@ -40,8 +40,7 @@
 												</td>
 												<td><?php echo $row->ket_minta?></td>
 												<td class="project-actions text-center">
-													<a data-toggle="tooltip" data-placement="top" title="Cetak Nota" href="#"><i class="fas fa-print fa-sm"></i></a>
-													&nbsp;
+													<!-- <a data-toggle="tooltip" data-placement="top" title="Cetak Nota" href="#"><i class="fas fa-print fa-sm"></i></a>&nbsp; -->
 													<a data-toggle="tooltip" data-placement="top" title="Detail verifikasi" href="<?php echo site_url('pembelian/v_ver_pesbaru/'.$row->id_permintaan)?>"><i class="fas fa-align-justify fa-sm"></i></a>&nbsp;
 													<!-- &nbsp;
 													<a  data-toggle="tooltip" data-placement="top" title="Hapus" href="#" onclick="return confirm('Konfirmasi Hapus Data ?')"><i class="fas fa-trash fa-sm"></i></a> -->
@@ -95,6 +94,7 @@
 													    <!-- /.modal-dialog -->
 													  </div>
 													  <!-- /.modal -->
+													</div>
 												</td>
 											</tr>
 											<?php } ?>

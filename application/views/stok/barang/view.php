@@ -35,7 +35,7 @@
 												<td><?php echo $row->nm_satuan2?></td>
 												<td class="project-actions text-center">
 													<a  data-toggle="tooltip" data-placement="top" title="Ubah" href="<?php echo site_url('stok/u_barang/'.$row->id_barang)?>"><i class="fas fa-pencil-alt fa-sm"></i></a>&nbsp;
-													<a  data-toggle="tooltip" data-placement="top" title="Hapus" href="<?php echo site_url('stok/h_barang/'.$row->id_barang)?>"><i class="fas fa-trash fa-sm"></i></a>
+													<a  data-toggle="tooltip" data-placement="top" title="Hapus" href="<?php echo site_url('stok/h_barang/'.$row->id_barang)?>" onclick="return confirm('Konfirmasi Hapus Data ?')"><i class="fas fa-trash fa-sm"></i></a>
 												</td>
 												</tr>
 												<?php } ?>

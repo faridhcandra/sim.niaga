@@ -11,9 +11,9 @@ class Pembelian extends CI_Controller {
 
 	public function index()
 	{
-		$data['menutitle'] = 'Dashboard';
-		$data['menu'] = 'Home';
-		$data['submenu'] = 'Dashboard';
+		$data['menutitle'] 	= 'Dashboard';
+		$data['menu'] 		= 'Home';
+		$data['submenu'] 	= 'Dashboard';
 
 		$this->load->view('pembelian/template/head');
 		$this->load->view('pembelian/template/navbar');
@@ -34,9 +34,9 @@ class Pembelian extends CI_Controller {
 	// -------------- Jenis barang --------------
 	public function view_jenisbrng()
 	{
-		$data['menutitle'] = 'Data Jenis Barang';
-		$data['menu'] = 'Data Master';
-		$data['submenu'] = 'Jenis Barang';
+		$data['menutitle'] 	= 'Data Jenis Barang';
+		$data['menu'] 		= 'Data Master';
+		$data['submenu'] 	= 'Jenis Barang';
 
 		$isi['isi'] = $this->M_pembelian->v_jenisbrng();
 
@@ -72,9 +72,9 @@ class Pembelian extends CI_Controller {
 
 	public function u_jenisbrng($id='')
 	{
-		$data['menutitle'] = 'Data Master';
-		$data['menu'] = 'Data Master';
-		$data['submenu'] = 'Edit Jenis Barang';
+		$data['menutitle'] 	= 'Edit Jenis Barang';
+		$data['menu'] 		= 'Data Master';
+		$data['submenu'] 	= 'Jenis Barang';
 
 		$isi['isi'] = $this->M_pembelian->ve_jenisbrng($id);
 
@@ -128,9 +128,9 @@ class Pembelian extends CI_Controller {
 	// --------------- Group Barang -------------
 	public function view_groupbrng()
 	{
-		$data['menutitle'] = 'Data Group Barang';
-		$data['menu'] = 'Data Master';
-		$data['submenu'] = 'Group Barang';
+		$data['menutitle'] 	= 'Data Group Barang';
+		$data['menu'] 		= 'Data Master';
+		$data['submenu'] 	= 'Group Barang';
 
 		$isi['isi'] = $this->M_pembelian->v_groupbrng();
 
@@ -168,9 +168,9 @@ class Pembelian extends CI_Controller {
 
 	public function u_groupbrng($id='')
 	{
-		$data['menutitle'] = 'Data Master';
-		$data['menu'] = 'Data Master';
-		$data['submenu'] = 'Edit Group Barang';
+		$data['menutitle'] 	= 'Edit Group Barang';
+		$data['menu'] 		= 'Data Master';
+		$data['submenu'] 	= 'Group Barang';
 
 		$isi['isi'] = $this->M_pembelian->ve_groupbrng($id);
 
@@ -225,9 +225,9 @@ class Pembelian extends CI_Controller {
 	// --------------- Supplier -----------------
 	public function view_supplier()
 	{
-		$data['menutitle'] = 'Data Supplier';
-		$data['menu'] = 'Data Master';
-		$data['submenu'] = 'Supplier';
+		$data['menutitle'] 	= 'Data Supplier';
+		$data['menu'] 		= 'Data Master';
+		$data['submenu'] 	= 'Supplier';
 
 		$isi['isi'] = $this->M_pembelian->v_supplier();
 
@@ -239,9 +239,9 @@ class Pembelian extends CI_Controller {
 	}
 	public function t_supplier()
 	{
-		$data['menutitle'] = 'Data Supplier';
-		$data['menu'] = 'Data Master';
-		$data['submenu'] = 'Supplier';
+		$data['menutitle'] 	= 'Tambah Supplier';
+		$data['menu'] 		= 'Data Master';
+		$data['submenu'] 	= 'Supplier';
 
 		$isi['get_prov'] = $this->M_pembelian->get_prov();
 		// $isi['isi'] = $this->M_pembelian->ve_metpem($id);
@@ -289,9 +289,9 @@ class Pembelian extends CI_Controller {
 	}
 	public function u_supplier($id='')
 	{
-		$data['menutitle'] = 'Data Supplier';
-		$data['menu'] = 'Data Master';
-		$data['submenu'] = 'Edit Supplier';
+		$data['menutitle'] 	= 'Edit Supplier';
+		$data['menu'] 		= 'Data Master';
+		$data['submenu'] 	= 'Supplier';
 
 		$isi['isi'] = $this->M_pembelian->ve_supplier($id);
 		$isi['get_prov'] = $this->M_pembelian->get_prov();
@@ -342,9 +342,9 @@ class Pembelian extends CI_Controller {
 	// ----------- Metode Pembelian -------------
 	public function view_metpemb()
 	{
-		$data['menutitle'] = 'Data Metode Pembelian';
-		$data['menu'] = 'Data Master';
-		$data['submenu'] = 'Metode Pembelian';
+		$data['menutitle'] 	= 'Data Metode Pembelian';
+		$data['menu'] 		= 'Data Master';
+		$data['submenu'] 	= 'Metode Pembelian';
 
 		$isi['isi'] = $this->M_pembelian->v_metpemb();
 
@@ -379,9 +379,9 @@ class Pembelian extends CI_Controller {
 
 	public function u_metpemb($id='')
 	{
-		$data['menutitle'] = 'Data Metode Pembelian';
-		$data['menu'] = 'Data Master';
-		$data['submenu'] = 'Edit Metode Pembelian';
+		$data['menutitle'] 	= 'Edit Metode Pembelian';
+		$data['menu'] 		= 'Data Master';
+		$data['submenu'] 	= 'Metode Pembelian';
 
 		$isi['isi'] = $this->M_pembelian->ve_metpem($id);
 
@@ -436,9 +436,9 @@ class Pembelian extends CI_Controller {
 	// --------------------- Pesanan Baru -------------------------
 	public function v_verpesbaru()
 	{
-		$data['menutitle'] = 'Verifikasi Data Pesanan';
-		$data['menu'] = 'Verifilkasi';
-		$data['submenu'] = 'Pesanan Ke Pembelian';
+		$data['menutitle'] 	= 'Verifikasi Data Pesanan';
+		$data['menu'] 		= 'Verifilkasi';
+		$data['submenu'] 	= 'Pesanan Baru';
 
 		$isi['isi'] = $this->M_pembelian->v_verpesbar();
 
@@ -450,9 +450,9 @@ class Pembelian extends CI_Controller {
 	}
 	public function v_ver_pesbaru($id)
 	{
-		$data['menutitle'] = 'Detail Data Pesanan';
-		$data['menu'] = 'Verifikasi';
-		$data['submenu'] = 'Verifikasi Detail Pesanan';
+		$data['menutitle'] 	= 'Detail Data Pesanan';
+		$data['menu'] 		= 'Verifikasi';
+		$data['submenu'] 	= 'Verifikasi Detail Pesanan';
 
 		$isi['judul'] = $this->M_pembelian->v_ver_idpesbar($id);
 		$isi['isi'] = $this->M_pembelian->v_ver_dtlpesbar($id);
@@ -499,9 +499,9 @@ class Pembelian extends CI_Controller {
 	// ----------------------- Rencana Pembelian ------------------
 	public function v_pembelian()
 	{
-		$data['menutitle'] = 'Transaksi Pembelian';
-		$data['menu'] = 'Transaksi';
-		$data['submenu'] = 'Pembelian';
+		$data['menutitle'] 	= 'Transaksi Pembelian';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Renc. Pembelian';
 
 		$isi['isi'] = $this->M_pembelian->v_pembelian();
 
@@ -513,9 +513,9 @@ class Pembelian extends CI_Controller {
 	}
 	public function t_pembelian()
 	{
-		$data['menutitle'] = 'Tambah Transaksi Pembelian';
-		$data['menu'] = 'Pembelian';
-		$data['submenu'] = 'Tambah Pembelian';
+		$data['menutitle'] 	= 'Tambah Transaksi Pembelian';
+		$data['menu'] 		= 'Pembelian';
+		$data['submenu'] 	= 'Renc. Pembelian';
 
 		$isi['kode'] = $this->M_pembelian->k_pembelian();
 		$isi['get_mint'] = $this->M_pembelian->get_pembpes();
@@ -564,8 +564,7 @@ class Pembelian extends CI_Controller {
 							'tgl_beli' 		=> $tglbeli,
 							'ppn_beli' 		=> $ppn,
 							'total_beli'	=> $subtotal,
-							'ket_pembelian'	=> $ket,
-							'ket_dtl_beli'	=> $ketdtlbeli,
+							'ket_beli'		=> $ket,
 							'totalhrg_beli' => $total
 			);
 			$sql1 = $this->M_pembelian->s_pembelian($data1);
@@ -577,7 +576,7 @@ class Pembelian extends CI_Controller {
 					array_push($data2, array(
 						'id_pembelian' 		=> $kd,
 						'id_dtl_permintaan' => $datadtlpes,
-						'id_barang' 		=> $idbag[$i],
+						'id_barang' 		=> $idbrng[$i],
 						'nota_dtl_beli' 	=> $notabeli,
 						'jml_dtl_minta' 	=> $jmlpes[$i],
 						'ppn_dtl_beli' 		=> $subppnpemb[$i],
@@ -585,6 +584,7 @@ class Pembelian extends CI_Controller {
 						'totalhrg_dtl_beli' => $subtotpemb[$i],
 						'tgl_renc_beli' 	=> $tglrenc[$i],
 						'jml_renc_beli' 	=> $jmlrenbeli[$i],
+						'hrg_renc_beli' 	=> $hrgrencbeli[$i],
 						'ket_dtl_beli'		=> $ketdtlbeli[$i],
 						'langsung_beli'		=> $sungbeli[$i]
 					));
@@ -608,6 +608,156 @@ class Pembelian extends CI_Controller {
 			echo 'window.location=("'.site_url('pembelian/v_pembelian').'")';
 			echo '</script>';
 		}
+	}
+	public function v_dtl_pemb($id)
+	{
+		$data['menutitle'] 	= 'Detail Data Renc. Pembelian';
+		$data['menu'] 		= 'Renc. Pembelian';
+		$data['submenu'] 	= 'Renc. Pembelian';
+
+		$isi['judul'] = $this->M_pembelian->v_dtl_idpemb($id);
+		$isi['isi'] = $this->M_pembelian->v_dtl_pemb($id);
+		$isi['get_rppemb'] = $this->M_pembelian->get_rppemb($id);		
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/pembelian/view_detail',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function v_konfpemb($id)
+	{
+		$id 	= $this->input->post('kode');
+		$ubah 	= $this->input->post('ubah');
+
+		$data 	= array('selesai_beli' => $ubah);
+		$sql 	= $this->M_pembelian->v_konfpemb($id,$data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+		}
+	}
+	public function v_dtl_konfpemb($id)
+	{
+		$id 	= $this->input->post('kode');
+		$ubah 	= $this->input->post('ubah');
+		$idpemb = $this->input->post('kode_permin');
+
+		$data 	= array('langsung_beli' => $ubah);
+		$sql 	= $this->M_pembelian->v_dtl_konfpemb($id,$data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_dtl_pemb/'.$idpemb)."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/v_dtl_pemb/'.$idpemb)."';</script>";
+		}
+	}
+	public function u_rencpemb($id='')
+	{
+		$data['menutitle'] 	= 'Edit Renc. Pembelian';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Renc. Pembelian';
+
+		$isi['isi'] = $this->M_pembelian->ve_rencpemb($id);
+		$isi['get_mint'] = $this->M_pembelian->get_pembpes();
+		$isi['get_dtlmint'] = $this->M_pembelian->get_pembdtlpes();
+		
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/pembelian/edit',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function rencoemb_u($id)
+	{
+		$this->form_validation->set_rules('kdpemb','Kdpemb','required');
+		if($this->form_validation->run() == TRUE){
+			$ids  			= $this->input->post('kdpemb');
+			$nobeli 		= $this->input->post('nobeli');
+			$tglbeli 		= $this->input->post('tglbeli');
+			$ket  			= $this->input->post('ket');
+			// $id2  			= $this->input->post('iddtlpes');
+			$idbrng  		= $this->input->post('idbrng');
+			$jmlpes  		= $this->input->post('jmlpes');
+			$jmlrencbeli  	= $this->input->post('jmlrencbeli');
+			$hrgrencbeli  	= $this->input->post('hrgrencbeli');
+			$tglrenc  		= $this->input->post('tglrenc');
+			$subpemb  		= $this->input->post('subpemb');
+			$subppnpemb  	= $this->input->post('subppnpemb');
+			$subtotpemb  	= $this->input->post('subtotpemb');
+			$ketdtlbeli  	= $this->input->post('ketdtlbeli');
+
+			$sql2 = $this->M_pembelian->e_rencpemb($ids,$id,$subppnpemb,$subpemb,$subtotpemb,$nobeli,$tglbeli,$ket);
+			$data1 = array( 'id_dtl_permintaan' => $id,
+						    'id_barang' 		=> $idbrng,
+						    'jml_dtl_minta' 	=> $jmlpes,
+						    'tgl_renc_beli' 	=> $tglrenc,
+						    'jml_renc_beli' 	=> $jmlrencbeli,
+						    'hrg_renc_beli' 	=> $hrgrencbeli,
+						    'ppn_dtl_beli' 		=> $subppnpemb,
+						    'total_dtl_beli' 	=> $subpemb,
+						    'totalhrg_dtl_beli'	=> $subtotpemb,
+						    'ket_dtl_beli' 		=> $ketdtlbeli 
+						  );
+			$sql1 = $this->M_pembelian->e_dtlrencpemb($id,$data1);
+
+			$allsql = array($sql1,$sql2); 
+			if($allsql){ // Jika sukses
+				echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_dtl_pemb/'.$ids)."';</script>";
+			}else{ // Jika gagal
+				echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_rencpemb/'.$id)."';</script>";
+			}
+		}
+	}
+	public function rencpemb_h($id)
+	{
+		$a = $this->M_pembelian->h_rencpemb($id);
+		$b = $this->M_pembelian->h_dtlrencpemb($id);
+		$all = array($a,$b);
+		if($allsql){ // Jika sukses
+			echo "<script>alert('Data berhasil dihapus');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+		}else{ // Jika gagal
+			echo "<script>alert('Data gagal dihapus');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+		}
+	}
+	// ------------------------------------------------------------
+	// ----------------- Surat Pesanan Barang ---------------------
+	public function v_spb()
+	{
+		$data['menutitle'] 	= 'Transaksi Surat Pesanan barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Surat Pesanan Barang';
+
+		// $isi['isi'] = $this->M_pembelian->v_pembelian();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/surat_pesanan_barang/view');
+		$this->load->view('pembelian/template/footer');
+	}
+	public function t_spb()
+	{
+		$data['menutitle'] 	= 'Tambah Surat Pesanan Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Surat Pesanan Barang';
+
+		$isi['kode'] = $this->M_pembelian->k_spb();
+		$isi['get_supplier'] = $this->M_pembelian->get_supplier();
+		$isi['get_rencpemb'] = $this->M_pembelian->get_rencpemb();
+		$company = $this->M_pembelian->get_company();
+		foreach ($company as $row) {
+			$get_company = $row->nm_company;
+		}
+		$isi['get_company'] = $get_company;
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/surat_pesanan_barang/tambah',$isi);
+		$this->load->view('pembelian/template/footer');
 	}
 	// ------------------------------------------------------------
 	// ========================================================================================================================================

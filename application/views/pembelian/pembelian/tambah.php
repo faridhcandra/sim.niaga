@@ -66,7 +66,7 @@
 					<div class="row">
 						<div class="col-md-2"><p><i><b>Detail Pembelian</b></i></p></div>
 						<div class="col-md-10">
-							<hr>
+							<hr style="border: 1px solid green;">
 						</div>
 					</div>
 					<div id="insert-pembbaru"></div>
@@ -81,7 +81,7 @@
 					<div class="row">
 						<div class="col-md-2"><p><i><b>Total Pembelian</b></i></p></div>
 						<div class="col-md-10">
-							<hr>
+							<hr style="border: 1px solid green;">
 						</div>
 					</div>
 					<div class="row">
@@ -104,7 +104,7 @@
 							</div>
 						</div>
 					</div>
-					<hr>
+					<hr style="border: 1px solid green;">
 					<div class="row">
 					<div class="col-md-12">
 						<div class="form-group float-right">
@@ -254,7 +254,7 @@ $(document).ready(function(){
 	+		"<div class='col-md-3'>"
 	+			"<label style='font-size: 11pt;'>Keterangan Beli</label>"
 	+			"<div class='form-group'>"
-	+				"<input class='form-control form-control-sm' type='text' name='ketdtlbeli[]'>"
+	+				"<input class='form-control form-control-sm' type='text' name='ketdtlbeli[]' autocomplete='off'>"
 	+			"</div>"
 	+		"</div>"
 	+	"</div>"
@@ -341,10 +341,10 @@ $(document).ready(function(){
         var hrg        	= parseFloat($('#hrgdtlpembpes'+nextform).val()) || 0;
         var jumlah      = parseFloat(jml * hrg);
         $('#subpemb'+nextform).val(jumlah);
-        totalandppn();
+        totalrencpemb();
     });
     // total dan ppn
-    function totalandppn(){
+    function totalrencpemb(){
     	var subtotal    = parseFloat($('#subpemb'+nextform).val()) || 0;
     	var ppn 		= parseFloat((subtotal * 10)/100);
     	var total 		= parseFloat(subtotal+ppn);
@@ -380,7 +380,7 @@ $(document).ready(function(){
 
 	// tabel dtl permintaan
 	$(function () {
-		$("#tbldtlpes").DataTable({
+		$("#tbldtlpes"+nextform).DataTable({
 		  "deferRender" : true,
 		  "processing"  : true,
 		  "order"       : [],
