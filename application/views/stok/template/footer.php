@@ -41,12 +41,15 @@
   }
 
   // Datatable
-  $(function () {
-    $("#example2").DataTable({
+  $('#example2').DataTable({
       "deferRender" : true,
       "processing"  : true,
-      "order"       : [],
-    });
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "order": [],
+      "info": true,
+      "autoWidth": false,
   });
 
   // Totips 

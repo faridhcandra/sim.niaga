@@ -11,8 +11,6 @@
 <!-- ./wrapper -->
 </body>
 <!-- REQUIRED SCRIPTS -->
-<!-- jQuery -->
-<!-- <script src="<?php echo base_url();?>assets/plugins/jquery/jquery.min.js"></script> -->
 <!-- Bootstrap -->
 <script src="<?php echo base_url();?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE -->
@@ -21,11 +19,11 @@
 <script src="<?php echo base_url();?>assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- pace-progress -->
 <script src="<?php echo base_url();?>assets/plugins/pace-progress/pace.min.js"></script>
+<!-- Toastr -->
+<script src="<?php echo base_url();?>assets/plugins/toastr/toastr.min.js"></script>
 <!-- DataTables -->
 <script src="<?php echo base_url();?>assets/plugins/datatables/jquery.dataTables.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
-<!-- Toastr -->
-<!-- <script src="<?php echo base_url();?>assets/plugins/toastr/toastr.min.js"></script> -->
 <script>
   // Add active class to the current button (highlight it)
   var header = document.getElementById("mySidebar");
@@ -38,19 +36,34 @@
       this.className += " active";
     });
   }
-
   // Datatable
-  $(function () {
-    $("#example2").DataTable({
+   $('#example2').DataTable({
       "deferRender" : true,
       "processing"  : true,
-      "order"       : [],
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "order": [],
+      "info": true,
+      "autoWidth": false,
     });
-  });
+  // Toastr
+  <?php if ($this->session->flashdata('success')) {?>
+    toastr.success("<?php echo $this->session->flashdata('success'); ?>");
+  <?php } else if ($this->session->flashdata('error')) {?>
+    toastr.error("<?php echo $this->session->flashdata('error'); ?>");
+  <?php } else if ($this->session->flashdata('warning')) {?>
+    toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
+  <?php } else if ($this->session->flashdata('info')) {?>
+    toastr.info("<?php echo $this->session->flashdata('info'); ?>");
+  <?php }?>
 
   // Totips 
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({
+        placement: "auto",
+        container: 'body',
+    });
   })
 
 </script>

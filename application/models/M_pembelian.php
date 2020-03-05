@@ -366,13 +366,13 @@ class M_pembelian extends CI_Model {
 	 					   where a.id_pembelian = '$id' and b.id_dtl_pembelian = '$id2'");
 
 	}
-	public function h_rencpemb($id,$data)
+	public function h_rencpemb($id)
 	{
-		$this->db->where('id_pembelian', $id)->update('tbl_pembelian',$data);
+		$this->db->where('id_pembelian', $id)->delete('tbl_pembelian');
 	}
-	public function h_dtlrencpemb($id,$data)
+	public function h_dtlrencpemb($id)
 	{
-		$this->db->where('id_pembelian', $id)->update('tbl_dtl_pembelian',$data);
+		$this->db->where('id_pembelian', $id)->delete('tbl_dtl_pembelian');
 	}
 	// ------------------------------------------------------------
 	// ----------------- Surat Pesanan Barang ---------------------
@@ -398,6 +398,12 @@ class M_pembelian extends CI_Model {
 	function get_company()
 	{
 		$sql = "SELECT nm_company FROM tbl_company WHERE id_company = 'GKBI'";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	function get_rpspb($id)
+	{
+		$sql = "SELECT total_spb,ppn_spb,totalharga_spb FROM tbl_spb WHERE id_spb='$id'";
 		$data = $this->db->query($sql);
 		return $data->result();
 	}
@@ -428,6 +434,110 @@ class M_pembelian extends CI_Model {
 		}
 		
 		return $kode_spb;
+	}
+	public function v_spb()
+	{
+		$sql = "SELECT a.id_spb,a.tgl_spb,a.nota_spb,b.nm_supplier,b.attn_supplier,a.total_spb,a.ppn_spb,a.totalharga_spb
+				FROM tbl_spb as a
+				join tbl_supplier as b on a.id_supplier=b.id_supplier
+				order by a.tgl_spb desc";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	function s_spb($data)
+	{
+		return $this->db->insert('tbl_spb', $data);
+	}
+	function s_dtl_spb_batch($data)
+	{
+		return $this->db->insert_batch('tbl_dtl_spb', $data);
+	}
+	function v_dtl_idspb($id)
+	{
+		$this->db->select('a.id_spb,a.tgl_spb,a.nota_spb,b.nm_supplier');
+		$this->db->from('tbl_spb as a');
+		$this->db->join('tbl_supplier as b', 'a.id_supplier = b.id_supplier');
+		$this->db->where('a.id_spb', $id);
+		$this->db->limit(1);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+	function v_dtl_spb($id)
+	{
+		$this->db->select('a.id_dtl_spb,a.id_spb,b.nm_barang,a.jmlbrng_spb,a.satuanbrng_spb,a.hargabrng_spb,a.dtltotal_spb,a.dtlppn_spb,a.dtltotalhrg_spb,a.selesai_dtl_spb');
+		$this->db->from('tbl_dtl_spb as a');
+		$this->db->join('tbl_nama_barang as b', 'a.id_barang = b.id_barang');
+		$this->db->where('a.id_spb', $id);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+	function v_dtl_konfspb($id,$data)
+	{
+		$this->db->where('id_dtl_spb', $id)
+				 ->update('tbl_dtl_spb',$data);
+	}
+	function ve_nospb($id)
+	{
+		$this->db->select('a.id_spb,a.nota_spb,a.tgl_spb,a.kurs_spb,a.tgl_serahspb,a.ket_serahspb,a.ket_gudangspb,a.ket_spb,a.haribayar_spb,a.ket_bayar,a.ket_spb,b.id_supplier,b.nm_supplier,b.attn_supplier,a.total_spb,a.ppn_spb,a.totalharga_spb');
+		$this->db->from('tbl_spb as a');
+		$this->db->join('tbl_supplier as b', 'a.id_supplier = b.id_supplier');
+		$this->db->where('a.id_spb', $id);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+	function ve_spb($id)
+	{
+		$this->db->select('a.id_dtl_spb,a.id_spb,a.nota_dtl_spb,a.id_dtl_pembelian,a.nota_beli,d.id_barang,c.nm_barang,a.hargabrng_spb,a.jmlbrng_spb,a.satuanbrng_spb,a.dtltotal_spb,a.dtlppn_spb,a.dtltotalhrg_spb,');
+		$this->db->from('tbl_dtl_spb as a');
+		$this->db->join('tbl_nama_barang as c', 'a.id_barang = c.id_barang');
+		$this->db->join('tbl_dtl_pembelian as d', 'a.id_dtl_pembelian = d.id_dtl_pembelian');
+		$this->db->where('a.id_dtl_spb', $id);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+	function e_spb($id,$id2,$ppn,$subtotal,$total)
+	{
+		$this->db->query( "update tbl_spb a join tbl_dtl_spb b on a.id_spb=b.id_spb
+	 					   set a.total_spb 		= (a.total_spb-b.dtltotal_spb)+$subtotal,
+	 					   a.ppn_spb 			= (a.ppn_spb-b.dtlppn_spb)+$ppn,
+						   a.totalharga_spb 	= (a.totalharga_spb-b.dtltotalhrg_spb)+$total
+	 					   where a.id_spb = '$id' and b.id_dtl_spb = '$id2'");
+	}
+	function e_nospb($id,$data)
+	{
+		$this->db->where('id_spb',$id)->update('tbl_spb', $data);
+	}
+	function e_dtl_spb($id,$data)
+	{
+		$this->db->where('id_dtl_spb',$id)->update('tbl_dtl_spb', $data);
+	}
+	function e_dtl_nospb($id,$data)
+	{
+		$this->db->where('id_spb',$id)->update('tbl_dtl_spb', $data);
+	}
+	function h_spb($id)
+	{
+		$this->db->where('id_spb', $id)->delete('tbl_spb');
+	}
+	function h_dtlspb($id)
+	{
+		$this->db->where('id_spb', $id)->delete('tbl_dtl_spb');
 	}
 	// ------------------------------------------------------------
 	// ========================================================================================================================================

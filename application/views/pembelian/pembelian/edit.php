@@ -5,7 +5,7 @@
 		<div class="col-md-12">
 		<div class="card card-outline card-dark">
 			<div class="card-header">
-				<h3 class="card-title">Form Tambah Pembelian</h3>
+				<h3 class="card-title">Form Ubah Pembelian</h3>
 			</div>
 			<div class="card-body">
 				<?php foreach ($isi as $key => $row): ?>

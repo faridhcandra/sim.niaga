@@ -9,12 +9,12 @@
 			</div>
 			<div class="card-body">
 				<?php echo validation_errors();?>
-				<?php echo form_open('pembelian/');?>
+				<?php echo form_open('pembelian/spb_t');?>
 					<div class="row">
 						<div class="col-md-3">
 							<div class="form-group">
 								<label style="font-size: 11pt;">No SPB</label>
-								<input class="form-control form-control-sm" type="text" name="nospb" placeholder="ex: xxx/kdunit/bln/thn" required="" autocomplete="off" autofocus="">
+								<input class="form-control form-control-sm" type="text" name="nospb" placeholder="ex: xxx/spb/kdunit/bln/thn" required="" autocomplete="off" autofocus="">
 								<input class="form-control form-control-sm" type="text" name="kode" hidden="" value="<?php echo $kode?>">
 							</div>
 						</div>
@@ -86,12 +86,12 @@
 								</td>
 								<td width="12%">
 									<div class="form-group">
-										<input class="form-control form-control-sm" type="date" name="tglserah">
+										<input class="form-control form-control-sm" type="date" name="tglserah" required="">
 									</div>
 								</td>
 								<td colspan="3">
 									<div class="form-group">
-										<input class="form-control form-control-sm" type="text" name="ketserah" value="Barang sampai di gudang kami">
+										<input class="form-control form-control-sm" type="text" name="ketserah" value="Barang sampai di gudang kami" required="">
 									</div>
 								</td>
 								<td valign="top" valign="top">
@@ -99,7 +99,7 @@
 								</td>
 								<td>
 									<div class="form-group">
-										<input class="form-control form-control-sm" type="number" name="total" id="totalspb">
+										<input class="form-control form-control-sm" type="number" name="total" id="totalspb" required="">
 									</div>
 								</td>
 							</tr>
@@ -109,7 +109,7 @@
 								</td>
 								<td width="5%">
 									<div class="form-group">
-										<input class="form-control form-control-sm" type="number" name="haribayar">
+										<input class="form-control form-control-sm" type="number" name="haribayar" required="">
 									</div>
 								</td>
 								<td valign="top">
@@ -117,7 +117,7 @@
 								</td>
 								<td colspan="2">
 									<div class="form-group">
-										<input class="form-control form-control-sm" type="text" name="ketbayar" value="setelah barang diterima dan diperiksa dengan baik">
+										<input class="form-control form-control-sm" type="text" name="ketbayar" value="setelah barang diterima dan diperiksa dengan baik" required="">
 									</div>
 								</td>
 								<td width="10%" valign="top">
@@ -125,7 +125,7 @@
 								</td>
 								<td width="20%">
 									<div class="form-group">
-										<input class="form-control form-control-sm" type="number" name="ppn" id="ppnspb">
+										<input class="form-control form-control-sm" type="number" name="ppn" id="ppnspb" required="">
 									</div>
 								</td>
 							</tr>
@@ -135,7 +135,7 @@
 								</td>
 								<td colspan="4">
 									<div class="form-group">
-										<select class="form-control form-control-sm" name="ketgudang">
+										<select class="form-control form-control-sm" name="ketgudang" required="">
 											<option value="Franko gudang <?php echo $get_company?>">Franko gudang <?php echo $get_company?></option>
 											<option value="Loco Gudang Penjualan">Loco Gudang Penjualan</option>
 										</select>
@@ -152,7 +152,7 @@
 							</tr>
 							<tr>
 								<td colspan="7">
-									<textarea class="form-control form-control-sm" rows="5" name="ketspb">
+									<textarea class="form-control form-control-sm" rows="5" name="ketspb" required="">
 1.Kualitas barang tersebut diatas sesuai dengan standart kualitas <?php echo $get_company?> - Yogyakarta.<?php echo "\n"?>
 2.Dokumen pendukung harap segera dilengkapi/dikirim maksimal 7 (tujuh) hari setelah barang<?php echo "\n"?>
    kami terima karena hal itu sebagai syarat pengajuan pembayaran.<?php echo "\n"?>
@@ -439,7 +439,7 @@ $(document).ready(function(){
     }
     // tabel no renc pembelian
 	$(function () {
-		$("#tblrencbeli").DataTable({
+		$("#tblrencbeli"+nextform).DataTable({
 		  "deferRender" : true,
 		  "processing"  : true,
 		  "order"       : [],

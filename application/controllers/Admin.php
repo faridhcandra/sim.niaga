@@ -51,9 +51,13 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->s_bagian($data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('admin/v_bagian')."';</script>";
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('admin/v_bagian')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('admin/v_bagian','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('admin/v_bagian')."';</script>";
+				// echo "<script>alert('Data gagal disimpan');window.location = '".base_url('admin/v_bagian')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('admin/v_bagian','refresh');
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -93,12 +97,18 @@ class Admin extends CI_Controller {
 			$sql = $this->M_admin->e_bagian($id, $data);
 			$allsql = array($sql);
 				if($allsql){ // Jika sukses
-					echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_bagian')."';</script>";
+					// echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_bagian')."';</script>";
+					$this->session->set_flashdata('success', 'Data berhasil diubah');
+					redirect('admin/v_bagian','refresh');
 				}else{ // Jika gagal
-					echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/u_bagian')."';</script>";
+					// echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/v_bagian')."';</script>";
+					$this->session->set_flashdata('error', 'Data gagal diubah');
+					redirect('admin/v_bagian','refresh');
 				}
 		}else{
-			echo "<script>alert('Maaf Kode Bagian tidak ditemukan');window.location = '".site_url('admin/v_bagian')."';</script>";
+			// echo "<script>alert('Maaf Kode Bagian tidak ditemukan');window.location = '".site_url('admin/v_bagian')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Kode Bagian tidak ditemukan');
+			redirect('admin/v_bagian','refresh');
 		}
 	}
 
@@ -107,9 +117,13 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->h_bagian($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('admin/v_bagian')."';</script>";
+			// echo "<script>alert('Data berhasil dihapus');window.location = '".base_url('admin/v_bagian')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('admin/v_bagian','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('admin/v_bagian')."';</script>";
+			// echo "<script>alert('Data gagal di hapus');window.location = '".base_url('admin/v_bagian')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('admin/v_bagian','refresh');
 		}
 	}
 	// ------------------------------------
@@ -140,9 +154,13 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->s_unit($data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('admin/v_unit')."';</script>";
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('admin/v_unit')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('admin/v_unit','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('admin/v_unit')."';</script>";
+				// echo "<script>alert('Data gagal disimpan');window.location = '".base_url('admin/v_unit')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('admin/v_unit','refresh');
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -180,12 +198,18 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->e_unit($id, $data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_unit')."';</script>";
+				// echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_unit')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('admin/v_unit','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/v_unit')."';</script>";
+				// echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/v_unit')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('admin/v_unit','refresh');
 			}
 		}else{
-			echo "<script>alert('Maaf Kode Unit tidak ditemukan');window.location = '".site_url('admin/v_unit')."';</script>";
+			// echo "<script>alert('Maaf Kode Unit tidak ditemukan');window.location = '".site_url('admin/v_unit')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Kode Unit tidak ditemukan');
+			redirect('admin/v_unit','refresh');
 		}
 	}
 
@@ -194,9 +218,13 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->h_unit($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('admin/v_unit')."';</script>";
+			// echo "<script>alert('Data berhasil dihapus');window.location = '".base_url('admin/v_unit')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('admin/v_unit','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('admin/v_unit')."';</script>";
+			// echo "<script>alert('Data gagal di hapus');window.location = '".base_url('admin/v_unit')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('admin/v_unit','refresh');
 		}
 	}
 	// ------------------------------------
@@ -228,9 +256,13 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->s_kabupaten($data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('admin/v_kabupaten')."';</script>";
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('admin/v_kabupaten')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('admin/v_kabupaten','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('admin/v_kabupaten')."';</script>";
+				// echo "<script>alert('Data gagal disimpan');window.location = '".base_url('admin/v_kabupaten')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('admin/v_kabupaten','refresh');
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -269,12 +301,18 @@ class Admin extends CI_Controller {
 			$sql = $this->M_admin->e_kabupaten($id, $data);
 			$allsql = array($sql);
 				if($allsql){ // Jika sukses
-					echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_kabupaten')."';</script>";
+					// echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_kabupaten')."';</script>";
+					$this->session->set_flashdata('success', 'Data berhasil diubah');
+					redirect('admin/v_kabupaten','refresh');
 				}else{ // Jika gagal
-					echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/u_Kabupaten')."';</script>";
+					// echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/u_Kabupaten')."';</script>";
+					$this->session->set_flashdata('error', 'Data gagal diubah');
+					redirect('admin/v_kabupaten','refresh');
 				}
 		}else{
-			echo "<script>alert('Maaf Nama Kabupaten tidak ditemukan');window.location = '".site_url('admin/v_Kabupaten')."';</script>";
+			// echo "<script>alert('Maaf Nama Kabupaten tidak ditemukan');window.location = '".site_url('admin/v_Kabupaten')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Nama Kabupaten tidak ditemukan');
+			redirect('admin/v_Kabupaten','refresh');
 		}
 	}
 
@@ -283,9 +321,13 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->h_kabupaten($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('admin/v_Kabupaten')."';</script>";
+			// echo "<script>alert('Data berhasil dihapus');window.location = '".base_url('admin/v_Kabupaten')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('admin/v_kabupaten','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('admin/v_Kabupaten')."';</script>";
+			// echo "<script>alert('Data gagal di hapus');window.location = '".base_url('admin/v_Kabupaten')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('admin/v_kabupaten','refresh');
 		}
 	}
 	// ---------------------------------------
@@ -313,9 +355,13 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->s_provinsi($data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('admin/v_provinsi')."';</script>";
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".base_url('admin/v_provinsi')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('admin/v_provinsi','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".base_url('admin/v_provinsi')."';</script>";
+				// echo "<script>alert('Data gagal disimpan');window.location = '".base_url('admin/v_provinsi')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('admin/v_provinsi','refresh');
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -352,12 +398,18 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->e_provinsi($id, $data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_provinsi')."';</script>";
+				// echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_provinsi')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('admin/v_provinsi','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/v_provinsi')."';</script>";
+				// echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/v_provinsi')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('admin/v_provinsi','refresh');
 			}
 		}else{
-			echo "<script>alert('Maaf Nama provinsi tidak ditemukan');window.location = '".site_url('admin/v_provinsi')."';</script>";
+			// echo "<script>alert('Maaf Nama provinsi tidak ditemukan');window.location = '".site_url('admin/v_provinsi')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Nama provinsi tidak ditemukan');
+			redirect('admin/v_provinsi','refresh');
 		}
 	}
 
@@ -366,9 +418,13 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->h_provinsi($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".base_url('admin/v_provinsi')."';</script>";
+			// echo "<script>alert('Data berhasil dihapus');window.location = '".base_url('admin/v_provinsi')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('admin/v_provinsi','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".base_url('admin/v_provinsi')."';</script>";
+			// echo "<script>alert('Data gagal dihapus');window.location = '".base_url('admin/v_provinsi')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('admin/v_provinsi','refresh');
 		}
 	}
 	// ---------------------------------------
@@ -420,12 +476,18 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->e_jabatan($data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_jabatan')."';</script>";
+				// echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_jabatan')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('admin/v_jabatan','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/v_jabatan')."';</script>";
+				// echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/v_jabatan')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('admin/v_jabatan','refresh');
 			}
 		}else{
-			echo "<script>alert('Maaf Kode tidak ditemukan');window.location = '".site_url('admin/v_jabatan')."';</script>";
+			// echo "<script>alert('Maaf Kode tidak ditemukan');window.location = '".site_url('admin/v_jabatan')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Kode tidak ditemukan');
+			redirect('admin/v_jabatan','refresh');
 		}
 	}
 	// ------------------------------------
@@ -480,12 +542,18 @@ class Admin extends CI_Controller {
 		$sql = $this->M_admin->e_perusahaan($data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_perusahaan')."';</script>";
+				// echo "<script>alert('Data berhasil diubah');window.location = '".base_url('admin/v_perusahaan')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('admin/v_perusahaan','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/v_perusahaan')."';</script>";
+				// echo "<script>alert('Data gagal diubah');window.location = '".base_url('admin/v_perusahaan')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('admin/v_perusahaan','refresh');
 			}
 		}else{
-			echo "<script>alert('Maaf Nama Perusahaan tidak ditemukan');window.location = '".site_url('admin/v_perusahaan')."';</script>";
+			// echo "<script>alert('Maaf Nama Perusahaan tidak ditemukan');window.location = '".site_url('admin/v_perusahaan')."';</script>";
+			$this->session->set_flashdata('error', 'Maaf Nama Perusahaan tidak ditemukan');
+			redirect('admin/v_perusahaan','refresh');
 		}
 	}
 	// ------------------------------------

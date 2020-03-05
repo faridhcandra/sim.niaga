@@ -1,10 +1,10 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar elevation-4 sidebar-dark-success">
   <!-- Brand Logo -->
-  <a href="index.html" class="brand-link">
+  <a href="index.html" class="brand-link text-sm">
     <img src="<?php echo base_url();?>assets/dist/img/logos.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
     style="opacity: .8">
-    <span class="brand-text text-white font-weight-light">SIM Pembelian</span>
+    <span class="brand-text text-white font-weight-light" style="font-size: 15.5px;">SIM Pembelian</span>
   </a>
   <!-- Sidebar -->
   <div class="sidebar">
@@ -20,11 +20,11 @@
     </div>
     <!-- Sidebar Menu -->
     <nav class="mt-2" id="mySidebar">
-      <ul class="nav navnav-pills nav-sidebar flex-column nav-flat " data-widget="treeview" role="menu" data-accordion="false">
+      <ul class="nav navnav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false" style="font-size: 15px;">  
         <!-- Add icons to the links using the .nav-icon class  with font-awesome or any other icon font library -->
         <li class="nav-item">
           <a href="<?php echo site_url('pembelian');?>" class="nav-link">
-            <i class="nav-icon fas fa-landmark"></i>
+            <i class="nav-icon fas fa-home"></i>
             <p>Halaman Utama</p>
           </a>
         </li>
@@ -104,12 +104,6 @@
                 <p>Pesanan Datang</p>
               </a>
             </li> -->
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Penerimaan</p>
-              </a>
-            </li>
           </ul>
         </li>
         <li class="nav-item has-treeview">
@@ -135,23 +129,17 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="<?php echo site_url('pembelian/v_npb')?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Nota Penerimaan (NPB)</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>MI Keluar</p>
               </a>
             </li>
-              <!-- <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Barang Masuk</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Barang Keluar</p>
-                </a>
-              </li> -->
             </ul>
           </li>
           <li class="nav-item has-treeview">

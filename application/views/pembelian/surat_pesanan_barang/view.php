@@ -1,5 +1,5 @@
-<!-- Main content  -->
-<div class="content">
+<!-- Main content -->
+<div class="content" style="font-size: 15px;">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
@@ -12,23 +12,36 @@
 						<div class="example1_wrapper" class="dataTables_wrapper">
 							<div class="row">
 								<div class="col-md-12">
-									<table id="example2" width="100%" class="table table-sm table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+									<table id="example2" class="table table-sm table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
 										<thead>
 											<tr>
-												<td>Tanggal</td>
+												<td >Tanggal</td>
 												<td>No SPB</td>
 												<td>Leveransir</td>
 												<td>Atas Nama</td>
 												<td>Subtotal</td>
 												<td>PPN</td>
 												<td>Total</td>
-												<td width="12%;" align="center">Aksi</td>
+												<td align="center" width="10%">Aksi</td>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												
-											</tr>
+											<?php foreach ($isi as $row) { ?>
+												<tr>
+													<td><?php echo date("d/m/Y",strtotime($row->tgl_spb))?></td>
+													<td><?php echo $row->nota_spb?></td>
+													<td><?php echo $row->nm_supplier?></td>
+													<td><?php echo $row->attn_supplier?></td>
+													<td><?php echo number_format($row->total_spb,2,',','.')?></td>
+													<td><?php echo number_format($row->ppn_spb,2,',','.')?></td>
+													<td><?php echo number_format($row->totalharga_spb,2,',','.')?></td>
+													<td class="project-actions text-center">
+														<a data-toggle="tooltip" title="Cetak Nota" href="#"><i class="fas fa-print fa-sm"></i></a>&nbsp;
+														<a data-toggle="tooltip" title="Detail SPB" href="<?php echo site_url('pembelian/v_dtl_spb/'.$row->id_spb)?>"><i class="fas fa-align-justify fa-sm"></i></a>&nbsp;
+														<a href="<?php echo site_url('pembelian/spb_h/'.$row->id_spb)?>" data-toggle="tooltip" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a>&nbsp;
+													</td>
+												</tr>
+											<?php } ?>
 										</tbody>
 										</table>
 									</div>

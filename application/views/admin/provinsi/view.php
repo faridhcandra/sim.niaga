@@ -1,5 +1,5 @@
 <!-- Main content -->
-<div class="content">
+<div class="content" style="font-size: 15px;">
 	<div class="container-fluid">
 		<div class="row">
 		<div class="col-md-4">
