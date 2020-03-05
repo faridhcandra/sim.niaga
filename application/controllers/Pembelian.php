@@ -30,7 +30,7 @@ class Pembelian extends CI_Controller {
 	}
 	// =================================================
 
-	// ========================================================== MENU MASTER ==================================================================
+	// ========================================================== MENU MASTER =================================================================
 	// -------------- Jenis barang --------------
 	public function view_jenisbrng()
 	{
@@ -56,9 +56,13 @@ class Pembelian extends CI_Controller {
 
 			$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('pembelian/view_jenisbrng','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+				// echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('pembelian/view_jenisbrng','refresh');
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -97,9 +101,13 @@ class Pembelian extends CI_Controller {
 				$sql = $this->M_pembelian->e_jenisbrng($id, $data);
 				$allsql = array($sql);
 					if($allsql){ // Jika sukses
-						echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+						// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+						$this->session->set_flashdata('success', 'Data berhasil diubah');
+						redirect('pembelian/view_jenisbrng','refresh');
 					}else{ // Jika gagal
-						echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_satuan')."';</script>";
+						// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+						$this->session->set_flashdata('error', 'Data gagal diubah');
+						redirect('pembelian/view_jenisbrng','refresh');
 					}
 				}else{
 					echo '<script language="javascript">';
@@ -110,7 +118,9 @@ class Pembelian extends CI_Controller {
 					echo '</script>';
 				}
 		}else{
-			echo "<script>alert('Maaf Nama Jenis Barang tidak ditemukan');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+			// echo "<script>alert('Maaf Nama Jenis Barang tidak ditemukan');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Nama Jenis Barang tidak ditemukan');
+			redirect('pembelian/view_jenisbrng','refresh');
 		}
 	}
 
@@ -119,9 +129,13 @@ class Pembelian extends CI_Controller {
 		$sql = $this->M_pembelian->h_jenisbrng($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+			// echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil di hapus');
+			redirect('pembelian/view_jenisbrng','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+			// echo "<script>alert('Data gagal di hapus');window.location = '".site_url('pembelian/view_jenisbrng')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal di hapus');
+			redirect('pembelian/view_jenisbrng','refresh');
 		}
 	}
 	// ------------------------------------------
@@ -152,9 +166,13 @@ class Pembelian extends CI_Controller {
 		$sql = $this->M_pembelian->s_groupbrng($data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('pembelian/view_groupbrng','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+				// echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('pembelian/view_groupbrng','refresh');
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -194,9 +212,13 @@ class Pembelian extends CI_Controller {
 				$sql = $this->M_pembelian->e_groupbrng($id, $data);
 				$allsql = array($sql);
 					if($allsql){ // Jika sukses
-						echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+						// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+						$this->session->set_flashdata('success', 'Data berhasil diubah');
+						redirect('pembelian/view_groupbrng','refresh');
 					}else{ // Jika gagal
-						echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_groupbrng')."';</script>";
+						// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_groupbrng')."';</script>";
+						$this->session->set_flashdata('error', 'Data gagal diubah');
+						redirect('pembelian/view_groupbrng','refresh');
 					}
 				}else{
 					echo '<script language="javascript">';
@@ -207,7 +229,9 @@ class Pembelian extends CI_Controller {
 					echo '</script>';
 				}
 		}else{
-			echo "<script>alert('Maaf Group Barang tidak ditemukan');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+			// echo "<script>alert('Maaf Group Barang tidak ditemukan');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Group Barang tidak ditemukan');
+			redirect('pembelian/view_groupbrng','refresh');
 		}
 	}
 
@@ -216,9 +240,13 @@ class Pembelian extends CI_Controller {
 		$sql = $this->M_pembelian->h_groupbrng($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+			// echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil di hapus');
+			redirect('pembelian/view_groupbrng','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+			// echo "<script>alert('Data gagal di hapus');window.location = '".site_url('pembelian/view_groupbrng')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal di hapus');
+			redirect('pembelian/view_groupbrng','refresh');
 		}
 	}
 	// ------------------------------------------
@@ -274,9 +302,13 @@ class Pembelian extends CI_Controller {
 			$sql = $this->M_pembelian->s_supplier($data);
 			$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('pembelian/view_supplier','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/t_supplier')."';</script>";
+				// echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/t_supplier')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('pembelian/view_supplier','refresh');
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -322,9 +354,13 @@ class Pembelian extends CI_Controller {
 				$sql = $this->M_pembelian->e_supplier($id, $data);
 				$allsql = array($sql); 
 					if($allsql){ // Jika sukses
-						echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+						// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+						$this->session->set_flashdata('success', 'Data berhasil diubah');
+						redirect('pembelian/view_supplier','refresh');
 					}else{ // Jika gagal
-						echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+						// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+						$this->session->set_flashdata('error', 'Data gagal diubah');
+						redirect('pembelian/view_supplier','refresh');
 					}
 				/*}else{
 					echo '<script language="javascript">';
@@ -335,7 +371,9 @@ class Pembelian extends CI_Controller {
 					echo '</script>';
 				}*/
 		}else{
-			echo "<script>alert('Maaf Supplier tidak ditemukan');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+			// echo "<script>alert('Maaf Supplier tidak ditemukan');window.location = '".site_url('pembelian/view_supplier')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Supplier tidak ditemukan');
+			redirect('pembelian/view_supplier','refresh');
 		}
 	}
 	// ------------------------------------------	
@@ -363,9 +401,13 @@ class Pembelian extends CI_Controller {
 		$sql = $this->M_pembelian->s_metpemb($data);
 		$allsql = array($sql);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('pembelian/view_metpemb','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+				// echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('pembelian/view_metpemb','refresh');
 			}
 		}else{
 			echo '<script language="javascript">';
@@ -402,9 +444,13 @@ class Pembelian extends CI_Controller {
 				$sql = $this->M_pembelian->e_metpemb($id, $data);
 				$allsql = array($sql); 
 					if($allsql){ // Jika sukses
-						echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+						// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+						$this->session->set_flashdata('success', 'Data berhasil diubah');
+						redirect('pembelian/view_metpemb','refresh');
 					}else{ // Jika gagal
-						echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_metpemb')."';</script>";
+						// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+						$this->session->set_flashdata('error', 'Data gagal diubah');
+						redirect('pembelian/view_metpemb','refresh');
 					}
 				}else{
 					echo '<script language="javascript">';
@@ -415,7 +461,9 @@ class Pembelian extends CI_Controller {
 					echo '</script>';
 				}
 		}else{
-			echo "<script>alert('Maaf Metode Pembelian tidak ditemukan');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+			// echo "<script>alert('Maaf Metode Pembelian tidak ditemukan');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Metode Pembelian tidak ditemukan');
+			redirect('pembelian/view_metpemb','refresh');
 		}
 	}
 
@@ -424,13 +472,17 @@ class Pembelian extends CI_Controller {
 		$sql = $this->M_pembelian->h_metpemb($id);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+			// echo "<script>alert('Data berhasil dihapus');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('pembelian/view_metpemb','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal di hapus');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+			// echo "<script>alert('Data gagal di hapus');window.location = '".site_url('pembelian/view_metpemb')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('pembelian/view_metpemb','refresh');
 		}
 	}
 	// ------------------------------------------
-	// =========================================================================================================================================
+	// ========================================================================================================================================
 
 	// ======================================================== Verifikasi Data ===============================================================
 	// --------------------- Pesanan Baru -------------------------
@@ -472,9 +524,13 @@ class Pembelian extends CI_Controller {
 		$sql 	= $this->M_pembelian->v_ver_konfirmasi($id,$data);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".site_url('pembelian/v_verpesbaru')."';</script>";
+			// echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".site_url('pembelian/v_verpesbaru')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dikonfirmasi');
+			redirect('pembelian/v_verpesbaru','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".site_url('pembelian/v_verpesbaru')."';</script>";
+			// echo "<script>alert('Data gagal dikonfirmasi');window.location = '".site_url('pembelian/v_verpesbaru')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dikonfirmasi');
+			redirect('pembelian/v_verpesbaru','refresh');
 		}
 	}
 	public function ver_konfirmasi($id)
@@ -487,9 +543,13 @@ class Pembelian extends CI_Controller {
 		$sql 	= $this->M_pembelian->ver_konfirmasi($id,$data);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".site_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
+			// echo "<script>alert('Data berhasil dikonfirmasi');window.location = '".site_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dikonfirmasi');
+			redirect('pembelian/v_ver_pesbaru/'.$idper,'refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal dikonfirmasi');window.location = '".site_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
+			// echo "<script>alert('Data gagal dikonfirmasi');window.location = '".site_url('pembelian/v_ver_pesbaru/'.$idper)."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dikonfirmasi');
+			redirect('pembelian/v_ver_pesbaru/'.$idper,'refresh');
 		}
 	}
 	// ------------------------------------------------------------
@@ -595,9 +655,13 @@ class Pembelian extends CI_Controller {
 
 			$allsql = array($sql1,$sql2);
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('pembelian/v_pembelian','refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+				// echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('pembelian/v_pembelian','refresh');
 			}
 
 		}else{
@@ -634,9 +698,13 @@ class Pembelian extends CI_Controller {
 		$sql 	= $this->M_pembelian->v_konfpemb($id,$data);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil diubah');
+			redirect('pembelian/v_pembelian','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal diubah');
+			redirect('pembelian/v_pembelian','refresh');
 		}
 	}
 	public function v_dtl_konfpemb($id)
@@ -649,9 +717,13 @@ class Pembelian extends CI_Controller {
 		$sql 	= $this->M_pembelian->v_dtl_konfpemb($id,$data);
 		$allsql = array($sql);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_dtl_pemb/'.$idpemb)."';</script>";
+			// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_dtl_pemb/'.$idpemb)."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil diubah');
+			redirect('pembelian/v_dtl_pemb/'.$idpemb,'refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/v_dtl_pemb/'.$idpemb)."';</script>";
+			// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/v_dtl_pemb/'.$idpemb)."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal diubah');
+			redirect('pembelian/v_dtl_pemb/'.$idpemb,'refresh');
 		}
 	}
 	public function u_rencpemb($id='')
@@ -705,9 +777,13 @@ class Pembelian extends CI_Controller {
 
 			$allsql = array($sql1,$sql2); 
 			if($allsql){ // Jika sukses
-				echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_dtl_pemb/'.$ids)."';</script>";
+				// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_dtl_pemb/'.$ids)."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('pembelian/v_dtl_pemb/'.$ids,'refresh');
 			}else{ // Jika gagal
-				echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_rencpemb/'.$id)."';</script>";
+				// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_rencpemb/'.$id)."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('pembelian/u_rencpemb/'.$id,'refresh');
 			}
 		}
 	}
@@ -717,9 +793,13 @@ class Pembelian extends CI_Controller {
 		$b = $this->M_pembelian->h_dtlrencpemb($id);
 		$all = array($a,$b);
 		if($allsql){ // Jika sukses
-			echo "<script>alert('Data berhasil dihapus');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			// echo "<script>alert('Data berhasil dihapus');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('pembelian/v_pembelian','refresh');
 		}else{ // Jika gagal
-			echo "<script>alert('Data gagal dihapus');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			// echo "<script>alert('Data gagal dihapus');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('pembelian/v_pembelian','refresh');
 		}
 	}
 	// ------------------------------------------------------------
@@ -730,12 +810,12 @@ class Pembelian extends CI_Controller {
 		$data['menu'] 		= 'Transaksi';
 		$data['submenu'] 	= 'Surat Pesanan Barang';
 
-		// $isi['isi'] = $this->M_pembelian->v_pembelian();
+		$isi['isi'] = $this->M_pembelian->v_spb();
 
 		$this->load->view('pembelian/template/head');
 		$this->load->view('pembelian/template/navbar');
 		$this->load->view('pembelian/template/sidebar',$data);
-		$this->load->view('pembelian/surat_pesanan_barang/view');
+		$this->load->view('pembelian/surat_pesanan_barang/view',$isi);
 		$this->load->view('pembelian/template/footer');
 	}
 	public function t_spb()
@@ -759,6 +839,291 @@ class Pembelian extends CI_Controller {
 		$this->load->view('pembelian/surat_pesanan_barang/tambah',$isi);
 		$this->load->view('pembelian/template/footer');
 	}
+	public function v_dtl_spb($id)
+	{
+		$data['menutitle'] 	= 'Detail Data Surat Pesanan Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Surat Pesanan Barang';
+
+		$isi['judul'] = $this->M_pembelian->v_dtl_idspb($id);
+		$isi['isi'] = $this->M_pembelian->v_dtl_spb($id);
+		$isi['get_rpspb'] = $this->M_pembelian->get_rpspb($id);
+		$get_id = $this->M_pembelian->v_dtl_spb($id);
+		foreach ($get_id as $s) {
+			$id_ne = $s->id_spb;
+		}
+		$isi['get_idspb'] = $s->id_spb;
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/surat_pesanan_barang/view_detail',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function spb_t()
+	{
+		$cek = $this->db->query("SELECT * FROM tbl_spb where nota_spb='".$this->input->post('nospb', TRUE)."' ")->num_rows();
+		if($cek <= 0){
+
+			$nospb 			= $this->input->post('nospb');
+			$kode 			= $this->input->post('kode');
+			$tglspb 		= $this->input->post('tglspb');
+			$kurs 			= $this->input->post('kurs');
+			$kdlever 		= $this->input->post('kdlever');
+			$tglserah 		= $this->input->post('tglserah');
+			$ketserah 		= $this->input->post('ketserah');
+			$haribayar 		= $this->input->post('haribayar');
+			$ketbayar 		= $this->input->post('ketbayar');
+			$ketgudang 		= $this->input->post('ketgudang');
+			$ketspb 		= $this->input->post('ketspb');
+			// detail 
+			$kdrencbel 		= $this->input->post('kddtlrenc');
+			$nobeli 		= $this->input->post('nobeli');
+			$kdbrng 		= $this->input->post('kdbrng');
+			$harga 			= $this->input->post('harga');			
+			$jumlah 		= $this->input->post('jml');			
+			$satuan 		= $this->input->post('sat');	
+			// sub beli
+			$subtotal 		= $this->input->post('subtotal');			
+			$subppn 		= $this->input->post('subppn');			
+			$subtothrg 		= $this->input->post('subtotahrg');
+			// total beli
+			$total 			= $this->input->post('total');
+			$ppn 			= $this->input->post('ppn');
+			$totalharga 	= $this->input->post('tatalharga');
+
+			$data1 = array(
+							'id_spb' 			=> $kode,
+							'nota_spb' 			=> $nospb,
+							'tgl_spb' 			=> $tglspb,
+							'id_supplier' 		=> $kdlever,
+							'total_spb' 		=> $total,
+							'ppn_spb' 			=> $ppn,
+							'totalharga_spb' 	=> $totalharga,
+							'kurs_spb'			=> $kurs,
+							'tgl_serahspb'		=> $tglserah,
+							'ket_serahspb' 		=> $ketserah,
+							'haribayar_spb' 	=> $haribayar,
+							'ket_bayar' 		=> $ketbayar,
+							'ket_gudangspb' 	=> $ketgudang,
+							'ket_spb' 			=> $ketspb
+			);
+			$sql1 = $this->M_pembelian->s_spb($data1);
+
+			$data2 = array();
+			$i = 0;
+			if(is_array($kdrencbel)){
+				foreach ($kdrencbel as $datakdrencbel) {
+					array_push($data2, array(
+						'id_spb' 			=> $kode,
+						'nota_dtl_spb' 		=> $nospb,
+						'tgl_dtl_spb' 		=> $tglspb,
+						'id_barang' 		=> $kdbrng[$i],
+						'jmlbrng_spb' 		=> $jumlah[$i],
+						'satuanbrng_spb' 	=> $satuan[$i],
+						'hargabrng_spb' 	=> $harga[$i],
+						'dtltotal_spb' 		=> $subtotal[$i],
+						'dtlppn_spb' 		=> $subppn[$i],
+						'dtltotalhrg_spb' 	=> $subtothrg[$i],
+						'kurs_dtl_spb' 		=> $kurs,
+						'id_dtl_pembelian'	=> $datakdrencbel,
+						'nota_beli'			=> $nobeli[$i]
+					));
+					$i++;
+				}
+			}
+			$sql2 = $this->M_pembelian->s_dtl_spb_batch($data2);
+
+			$allsql = array($sql1,$sql2);
+			if($allsql){ // Jika sukses
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/v_spb')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('pembelian/v_spb','refresh');
+			}else{ // Jika gagal
+				// echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/v_spb')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('pembelian/v_spb','refresh');
+			}
+
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf No Surat Pesanan Barang Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('pembelian/v_spb').'")';
+			echo '</script>';
+		}
+	}
+	public function v_dtl_konfspb($id)
+	{
+		$id 	= $this->input->post('kode');
+		$ubah 	= $this->input->post('ubah');
+		$idspb 	= $this->input->post('kode_spb');
+
+		$data 	= array('selesai_dtl_spb' => $ubah);
+		$sql 	= $this->M_pembelian->v_dtl_konfspb($id,$data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_dtl_spb/'.$idspb)."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil diubah');
+			redirect('pembelian/v_dtl_spb/'.$idspb,'refresh');
+		}else{ // Jika gagal
+			// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/v_dtl_spb/'.$idspb)."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal diubah');
+			redirect('pembelian/v_dtl_spb/'.$idspb,'refresh');
+		}
+	}
+	public function u_nospb($id='')
+	{
+		$data['menutitle'] 	= 'Edit Surat Pesanan Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Surat Pesanan barang';
+
+		$isi['isi'] = $this->M_pembelian->ve_nospb($id);
+		$isi['get_supplier'] = $this->M_pembelian->get_supplier();
+		$company = $this->M_pembelian->get_company();
+		foreach ($company as $row) {
+			$get_company = $row->nm_company;
+		}
+		$isi['get_company'] = $get_company;
+		
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/surat_pesanan_barang/edit_nospb',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function nospb_u($id)
+	{
+		$this->form_validation->set_rules('kode','Kode','required');
+		if($this->form_validation->run() == TRUE){
+			$data = array(	'nota_spb' 		=> $this->input->post('nospb',TRUE),
+							'tgl_spb' 		=> $this->input->post('tglspb',TRUE),
+							'id_supplier' 	=> $this->input->post('kdlever',TRUE),
+							'kurs_spb' 		=> $this->input->post('kurs',TRUE),
+							'tgl_serahspb' 	=> $this->input->post('tglserah',TRUE),
+							'ket_serahspb' 	=> $this->input->post('ketserah',TRUE),
+							'haribayar_spb' => $this->input->post('haribayar',TRUE),
+							'ket_bayar'		=> $this->input->post('ketbayar',TRUE),
+							'ket_gudangspb' => $this->input->post('ketgudang',TRUE),
+							'ket_spb' 		=> $this->input->post('ketspb',TRUE)
+						 );
+			$sql = $this->M_pembelian->e_nospb($id, $data);
+			
+			$data2 = array( 'nota_dtl_spb'	=> $this->input->post('nospb',TRUE),
+							'tgl_dtl_spb' 	=> $this->input->post('tglspb',TRUE),
+							'kurs_dtl_spb' 	=> $this->input->post('kurs',TRUE)
+						  );
+			$sql2 = $this->M_pembelian->e_dtl_nospb($id,$data2);
+
+			$allsql = array($sql,$sql2); 
+			if($allsql){ // Jika sukses
+				// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_dtl_spb/'.$id)."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('pembelian/v_dtl_spb/'.$id,'refresh');
+			}else{ // Jika gagal
+				// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_nospb/'.$id)."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('pembelian/u_nospb/'.$id,'refresh');
+			}
+		}else{
+			// echo "<script>alert('Maaf SPB tidak ditemukan');window.location = '".site_url('pembelian/v_spb')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf SPB tidak ditemukan');
+			redirect('pembelian/v_spb','refresh');
+		}
+	}
+	public function u_spb($id='')
+	{
+		$data['menutitle'] 	= 'Edit Surat Pesanan Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Surat Pesanan barang';
+
+		$isi['isi'] = $this->M_pembelian->ve_spb($id);
+		$isi['get_supplier'] = $this->M_pembelian->get_supplier();
+		$isi['get_rencpemb'] = $this->M_pembelian->get_rencpemb();
+		$company = $this->M_pembelian->get_company();
+		foreach ($company as $row) {
+			$get_company = $row->nm_company;
+		}
+		$isi['get_company'] = $get_company;
+		
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/surat_pesanan_barang/edit',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function spb_u($id)
+	{
+		$this->form_validation->set_rules('kddtlrenc','Kddtlrenc','required');
+		if($this->form_validation->run() == TRUE){
+
+			$idspb 	= $this->input->post('spb',TRUE);
+			$sub 	= $this->input->post('subtotal',TRUE);
+			$ppn 	= $this->input->post('subppn',TRUE);
+			$total 	= $this->input->post('subtotahrg',TRUE);
+			$sql2 	= $this->M_pembelian->e_spb($idspb,$id,$ppn,$sub,$total);
+
+			$data = array(	'id_barang' 		=> $this->input->post('kdbrng',TRUE),
+							'jmlbrng_spb' 		=> $this->input->post('jml',TRUE),
+							'satuanbrng_spb' 	=> $this->input->post('sat',TRUE),
+							'hargabrng_spb' 	=> $this->input->post('harga',TRUE),
+							'dtltotal_spb' 		=> $this->input->post('subtotal',TRUE),
+							'dtlppn_spb' 		=> $this->input->post('subppn',TRUE),
+							'dtltotalhrg_spb' 	=> $this->input->post('subtotahrg',TRUE),
+							'id_dtl_pembelian'	=> $this->input->post('kddtlrenc',TRUE),
+							'nota_beli' 		=> $this->input->post('nobeli',TRUE)
+						 );
+			$sql = $this->M_pembelian->e_dtl_spb($id, $data);
+
+			$allsql = array($sql,$sql2); 
+			if($allsql){ // Jika sukses
+				// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_dtl_spb/'.$idspb)."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('pembelian/v_dtl_spb/'.$idspb,'refresh');
+			}else{ // Jika gagal
+				// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_nospb/'.$id)."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('pembelian/u_nospb/'.$id,'refresh');
+			}
+		}else{
+			// echo "<script>alert('Maaf Detail SPB tidak ditemukan');window.location = '".site_url('pembelian/v_spb')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Detail SPB tidak ditemukan');
+			redirect('pembelian/v_spb','refresh');
+		}
+	}
+	public function spb_h($id)
+	{
+		$a = $this->M_pembelian->h_spb($id);
+		$b = $this->M_pembelian->h_dtlspb($id);
+		$all = array($a,$b);
+		if($all){ // Jika sukses
+			// echo "<script>alert('Data berhasil dihapus');window.location = '".site_url('pembelian/v_spb')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('pembelian/v_spb','refresh');
+		}else{ // Jika gagal
+			// echo "<script>alert('Data gagal dihapus');window.location = '".site_url('pembelian/v_spb')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('pembelian/v_spb','refresh');
+		}
+	}
+	// ------------------------------------------------------------
+	// -------------- Nota Penerimaan Barang (NPB)-----------------
+	public function v_npb()
+	{
+		$data['menutitle'] 	= 'Transaksi Nota Penerimaan Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Nota Penerimaan Barang';
+
+		// $isi['isi'] = $this->M_pembelian->v_spb();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/nota_penerimaan_barang/view');
+		$this->load->view('pembelian/template/footer');
+	}
+	
 	// ------------------------------------------------------------
 	// ========================================================================================================================================
 }

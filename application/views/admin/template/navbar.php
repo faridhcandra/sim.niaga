@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand border-bottom-0 navbar-dark navbar-dark">
+<nav class="main-header navbar navbar-expand navbar-white navbar-primary text-sm">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
     <li class="nav-item">
@@ -13,7 +13,7 @@
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-bell"></i>
-        <span class="badge badge-light navbar-badge">15</span>
+        <span class="badge badge-info navbar-badge">15</span>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <span class="dropdown-item dropdown-header">15 Notifications</span>

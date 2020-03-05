@@ -1,5 +1,5 @@
 <!-- Main content -->
-<div class="content">
+<div class="content" style="font-size: 15px;">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
@@ -12,8 +12,8 @@
 						<div class="col-md-12">
 							<div class="bg-success text-white text-center">
 								<?php foreach ($judul as $i) { ?>
-								<label>No Beli <?php echo $i->nota_beli?></label> - 
-								<label>Tanggal Beli <?php echo date("d/m/Y",strtotime($i->tgl_beli))?></label>
+								<label>No Beli: <?php echo $i->nota_beli?></label> | 
+								<label>Tanggal Beli: <?php echo date("d/m/Y",strtotime($i->tgl_beli))?></label>
 								<?php } ?>
 							</div>
 						</div>
@@ -155,4 +155,3 @@
 			</div>
 		</div>
 	</div>
-</div>

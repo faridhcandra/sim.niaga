@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12" style="font-size: 15px;">
   <div class="card card-outline card-dark">
     <div class="card-header">
       <div class="float-right"><a href="<?php echo site_url('admin/u_jabatan')?>" class="btn btn-primary btn-sm">Ubah Data</a></div>

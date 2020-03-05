@@ -1,5 +1,5 @@
 <!-- Main content  -->
-<div class="content">
+<div class="content" style="font-size: 15px;">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
@@ -12,7 +12,7 @@
 						<div class="example1_wrapper" class="dataTables_wrapper">
 							<div class="row">
 								<div class="col-md-12">
-									<table id="example2" width="100%" class="table table-sm table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+									<table id="example2" class="table table-sm table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
 										<thead>
 											<tr>
 												<td>Tanggal</td>
@@ -23,7 +23,7 @@
 												<!-- <td>Unit</td> -->
 												<td>Status</td>
 												<!-- <td>keterangan</td>				         					 -->
-												<td width="12%;" align="center">Aksi</td>
+												<td align="center">Aksi</td>
 											</tr>
 										</thead>
 										<tbody>
@@ -120,4 +120,4 @@
 		</div>
 	</div>
 </div>
-<!-- /.content
+<!-- /.content -->

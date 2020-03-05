@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="font-size: 15px;">
   <div class="card  card-outline card-dark">
     <div class="card-header">
       <div class="float-right"><a href="<?php echo site_url('admin/u_perusahaan')?>" class="btn btn-primary btn-sm">Ubah Data</a></div>
