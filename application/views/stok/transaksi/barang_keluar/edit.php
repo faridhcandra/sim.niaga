@@ -22,7 +22,7 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<label style="font-size: 11pt;">Tanggal Keluar</label>
-									<input class="form-control form-control-sm" type="date" name="tgl_keluar"required="" value="<?php echo date('Y-m-d');?>">
+									<input class="form-control form-control-sm" type="date" name="tgl_keluar"required="" value="<?php echo $row->tgl_brngkel;?>">
 								</div>
 							</div>
 							<div class="col-md-2">
@@ -47,7 +47,7 @@
 							<div class="col-md-3">
 								<div class="form-group" >
 									<label style="font-size: 11pt;">ID Barang Masuk</label>
-									<input class="form-control form-control-sm" type="text" name="id_brngmsk" id="id_bmasuk" required="" readonly="">
+									<input class="form-control form-control-sm" type="text" name="id_brngmsk" id="id_bmasuk" value="<?php echo $row->id_brngmsk;?>" required="" readonly="">
 								</div>
 							</div>
 							<div class="col-md-3">
@@ -104,4 +104,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> 
