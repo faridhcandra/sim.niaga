@@ -4,7 +4,7 @@
   <i>Copyright &copy; 2014-2019 <b>Adminlte.io</b>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      Developed By <b>GKBI</b></i>
+      Developed By <b><?php echo config_item('web_developed');?></b></i>
     </div>
   </footer>
 </div>
@@ -21,6 +21,8 @@
 <script src="<?php echo base_url();?>assets/plugins/pace-progress/pace.min.js"></script>
 <!-- Toastr -->
 <script src="<?php echo base_url();?>assets/plugins/toastr/toastr.min.js"></script>
+<!-- moment js-->
+<script src="<?php echo base_url();?>assets/plugins/moment/moment.js"></script>
 <!-- DataTables -->
 <script src="<?php echo base_url();?>assets/plugins/datatables/jquery.dataTables.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
@@ -38,6 +40,7 @@
   }
   // Datatable
    $('#example2').DataTable({
+      "processing": true,  
       "deferRender" : true,
       "processing"  : true,
       "paging": true,

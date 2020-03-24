@@ -7,7 +7,7 @@
     <span class="brand-text text-white font-weight-light" style="font-size: 15.5px;">SIM Gudang</span>
   </a>
   <!-- Sidebar -->
-  <div class="sidebar">
+  <div class="sidebar text-sm">
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-2 pb-2 mb-3 d-flex">
       <div class="image mt-2">
@@ -185,6 +185,12 @@
           <p>Informational</p>
         </a>
       </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="nav-icon far fa-circle text-success"></i>
+          <p>Success</p>
+        </a>
+      </li>
     </ul>
   </nav>
   <!-- /.sidebar-menu -->
@@ -197,7 +203,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark"><?php echo $menutitle?></h1>
+          <h4 class="m-0 text-dark"><?php echo $menutitle?></h4>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">

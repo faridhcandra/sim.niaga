@@ -78,7 +78,7 @@
 					</div>
 					<!-- modal -->
 					<div class="modal fade" id="emodal-rencbeli">
-					    <div class="modal-dialog modal-lg">
+					    <div class="modal-dialog modal-lg text-sm">
 					      <div class="modal-content">
 					        <div class="modal-header">
 					          <h5 class="modal-title">Cari Data Renc. Pembelian</h5>

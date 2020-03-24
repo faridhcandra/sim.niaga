@@ -45,8 +45,6 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <a href="#" class="dropdown-item"><i class="fas fa-cog fa-sm"></i>&ensp;Setting</a>
-          <a href="#" class="dropdown-item"><i class="far fa-question-circle fa-sm"></i>&ensp;Help</a>
-          <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt fa-sm"></i>&ensp;Logout</a>
         </div>
       </li>

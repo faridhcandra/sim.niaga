@@ -22,7 +22,7 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<label style="font-size: 11pt;">Tanggal Keluar</label>
-									<input class="form-control form-control-sm" type="date" name="tgl_keluar"required="" value="<?php echo $row->tgl_brngkel;?>">
+									<input class="form-control form-control-sm" type="date" name="tgl_keluar" required="" value="<?php echo $row->tgl_brngkel;?>">
 								</div>
 							</div>
 							<div class="col-md-2">

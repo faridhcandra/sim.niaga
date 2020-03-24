@@ -19,9 +19,17 @@ class M_pembelian extends CI_Model {
 	{
 		$hasil = $this->db->query("SELECT * FROM tbl_kabupaten WHERE id_provinsi='$id'");
 		return $hasil->result(); 
+	}
+	function get_idjenis(){
+		return $this->db->order_by('id_jnsbrng','asc')->get('tbl_jenis_barang');
+	}
+	function get_idgroup(){
+		return $this->db->order_by('id_group','asc')->get('tbl_group');
+	}
+	function get_satuan(){
+		return $this->db->order_by('nm_satuan','asc')->get('tbl_satuan');
 	} 
 	// =======================================
-
 	// ========================================================= Master Data ===================================================================
 	// --------------- Jenis barang --------------
 	public function v_jenisbrng()
@@ -97,6 +105,74 @@ class M_pembelian extends CI_Model {
 		$this->db->where('id_group',$id)->delete('tbl_group');
 	}
 	// -------------------------------------------
+	// --------------- Satuan ------------------
+		public function v_satuan()
+		{
+			$hasil = $this->db->get('tbl_satuan');
+			if($hasil->num_rows()>0){
+				return $hasil->result();
+			}else{
+				return array();
+			}
+		}
+
+		public function s_satuan($data){
+			$this->db->insert('tbl_satuan', $data);
+		}
+
+		public function ve_satuan($id)
+		{
+			$this->db->select('*');
+			$this->db->from('tbl_satuan');
+			$this->db->where('id_satuan', $id);
+			$hasil = $this->db->get();
+			if($hasil->num_rows()>0){
+				return $hasil->result();
+			}else{
+				return array();
+			}
+		}
+
+		public function e_satuan($id,$data){
+			$this->db->where('id_satuan',$id)->update('tbl_satuan', $data);
+		}
+
+		public function h_satuan($id)
+		{
+			$this->db->where('id_satuan',$id)->delete('tbl_satuan');
+		}
+	// -----------------------------------------
+	// ---------------BARANG--------------------
+		public function v_barang()
+		{
+			$sql = "SELECT a.id_barang,a.nm_barang,b.nm_jnsbrng,a.kel_barang,c.nm_satuan,d.nm_satuan as nm_satuan2 FROM tbl_nama_barang as a join tbl_jenis_barang as b on a.id_jnsbrng=b.id_jnsbrng join tbl_satuan as c on a.sat1_barang=c.id_satuan join tbl_satuan as d on a.sat2_barang=d.id_satuan order by a.id_barang asc";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+
+		public function ve_barang($id)
+		{
+			$sql = "SELECT a.id_barang,a.nm_barang,b.nm_jnsbrng,a.kel_barang,a.no_barang,a.sat1_barang,a.sat2_barang,a.id_group,a.id_jnsbrng,a.ket_barang,c.nm_satuan,f.nm_group,d.nm_satuan as nm_satuan2 FROM tbl_nama_barang as a 
+				join tbl_jenis_barang as b on a.id_jnsbrng=b.id_jnsbrng 
+				join tbl_satuan as c on a.sat1_barang=c.id_satuan 
+				join tbl_satuan as d on a.sat2_barang=d.id_satuan
+				join tbl_jenis_barang as e on a.id_jnsbrng=e.id_jnsbrng
+				join tbl_group as f on a.id_group=f.id_group
+				where a.id_barang = '$id'";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+		public function s_barang($data){
+			$this->db->insert('tbl_nama_barang ', $data);
+		}
+		public function e_barang($id,$data){
+			$this->db->where('id_barang',$id)->update('tbl_nama_barang', $data);
+		}
+		public function h_barang($id)
+		{
+			$this->db->where('id_barang',$id)->delete('tbl_nama_barang');
+		}
+	// ------------------------------------------
 	// --------------- Supplier ------------------
 	public function v_supplier()
 	{
@@ -221,6 +297,20 @@ class M_pembelian extends CI_Model {
 				 ->update('tbl_dtl_permintaan',$data);
 	}
 // ------------------------------------------------------------
+// --------------- Stok Barang ------------------
+	public function v_stok()
+	{
+		$sql = "SELECT a.id_stok,a.id_barang,c.nm_barang,a.id_brngmsk,
+				SUM(a.stok_masuk) AS sisa_stok,SUM(a.stok_keluar) AS stok_keluar,a.id_bagian 
+				FROM tbl_stok_barang AS a 
+				JOIN tbl_nama_barang AS c ON a.id_barang=c.id_barang
+				JOIN tbl_barang_masuk AS b ON a.id_brngmsk=b.id_brngmsk
+				GROUP BY a.id_barang
+				ORDER BY ABS(c.nm_barang) ASC";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+// -----------------------------------------
 // ========================================================================================================================================
 
 // ====================================================== Data Transaksi ==================================================================
@@ -540,8 +630,95 @@ class M_pembelian extends CI_Model {
 		$this->db->where('id_spb', $id)->delete('tbl_dtl_spb');
 	}
 	// ------------------------------------------------------------
+	// ----------- Nota Penerimaan Barang (NPB) -------------------
+	public function v_npb()
+	{
+		$sql = "SELECT a.id_penerimaan,a.nota_terima,a.tgl_terima,a.nota_spb,b.nm_supplier,c.nm_bagian,d.nota_beli,a.srtjalan_terima,a.tgljalan_terima,e.nm_unit,a.verif_terima
+				FROM tbl_penerimaan as a
+				join tbl_supplier as b on a.id_supplier=b.id_supplier
+				join tbl_bagian as c on a.id_bagian=c.id_bagian
+				join tbl_pembelian as d on a.id_pembelian=d.id_pembelian
+				join tbl_unit as e on a.id_unit=e.id_unit
+				order by a.tgl_terima desc";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	function get_spbnpb()
+	{
+		$sql = "SELECT a.id_spb,a.nota_spb,a.tgl_spb,b.nm_supplier,b.attn_supplier FROM tbl_spb as a
+				join tbl_supplier as b on a.id_supplier=b.id_supplier
+				order by a.id_spb desc";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	public function ve_npb($id)
+	{
+		$sql = "SELECT a.id_penerimaan,a.nota_terima,a.tgl_terima,a.id_supplier,e.nm_supplier,a.id_pembelian,a.nota_beli,a.id_unit,c.nm_unit,a.id_bagian,d.nm_bagian,a.id_cek,a.nota_cek,a.tgl_cek,a.srtjalan_terima,a.tgljalan_terima,a.ket_terima,a.biaya_angkut_terima,a.id_jnsbrng,g.nm_jnsbrng,a.ppn_terima,a.subtotal_terima,a.totalharga_terima,a.k_ppn_terima,a.k_subtotal_terima,a.k_totalharga_terima,a.harijt_terima,a.tgljt_terima,a.lunas_terima,a.jml_kurs_terima,a.kurs_terima
+			FROM tbl_penerimaan as a 
+			join tbl_dtl_penerimaan as b on a.id_penerimaan=b.id_penerimaan
+			join tbl_unit as c on a.id_unit=c.id_unit
+			join tbl_bagian as d on a.id_bagian=d.id_bagian
+			join tbl_supplier as e on a.id_supplier=e.id_supplier
+			join tbl_pembelian as f on a.id_pembelian=a.id_pembelian
+			join tbl_jenis_barang as g on a.id_jnsbrng=g.id_jnsbrng
+			WHERE a.id_penerimaan = '$id' 
+			limit 1";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	public function ve_detl_npb($id)
+	{
+		$sql = "SELECT a.id_dtl_penerimaan,a.id_penerimaan,a.id_dtl_pembelian,a.id_barang,d.nm_barang,a.jml1_dtlterima,a.jml2_dtlterima,a.sat1_dtlterima,a.sat2_dtlterima,a.angkut_dtlterima,a.harga_dtlterima,a.ppn_dtlterima,a.subtotal_dtlterima,a.totalharga_dtlterima,a.k_ppn_dtlterima,a.k_subtotal_dtlterima,a.k_totalharga_dtlterima,a.harga_dtlterima,f.nm_satuan as nm_satuan1,g.nm_satuan as nm_satuan2
+			FROM tbl_dtl_penerimaan as a 
+			left join tbl_penerimaan as b on a.id_penerimaan=b.id_penerimaan
+			left join tbl_group as c on a.id_group=c.id_group
+			left join tbl_nama_barang as d on a.id_barang=d.id_barang
+			left join tbl_dtl_pembelian as e on a.id_dtl_pembelian=e.id_dtl_pembelian
+			left join tbl_satuan as f on a.sat1_dtlterima=f.id_satuan
+			left join tbl_satuan as g on a.sat2_dtlterima=g.id_satuan
+			WHERE a.id_penerimaan = '$id'";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+
+	public function e_npb($id,$kurs,$jml_kurs,$lunas_terima,$id_spb,$nota_spb,$hrjt,$tgljt,$ket,$byangkut,$stot,$ppn,$tothrg,$k_stot,$k_ppn,$k_tothrg)
+	{
+		$this->db->query( "update tbl_penerimaan a join tbl_dtl_penerimaan b on a.id_penerimaan=b.id_penerimaan
+						   set a.kurs_terima = '$kurs',
+						   a.jml_kurs_terima = $jml_kurs,
+						   a.lunas_terima = '$lunas_terima',
+						   a.id_spb = '$id_spb',
+						   a.nota_spb = '$nota_spb',
+						   a.harijt_terima = $hrjt,
+						   a.tgljt_terima = '$tgljt',
+						   a.ket_terima = '$ket',
+						   a.biaya_angkut_terima = $byangkut,
+						   a.subtotal_terima = $stot,
+						   a.ppn_terima = $ppn,
+						   a.totalharga_terima = $tothrg,
+						   a.k_subtotal_terima = $k_stot,
+						   a.k_ppn_terima = $k_ppn,
+						   a.k_totalharga_terima = $k_tothrg
+						   where a.id_penerimaan = '$id'");
+	}
+	function v_konfnpb($id,$data)
+	{
+		$this->db->where('id_penerimaan', $id)
+				 ->update('tbl_penerimaan',$data);
+	}
+	// ------------------------------------------------------------
 	// ========================================================================================================================================
 }
 
 /* End of file M_pembelian.php */
 /* Location: ./application/models/M_pembelian.php */
+
+/*
+a.biaya_angkut_terima = (a.biaya_angkut_terima-b.angkut_dtlterima)+$byangkut,
+						   a.subtotal_terima = (a.subtotal_terima-b.subtotal_dtlterima)+$stot,
+						   a.ppn_terima = (a.ppn_terima-b.ppn_dtlterima)+$ppn,
+						   a.totalharga_terima = (a.totalharga_terima-b.totalharga_dtlterima)+$tothrg,
+						   a.k_subtotal_terima = (a.k_subtotal_terima-b.k_subtotal_dtlterima)+$$k_stot,
+						   a.k_ppn_terima = (a.k_ppn_terima-b.k_ppn_dtlterima)+$k_ppn,
+						   a.k_totalharga_terima = (a.totalharga_terima-b.k_totalharga_dtlterima)+$k_tothrg
+*/

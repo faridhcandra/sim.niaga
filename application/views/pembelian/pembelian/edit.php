@@ -126,7 +126,7 @@
 					</div>
 					<!-- modal -->
 					<div class="modal fade" id="emodal-dtlnopes">
-					    <div class="modal-dialog modal-lg">
+					    <div class="modal-dialog modal-lg text-sm">
 					      <div class="modal-content">
 					        <div class="modal-header">
 					          <h5 class="modal-title">Cari Data Pesanan</h5>
@@ -209,6 +209,7 @@
 						</div>
 					</div>
 					</div>
+					</form>
 				<?php endforeach ?>
 			</div>
 			</div>         

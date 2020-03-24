@@ -17,7 +17,7 @@
 								<?php foreach ($judul as $i) { ?>
 								<label>No SPB: <?php echo $i->nota_spb?></label> | 
 								<label>Supplier: <?php echo $i->nm_supplier?></label>  |
-								<label>Tanggal SPB: <?php echo date("d/m/Y",strtotime($i->tgl_spb))?></label>
+								<label>Tanggal SPB: <?php echo set_tanggal($i->tgl_spb)?></label>
 								<?php } ?> 
 							</div>
 						</div>
@@ -29,21 +29,21 @@
 							  <div class="col-md-2"></div>
 			                  <div class="col-md-3">
 			                    <div class="description-block border-right">
-			                      <h5 class="description-header">Rp.<?php echo number_format($s->total_spb,2,',','.')?></h5>
+			                      <h5 class="description-header">Rp.<?php echo set_number($s->total_spb)?></h5>
 			                      <span>Sub Total</span>
 			                    </div>
 			                  </div>
 			                  <!-- /.col -->
 			                  <div class="col-md-3">
 			                    <div class="description-block border-right">
-			                      <h5 class="description-header">Rp.<?php echo number_format($s->ppn_spb,2,',','.')?></h5>
+			                      <h5 class="description-header">Rp.<?php echo set_number($s->ppn_spb)?></h5>
 			                      <span>PPN</span>
 			                    </div>
 			                  </div>
 			                 <!--  /.col -->
 			                  <div class="col-md-3">
 			                    <div class="description-block">
-			                      <h5 class="description-header">Rp.<?php echo number_format($s->totalharga_spb,2,',','.')?></h5>
+			                      <h5 class="description-header">Rp.<?php echo set_number($s->totalharga_spb)?></h5>
 			                      <span>Total</span>
 			                    </div>
 			                  </div>
@@ -83,10 +83,10 @@
 													<td><?php echo $row->nm_barang?></td>
 													<td align="right"><?php echo $row->jmlbrng_spb?></td>
 													<td><?php echo $row->satuanbrng_spb?></td>
-													<td align="right"><?php echo number_format($row->hargabrng_spb,2,',','.')?></td>
-													<td align="right"><?php echo number_format($row->dtltotal_spb,2,',','.')?></td>
-													<td align="right"><?php echo number_format($row->dtlppn_spb,2,',','.')?></td>
-													<td align="right"><?php echo number_format($row->dtltotalhrg_spb,2,',','.')?></td>
+													<td align="right"><?php echo set_number($row->hargabrng_spb)?></td>
+													<td align="right"><?php echo set_number($row->dtltotal_spb)?></td>
+													<td align="right"><?php echo set_number($row->dtlppn_spb)?></td>
+													<td align="right"><?php echo set_number($row->dtltotalhrg_spb)?></td>
 													<td>
 									                    <?php if($row->selesai_dtl_spb == 'T'){ ?>
 									                      <span class="badge bg-warning" data-toggle="tooltip" data-placement="top" title="Belum Selesai">Menunggu</span>

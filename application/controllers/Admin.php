@@ -467,11 +467,16 @@ class Admin extends CI_Controller {
 		$this->form_validation->set_rules('ja1','Ja1','required');
 		if($this->form_validation->run() == TRUE){
 		$data = array(
-						'nm_pejabat1' 	=> $this->input->post('ja1'),						
-						'nm_pejabat2' 	=> $this->input->post('ja2'),						
-						'nm_pejabat3' 	=> $this->input->post('ja3'),						
-						'nm_pejabat4' 	=> $this->input->post('ja4'),						
-						'nm_pejabat5' 	=> $this->input->post('ja5')					
+						'nm_pejabat1' 		=> $this->input->post('ja1'),						
+						'nm_pejabat2' 		=> $this->input->post('ja2'),						
+						'nm_pejabat3' 		=> $this->input->post('ja3'),						
+						'nm_pejabat4' 		=> $this->input->post('ja4'),						
+						'nm_pejabat5' 		=> $this->input->post('ja5'),
+						'posisi_pejabat1' 	=> $this->input->post('pj1'),						
+						'posisi_pejabat2' 	=> $this->input->post('pj2'),						
+						'posisi_pejabat3' 	=> $this->input->post('pj3'),						
+						'posisi_pejabat4' 	=> $this->input->post('pj4'),						
+						'posisi_pejabat5' 	=> $this->input->post('pj5')					
 					 );
 		$sql = $this->M_admin->e_jabatan($data);
 		$allsql = array($sql);

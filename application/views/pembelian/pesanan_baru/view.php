@@ -25,7 +25,7 @@
 										<tbody>
 											<?php foreach ($isi as $row) {?>
 											<tr>
-												<td><?php echo date('d/m/Y',strtotime($row->tgl_minta))?></td>
+												<td><?php echo set_tanggal($row->tgl_minta)?></td>
 												<td><?php echo $row->nota_minta?></td>
 												<td><?php echo $row->nm_bagian?></td>
 												<td>
@@ -44,7 +44,7 @@
 													<a data-toggle="tooltip" data-placement="top" title="Detail verifikasi" href="<?php echo site_url('pembelian/v_ver_pesbaru/'.$row->id_permintaan)?>"><i class="fas fa-align-justify fa-sm"></i></a>&nbsp;
 													<!-- &nbsp;
 													<a  data-toggle="tooltip" data-placement="top" title="Hapus" href="#" onclick="return confirm('Konfirmasi Hapus Data ?')"><i class="fas fa-trash fa-sm"></i></a> -->
-													<a data-toggle="modal" data-target="#c<?php echo $row->id_permintaan?>" href=""><i class="far fa-check-circle" data-toggle="tooltip" data-placement="top" title="Ubah Status"></i></i></a>&nbsp;
+													<a data-toggle="modal" data-target="#c<?php echo $row->id_permintaan?>" href=""><i class="far fa-check-circle" data-toggle="tooltip" data-placement="top" title="Ubah Status"></i></a>&nbsp;
 													<div class="text-left">
 													<!-- modal -->
 													<div class="modal fade" id="c<?php echo $row->id_permintaan?>">

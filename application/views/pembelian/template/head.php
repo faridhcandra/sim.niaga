@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="Description" content="Aplikasi pembelian niaga">
   <link rel="shortcut icon" href="<?php echo base_url();?>assets/dist/img/favicon.png">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -15,7 +16,8 @@
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/fonts/css_fonts.css">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
   <!-- pace-progress -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/pace-progress/themes/green/pace-theme-flat-top.css">
   <!-- Toastr -->

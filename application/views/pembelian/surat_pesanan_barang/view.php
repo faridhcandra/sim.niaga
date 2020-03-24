@@ -32,9 +32,9 @@
 													<td><?php echo $row->nota_spb?></td>
 													<td><?php echo $row->nm_supplier?></td>
 													<td><?php echo $row->attn_supplier?></td>
-													<td><?php echo number_format($row->total_spb,2,',','.')?></td>
-													<td><?php echo number_format($row->ppn_spb,2,',','.')?></td>
-													<td><?php echo number_format($row->totalharga_spb,2,',','.')?></td>
+													<td><?php echo set_number($row->total_spb)?></td>
+													<td><?php echo set_number($row->ppn_spb)?></td>
+													<td><?php echo set_number($row->totalharga_spb)?></td>
 													<td class="project-actions text-center">
 														<a data-toggle="tooltip" title="Cetak Nota" href="#"><i class="fas fa-print fa-sm"></i></a>&nbsp;
 														<a data-toggle="tooltip" title="Detail SPB" href="<?php echo site_url('pembelian/v_dtl_spb/'.$row->id_spb)?>"><i class="fas fa-align-justify fa-sm"></i></a>&nbsp;
@@ -43,8 +43,7 @@
 												</tr>
 											<?php } ?>
 										</tbody>
-										</table>
-									</div>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -54,4 +53,4 @@
 		</div>
 	</div>
 </div>
-<!-- /.content
+<!-- /.content -->

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 05, 2020 at 11:32 AM
+-- Generation Time: Mar 24, 2020 at 10:42 AM
 -- Server version: 5.7.10-log
 -- PHP Version: 5.6.17
 
@@ -276,18 +276,21 @@ INSERT INTO `tbl_dtl_pembelian` (`id_dtl_pembelian`, `id_pembelian`, `id_dtl_per
 CREATE TABLE `tbl_dtl_penerimaan` (
   `id_dtl_penerimaan` int(11) NOT NULL,
   `id_penerimaan` varchar(12) DEFAULT NULL,
-  `tgl_dtlterima` varchar(20) DEFAULT NULL,
+  `nota_dtlterima` varchar(50) NOT NULL,
+  `tgl_dtlterima` date DEFAULT NULL,
   `id_barang` varchar(15) DEFAULT NULL,
-  `jml1_dtlterima` decimal(11,2) DEFAULT NULL,
-  `jml2_dtlterima` decimal(11,2) DEFAULT NULL,
+  `jml1_dtlterima` decimal(11,2) DEFAULT '0.00',
+  `jml2_dtlterima` decimal(11,2) DEFAULT '0.00',
   `sat1_dtlterima` tinyint(3) DEFAULT NULL,
   `sat2_dtlterima` tinyint(3) DEFAULT NULL,
+  `angkut_dtlterima` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `harga_dtlterima` decimal(15,2) NOT NULL DEFAULT '0.00',
   `ppn_dtlterima` decimal(15,2) DEFAULT NULL,
   `subtotal_dtlterima` decimal(15,2) DEFAULT NULL,
   `totalharga_dtlterima` decimal(15,2) DEFAULT NULL,
-  `k_ppn_dtlterima` decimal(15,2) DEFAULT NULL,
-  `k_subtotal_dtlterima` decimal(15,2) DEFAULT NULL,
-  `k_totalharga_dtlterima` decimal(15,2) DEFAULT NULL,
+  `k_ppn_dtlterima` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `k_subtotal_dtlterima` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `k_totalharga_dtlterima` decimal(15,2) NOT NULL DEFAULT '0.00',
   `id_dtl_pembelian` int(11) DEFAULT NULL,
   `nota_dtl_beli` varchar(50) DEFAULT NULL,
   `lunas_dtlterima` enum('Y','T') DEFAULT 'T',
@@ -295,7 +298,38 @@ CREATE TABLE `tbl_dtl_penerimaan` (
   `id_jnsbrngakt` tinyint(9) DEFAULT NULL,
   `input_dtlterima` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `kdpajak_dtlterima` varchar(20) DEFAULT NULL,
-  `pajak_dtlterima` enum('Y','T') DEFAULT 'T',
+  `pajak_dtlterima` enum('Y','T') DEFAULT 'T'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_dtl_penerimaan`
+--
+
+INSERT INTO `tbl_dtl_penerimaan` (`id_dtl_penerimaan`, `id_penerimaan`, `nota_dtlterima`, `tgl_dtlterima`, `id_barang`, `jml1_dtlterima`, `jml2_dtlterima`, `sat1_dtlterima`, `sat2_dtlterima`, `angkut_dtlterima`, `harga_dtlterima`, `ppn_dtlterima`, `subtotal_dtlterima`, `totalharga_dtlterima`, `k_ppn_dtlterima`, `k_subtotal_dtlterima`, `k_totalharga_dtlterima`, `id_dtl_pembelian`, `nota_dtl_beli`, `lunas_dtlterima`, `id_group`, `id_jnsbrngakt`, `input_dtlterima`, `kdpajak_dtlterima`, `pajak_dtlterima`) VALUES
+(1, 'NPB20030001', '', '2020-03-06', 'A', '10.00', '0.00', 2, 37, '2500.00', '1000.00', '1000.00', '10000.00', '11000.00', '0.00', '0.00', '0.00', 1, '0001/pemb-weav/I/01/2020', 'T', 1, 1, '2020-03-19 08:51:21', '01.050.4563.258', 'Y'),
+(2, 'NPB20030001', '', '2020-03-06', 'NH', '10.00', '0.00', 1, 37, '2500.00', '1000.00', '1000.00', '10000.00', '11000.00', '0.00', '0.00', '0.00', 1, '0001/pemb-weav/I/01/2020', 'T', 1, 1, '2020-03-19 09:34:43', '01.050.4563.258', 'Y');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dtl_pengecekan`
+--
+
+CREATE TABLE `tbl_dtl_pengecekan` (
+  `id_cek` varchar(15) NOT NULL,
+  `id_penyerahan` varchar(15) DEFAULT NULL,
+  `id_penerimaan` varchar(15) DEFAULT NULL,
+  `id_pembelian` varchar(15) DEFAULT NULL,
+  `id_bagian` varchar(8) DEFAULT NULL,
+  `id_unit` varchar(8) DEFAULT NULL,
+  `nota_cek` varchar(50) DEFAULT NULL,
+  `tgl_cek` date DEFAULT NULL,
+  `jml_cek` int(11) DEFAULT NULL,
+  `jml_lolos_cek` int(11) DEFAULT NULL,
+  `surat_jalan` varchar(20) DEFAULT NULL,
+  `tgl_jalan` date DEFAULT NULL,
+  `ket_cek` text,
+  `tgl_lunas` date DEFAULT NULL,
   `id_user` tinyint(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -369,8 +403,9 @@ CREATE TABLE `tbl_dtl_spb` (
 --
 
 INSERT INTO `tbl_dtl_spb` (`id_dtl_spb`, `id_spb`, `nota_dtl_spb`, `tgl_dtl_spb`, `id_barang`, `jmlbrng_spb`, `satuanbrng_spb`, `hargabrng_spb`, `dtltotal_spb`, `dtlppn_spb`, `dtltotalhrg_spb`, `kurs_dtl_spb`, `id_dtl_pembelian`, `nota_beli`, `selesai_dtl_spb`) VALUES
-(3, 'SPB20030001', '0001', '2020-03-04', 'A', 11, 'BIJI', '2000.00', '22000.00', '2200.00', '24200.00', 'RP', 2, '0001/pemb-weav/I/01/2020', 'T'),
-(4, 'SPB20030001', '0001', '2020-03-04', 'NH', 20, 'BTL', '1500.00', '30000.00', '3000.00', '33000.00', 'RP', 3, '0001/pemb-weav/I/01/2020', 'T');
+(3, 'SPB20030001', '0001/SPB/WEAV/I/2020', '2020-03-04', 'A', 11, 'BIJI', '2000.00', '22000.00', '2200.00', '24200.00', 'RP', 2, '0001/pemb-weav/I/01/2020', 'T'),
+(4, 'SPB20030001', '0001/SPB/WEAV/I/2020', '2020-03-04', 'NH', 20, 'BTL', '1500.00', '30000.00', '3000.00', '33000.00', 'RP', 3, '0001/pemb-weav/I/01/2020', 'T'),
+(5, 'SPB20030002', '0003/TEST/KEYUP/I/2020', '2020-03-06', 'NH', 20, 'BTL', '1500.00', '30000.00', '3000.00', '33000.00', 'RP', 3, '0001/pemb-weav/I/01/2020', 'T');
 
 -- --------------------------------------------------------
 
@@ -580,10 +615,10 @@ CREATE TABLE `tbl_nama_barang` (
 --
 
 INSERT INTO `tbl_nama_barang` (`id_barang`, `id_jnsbrng`, `id_jnsbrngakt`, `id_group`, `nm_barang`, `kel_barang`, `ket_barang`, `no_barang`, `sat1_barang`, `sat2_barang`, `hpp_barang`, `harga_barang`, `updated_barang`) VALUES
-('A', '2', NULL, 2, 'test barang', 'weav', 'weaving', 'a1', '6', '4', '0.00', '0.00', '2020-02-26 09:44:19'),
+('A', '2', NULL, 2, 'Palu Besar', 'weav', 'weaving', 'a1', '6', '6', '0.00', '0.00', '2020-03-11 11:47:52'),
 ('A.I', '2', NULL, 4, 'Alkaline A3', 'person', 'PERSONALIA', 'A1', '4', '11', '0.00', '0.00', '2020-01-31 00:00:00'),
-('NH', '1', NULL, 3, 'Natrium Hipoklorit', NULL, 'Bahan Campuran Pemutih', NULL, '10', '20', '900.00', '1500.00', '2020-01-30 15:07:41'),
-('sas', '3', NULL, 1, 'dsd', '23', 'dsfe', 's3', '15', '15', '0.00', '0.00', '2020-02-26 00:00:00');
+('NH', '1', NULL, 3, 'Natrium Hipoklorit', 'weav', 'Bahan Campuran Pemutih', 'a2', '10', '10', '900.00', '1500.00', '2020-03-09 00:00:00'),
+('sas', '3', NULL, 1, 'Barang 2', 'GF', 'dsfe', 's3', '15', '15', '0.00', '0.00', '2020-03-09 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -638,7 +673,7 @@ CREATE TABLE `tbl_pembelian` (
 --
 
 INSERT INTO `tbl_pembelian` (`id_pembelian`, `id_permintaan`, `id_bagian`, `id_unit`, `nota_beli`, `tgl_beli`, `ppn_beli`, `total_beli`, `totalhrg_beli`, `selesai_beli`, `ket_beli`, `id_user`) VALUES
-('PB20020001', 'PR20010003', '513', 'weav', '0003/pemb-weav/02/2020', '2020-02-19', '1500.00', '15000.00', '16500.00', 'T', 'shiap', NULL),
+('PB20020001', 'PR20010003', '513', 'weav', '0003/pemb-weav/02/2020', '2020-02-19', '1500.00', '15000.00', '16500.00', 'Y', 'shiap', NULL),
 ('PB20020002', 'PR20010001', '512', 'weav', '0001/pemb-weav/I/01/2020', '2020-02-21', '5200.00', '52000.00', '57200.00', 'T', 'okok', NULL);
 
 -- --------------------------------------------------------
@@ -658,11 +693,11 @@ CREATE TABLE `tbl_penerimaan` (
   `ppn_terima` decimal(15,2) DEFAULT NULL,
   `subtotal_terima` decimal(15,2) DEFAULT NULL,
   `totalharga_terima` decimal(15,2) DEFAULT NULL,
-  `k_ppn_terima` decimal(15,2) DEFAULT NULL,
-  `k_subtotal_terima` decimal(15,2) DEFAULT NULL,
-  `k_totalharga_terima` decimal(15,2) DEFAULT NULL,
-  `biaya_angkut_terima` decimal(15,2) DEFAULT NULL,
-  `jml_kurs_terima` decimal(15,2) DEFAULT NULL,
+  `k_ppn_terima` decimal(15,2) DEFAULT '0.00',
+  `k_subtotal_terima` decimal(15,2) DEFAULT '0.00',
+  `k_totalharga_terima` decimal(15,2) DEFAULT '0.00',
+  `biaya_angkut_terima` decimal(15,2) DEFAULT '0.00',
+  `jml_kurs_terima` decimal(15,2) DEFAULT '0.00',
   `nota_beli` varchar(50) DEFAULT NULL,
   `srtjalan_terima` varchar(25) DEFAULT NULL,
   `tgljalan_terima` date DEFAULT NULL,
@@ -676,13 +711,20 @@ CREATE TABLE `tbl_penerimaan` (
   `verif_terima` enum('Y','T') DEFAULT 'T',
   `tglverif_terima` date DEFAULT NULL,
   `lunas_terima` enum('Y','T') DEFAULT 'T',
-  `id_group` tinyint(3) DEFAULT NULL,
-  `harijt_terima` tinyint(3) DEFAULT NULL,
-  `tgljt_terima` date DEFAULT NULL,
+  `id_jnsbrng` tinyint(3) DEFAULT NULL,
+  `harijt_terima` tinyint(3) DEFAULT '0',
+  `tgljt_terima` date DEFAULT '0000-00-00',
   `fakturpjk_terima` varchar(20) DEFAULT NULL,
   `tglfaktur_terima` date DEFAULT NULL,
   `id_user` tinyint(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_penerimaan`
+--
+
+INSERT INTO `tbl_penerimaan` (`id_penerimaan`, `id_pembelian`, `id_supplier`, `id_bagian`, `id_unit`, `tgl_terima`, `nota_terima`, `ppn_terima`, `subtotal_terima`, `totalharga_terima`, `k_ppn_terima`, `k_subtotal_terima`, `k_totalharga_terima`, `biaya_angkut_terima`, `jml_kurs_terima`, `nota_beli`, `srtjalan_terima`, `tgljalan_terima`, `id_spb`, `nota_spb`, `ket_terima`, `id_cek`, `nota_cek`, `tgl_cek`, `kurs_terima`, `verif_terima`, `tglverif_terima`, `lunas_terima`, `id_jnsbrng`, `harijt_terima`, `tgljt_terima`, `fakturpjk_terima`, `tglfaktur_terima`, `id_user`) VALUES
+('NPB20030001', 'PB20020002', 'A2', '512', 'weav', '2020-03-06', '0001/WEAV/GD/I/2020', '2000.00', '20000.00', '27000.00', '0.00', '0.00', '0.00', '5000.00', '0.00', '0001/pemb-weav/I/01/2020', 'JLN2003/BJMLA', '2020-03-05', '', '', 'NO AGD 5200 S', '-', '-', NULL, 'RP', 'Y', NULL, 'T', 1, 0, '2020-03-06', '01.050.4563.258', '2020-03-06', NULL);
 
 -- --------------------------------------------------------
 
@@ -693,7 +735,6 @@ CREATE TABLE `tbl_penerimaan` (
 CREATE TABLE `tbl_pengecekan` (
   `id_cek` varchar(15) NOT NULL,
   `id_penyerahan` varchar(15) DEFAULT NULL,
-  `id_penerimaan` varchar(15) DEFAULT NULL,
   `id_pembelian` varchar(15) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
   `id_unit` varchar(8) DEFAULT NULL,
@@ -924,7 +965,8 @@ CREATE TABLE `tbl_spb` (
 --
 
 INSERT INTO `tbl_spb` (`id_spb`, `nota_spb`, `tgl_spb`, `id_supplier`, `total_spb`, `ppn_spb`, `totalharga_spb`, `kurs_spb`, `tgl_serahspb`, `ket_serahspb`, `haribayar_spb`, `ket_bayar`, `ket_gudangspb`, `ket_spb`) VALUES
-('SPB20030001', '0001', '2020-03-04', 'A2', '52000.00', '5200.00', '57200.00', 'RP', '2020-03-04', 'Barang sampai di gudang kami', 30, 'setelah barang diterima dan diperiksa dengan baik', 'Franko gudang PC GKBI', '1.Kualitas barang tersebut diatas sesuai dengan standart kualitas PC GKBI - Yogyakarta.\r\n2.Dokumen pendukung harap segera dilengkapi/dikirim maksimal 7 (tujuh) hari setelah barang\r\n   kami terima karena hal itu sebagai syarat pengajuan pembayaran.\r\n3.Setelah Surat Pesanan Barang ini ditandatangani oleh penjual harus dikirim atau di fax\r\n   balik ke PC GKBI.\r\n4Semua pemberitahuan mengenai dan atau sehubungan dengan Surat Pesanan Barang ini,\r\n   dilakukan secara tertulis kepada alamat kedua belah pihak.\r\n5.Barang dikirim ke Gudang PC GKBI - Yogyakarta.\r\n6.Barang yang kami terima adalah Ex. PT PUJI LESTARI - SOLO\r\n7.Tanggal penyerahan adalah estimasi kedatangan barang sampai di gudang kami.\r\n8.PO ini berlaku sampai dengan 30 Januari 2020 diatas tanggal tersebut PO kami anggap\r\n   batal.\r\n9.Jika barang yang kami pesan kedatangannya melebihi batas waktu tersebut di atas, diharap\r\n   mengkomunikasikan secara tertulis dengan pemesan.\r\n         ');
+('SPB20030001', '0001/SPB/WEAV/I/2020', '2020-03-04', 'A2', '52000.00', '5200.00', '57200.00', 'RP', '2020-03-04', 'Barang sampai di gudang kami', 30, 'setelah barang diterima dan diperiksa dengan baik', 'Franko gudang PC GKBI', '1.Kualitas barang tersebut diatas sesuai dengan standart kualitas PC GKBI - Yogyakarta.\r\n2.Dokumen pendukung harap segera dilengkapi/dikirim maksimal 7 (tujuh) hari setelah barang\r\n   kami terima karena hal itu sebagai syarat pengajuan pembayaran.\r\n3.Setelah Surat Pesanan Barang ini ditandatangani oleh penjual harus dikirim atau di fax\r\n   balik ke PC GKBI.\r\n4Semua pemberitahuan mengenai dan atau sehubungan dengan Surat Pesanan Barang ini,\r\n   dilakukan secara tertulis kepada alamat kedua belah pihak.\r\n5.Barang dikirim ke Gudang PC GKBI - Yogyakarta.\r\n6.Barang yang kami terima adalah Ex. PT PUJI LESTARI - SOLO\r\n7.Tanggal penyerahan adalah estimasi kedatangan barang sampai di gudang kami.\r\n8.PO ini berlaku sampai dengan 30 Januari 2020 diatas tanggal tersebut PO kami anggap\r\n   batal.\r\n9.Jika barang yang kami pesan kedatangannya melebihi batas waktu tersebut di atas, diharap\r\n   mengkomunikasikan secara tertulis dengan pemesan.\r\n         '),
+('SPB20030002', '0003/TEST/KEYUP/I/2020', '2020-03-06', 'AAB', '30000.00', '3000.00', '33000.00', 'RP', '2020-03-06', 'Barang sampai di gudang kami', 20, 'setelah barang diterima dan diperiksa dengan baik', 'Loco Gudang Penjualan', '1.Kualitas barang tersebut diatas sesuai dengan standart kualitas PC GKBI - Yogyakarta.\r\n2.Dokumen pendukung harap segera dilengkapi/dikirim maksimal 7 (tujuh) hari setelah barang\r\n   kami terima karena hal itu sebagai syarat pengajuan pembayaran.\r\n3.Setelah Surat Pesanan Barang ini ditandatangani oleh penjual harus dikirim atau di fax\r\n   balik ke PC GKBI.\r\n4Semua pemberitahuan mengenai dan atau sehubungan dengan Surat Pesanan Barang ini,\r\n   dilakukan secara tertulis kepada alamat kedua belah pihak.\r\n5.Barang dikirim ke Gudang PC GKBI - Yogyakarta.\r\n6.Barang yang kami terima adalah Ex. PT PUJI LESTARI - SOLO\r\n7.Tanggal penyerahan adalah estimasi kedatangan barang sampai di gudang kami.\r\n8.PO ini berlaku sampai dengan 30 Januari 2020 diatas tanggal tersebut PO kami anggap\r\n   batal.\r\n9.Jika barang yang kami pesan kedatangannya melebihi batas waktu tersebut di atas, diharap\r\n   mengkomunikasikan secara tertulis dengan pemesan.\r\n									');
 
 -- --------------------------------------------------------
 
@@ -1088,6 +1130,12 @@ ALTER TABLE `tbl_dtl_penerimaan`
   ADD PRIMARY KEY (`id_dtl_penerimaan`);
 
 --
+-- Indexes for table `tbl_dtl_pengecekan`
+--
+ALTER TABLE `tbl_dtl_pengecekan`
+  ADD PRIMARY KEY (`id_cek`);
+
+--
 -- Indexes for table `tbl_dtl_permintaan`
 --
 ALTER TABLE `tbl_dtl_permintaan`
@@ -1244,6 +1292,11 @@ ALTER TABLE `tbl_dtl_mutasi_gudang`
 ALTER TABLE `tbl_dtl_pembelian`
   MODIFY `id_dtl_pembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT for table `tbl_dtl_penerimaan`
+--
+ALTER TABLE `tbl_dtl_penerimaan`
+  MODIFY `id_dtl_penerimaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `tbl_dtl_permintaan`
 --
 ALTER TABLE `tbl_dtl_permintaan`
@@ -1252,7 +1305,7 @@ ALTER TABLE `tbl_dtl_permintaan`
 -- AUTO_INCREMENT for table `tbl_dtl_spb`
 --
 ALTER TABLE `tbl_dtl_spb`
-  MODIFY `id_dtl_spb` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_dtl_spb` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tbl_group`
 --

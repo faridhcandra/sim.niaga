@@ -31,7 +31,111 @@ class Pembelian extends CI_Controller {
 	// =================================================
 
 	// ========================================================== MENU MASTER =================================================================
-	// -------------- Jenis barang --------------
+	// -------------- satuan Barang ------------------
+	public function view_satuan()
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Satuan Barang';
+
+		$isi['isi'] = $this->M_pembelian->v_satuan();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/satuan/view',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function t_satuan()
+	{
+		$cek = $this->db->query("SELECT nm_satuan FROM tbl_satuan where nm_satuan='".$this->input->post('satuan',TRUE)."'")->num_rows();
+		if($cek <= 0){
+			$data = array ('nm_satuan' => $this->input->post('satuan'));
+			$sql = $this->M_pembelian->s_satuan($data);
+
+			$allsql = array($sql);
+			if($allsql){ // Jika sukses
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_satuan')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('pembelian/view_satuan','refresh');
+			}else{ // Jika gagal
+				// echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/view_satuan')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('pembelian/view_satuan','refresh');
+			}
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf Nama Satuan Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('pembelian/view_satuan').'")';
+			echo '</script>';
+		}
+	}
+	public function u_satuan($id='')
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Edit Satuan Barang';
+
+		$isi['isi'] = $this->M_pembelian->ve_satuan($id);
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/satuan/edit',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function satuan_u($id)
+	{
+		$this->form_validation->set_rules('satuan','Satuan','required');
+		if($this->form_validation->run() == TRUE){
+			$cek = $this->db->query("SELECT nm_satuan FROM tbl_satuan where nm_satuan='".$this->input->post('satuan',TRUE)."'")->num_rows();
+			if($cek <= 0){
+				$data = array(
+								'nm_satuan' => $this->input->post('satuan')							
+							 );
+				$sql = $this->M_pembelian->e_satuan($id, $data);
+				$allsql = array($sql);
+					if($allsql){ // Jika sukses
+						// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_satuan')."';</script>";
+						$this->session->set_flashdata('success', 'Data berhasil diubah');
+						redirect('pembelian/view_satuan','refresh');
+					}else{ // Jika gagal
+						// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_satuan')."';</script>";
+						$this->session->set_flashdata('error', 'Data gagal diubah');
+						redirect('pembelian/view_satuan','refresh');
+					}
+				}else{
+					echo '<script language="javascript">';
+					echo 'alert("Maaf Nama Satuan Sudah Ada")';
+					echo '</script>';
+					echo '<script language="javascript">';
+					echo 'window.location=("'.site_url('pembelian/view_satuan').'")';
+					echo '</script>';
+				}
+		}else{
+			// echo "<script>alert('Maaf Nama Satuan tidak ditemukan');window.location = '".site_url('pembelian/view_satuan')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Nama Satuan tidak ditemukan');
+			redirect('pembelian/view_satuan','refresh');
+		}
+	}
+	public function h_satuan($id)
+	{
+		$sql = $this->M_pembelian->h_satuan($id);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			// echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('pembelian/view_satuan')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('pembelian/view_satuan','refresh');
+		}else{ // Jika gagal
+			// echo "<script>alert('Data gagal di hapus');window.location = '".site_url('pembelian/view_satuan')."';</script>";
+			$this->session->set_flashdata('error', 'Data berhasil dihapus');
+			redirect('pembelian/view_satuan','refresh');
+		}
+	}
+	// ----------------------------------------------
+	// -------------- Jenis barang ------------------
 	public function view_jenisbrng()
 	{
 		$data['menutitle'] 	= 'Data Jenis Barang';
@@ -250,6 +354,149 @@ class Pembelian extends CI_Controller {
 		}
 	}
 	// ------------------------------------------
+	// ----------------- Barang ---------------------
+	public function view_barang()
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Data Barang';
+
+		$isi['isi'] =  $this->M_pembelian->v_barang();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/barang/view',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function t_barang()
+	{ 
+
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Tambah barang';
+
+		$isi['get_jnsbrng'] = $this->M_pembelian->get_idjenis();
+		$isi['get_group'] = $this->M_pembelian->get_idgroup();
+		$isi['get_satuan'] = $this->M_pembelian->get_satuan();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/barang/tambah',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function barang_t()
+	{
+		$cek = $this->db->query("SELECT id_barang FROM tbl_nama_barang where id_barang='".$this->input->post('id_barang',TRUE)."' OR nm_barang='".$this->input->post('nama_barang',TRUE)."'")->num_rows();
+		if($cek <= 0){
+			$data = array ('id_barang' => $this->input->post('id_barang'),
+							'id_jnsbrng' => $this->input->post('id_jnsbrng'),
+							'id_group' => $this->input->post('id_group'),
+							'nm_barang' => $this->input->post('nama_barang'),
+							'kel_barang' => $this->input->post('kel_barang'),
+							'ket_barang' => $this->input->post('ket_barang'),
+							'no_barang' => $this->input->post('no_barang'),
+							'sat1_barang' => $this->input->post('sat1'),
+							'sat2_barang' => $this->input->post('sat2'),
+							'updated_barang' => date('Y-m-d')
+               				);
+			$sql = $this->M_pembelian->s_barang($data);
+
+			$allsql = array($sql);
+			if($allsql){ // Jika sukses
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/view_barang')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('pembelian/view_barang','refresh');
+			}else{ // Jika gagal
+				// echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/view_barang')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('pembelian/view_barang','refresh');
+			}
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf Nama Satuan Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('pembelian/view_barang').'")';
+			echo '</script>';
+		}
+	}
+	public function u_barang($id='')
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Edit Barang';
+
+		$isi['get_jnsbrng'] = $this->M_pembelian->get_idjenis();
+		$isi['get_group'] = $this->M_pembelian->get_idgroup();
+		$isi['get_satuan'] = $this->M_pembelian->get_satuan();
+		$isi['isi'] = $this->M_pembelian->ve_barang($id);
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/barang/edit',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	public function barang_u($id)
+	{
+		$this->form_validation->set_rules('id_barang','id_barang','required');
+		if($this->form_validation->run() == TRUE){
+			/*$cek = $this->db->query("SELECT id_barang FROM tbl_nama_barang where id_barang='".$this->input->post('id_barang',TRUE)."'")->num_rows();
+			if($cek <= 0){*/
+				$data = array(
+							'id_barang' => $this->input->post('id_barang'),
+							'id_jnsbrng' => $this->input->post('id_jnsbrng'),
+							'id_group' => $this->input->post('id_group'),
+							'nm_barang' => $this->input->post('nama_barang'),
+							'kel_barang' => $this->input->post('kel_barang'),
+							'ket_barang' => $this->input->post('ket_barang'),
+							'no_barang' => $this->input->post('no_barang'),
+							'sat1_barang' => $this->input->post('sat1'),
+							'sat2_barang' => $this->input->post('sat2'),
+							'updated_barang' => date('Y-m-d')							
+							 );
+				$sql = $this->M_pembelian->e_barang($id, $data);
+				$allsql = array($sql);
+				if($allsql){ // Jika sukses
+					// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/view_barang')."';</script>";
+					$this->session->set_flashdata('success', 'Data berhasil diubah');
+					redirect('pembelian/view_barang','refresh');
+				}else{ // Jika gagal
+					// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/u_barang')."';</script>";
+					$this->session->set_flashdata('error', 'Data gagal diubah');
+					redirect('pembelian/u_barang','refresh');
+				}
+			/*}else{
+				echo '<script language="javascript">';
+				echo 'alert("Maaf Id Barang Sudah Ada")';
+				echo '</script>';
+				echo '<script language="javascript">';
+				echo 'window.location=("'.site_url('pembelian/view_barang').'")';
+				echo '</script>';
+			}*/
+		}else{
+			// echo "<script>alert('Maaf Nama Barang tidak ditemukan');window.location = '".site_url('pembelian/view_barang')."';</script>";
+			$this->session->set_flashdata('warning', 'Maaf Nama Barang tidak ditemukan');
+			redirect('pembelian/view_barang','refresh');
+		}
+	}
+	public function h_barang($id)
+	{
+		$sql = $this->M_pembelian->h_barang($id);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			// echo "<script>alert('Data berhasil di hapus');window.location = '".site_url('pembelian/view_barang')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('pembelian/view_barang','refresh');
+		}else{ // Jika gagal
+			// echo "<script>alert('Data gagal di hapus');window.location = '".site_url('pembelian/view_barang')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('pembelian/u_barang','refresh');
+		}
+	}
+	// ----------------------------------------------
 	// --------------- Supplier -----------------
 	public function view_supplier()
 	{
@@ -553,6 +800,22 @@ class Pembelian extends CI_Controller {
 		}
 	}
 	// ------------------------------------------------------------
+	// ----------------------- Stok Barang ------------------------
+	public function v_stok()
+	{
+		$data['menutitle'] = 'Data Stok Barang';
+		$data['menu'] = 'Transaksi';
+		$data['submenu'] = 'Stok Barang';
+
+		$isi['isi'] = $this->M_pembelian->v_stok();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/stok_barang/view',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	// ------------------------------------------------------------
 	// ========================================================================================================================================
 
 	// ========================================================== Data Transaksi ==============================================================
@@ -806,7 +1069,7 @@ class Pembelian extends CI_Controller {
 	// ----------------- Surat Pesanan Barang ---------------------
 	public function v_spb()
 	{
-		$data['menutitle'] 	= 'Transaksi Surat Pesanan barang';
+		$data['menutitle'] 	= 'Transaksi Surat Pesanan Barang';
 		$data['menu'] 		= 'Transaksi';
 		$data['submenu'] 	= 'Surat Pesanan Barang';
 
@@ -1062,6 +1325,7 @@ class Pembelian extends CI_Controller {
 			$sub 	= $this->input->post('subtotal',TRUE);
 			$ppn 	= $this->input->post('subppn',TRUE);
 			$total 	= $this->input->post('subtotahrg',TRUE);
+			
 			$sql2 	= $this->M_pembelian->e_spb($idspb,$id,$ppn,$sub,$total);
 
 			$data = array(	'id_barang' 		=> $this->input->post('kdbrng',TRUE),
@@ -1115,15 +1379,137 @@ class Pembelian extends CI_Controller {
 		$data['menu'] 		= 'Transaksi';
 		$data['submenu'] 	= 'Nota Penerimaan Barang';
 
-		// $isi['isi'] = $this->M_pembelian->v_spb();
+		$isi['isi'] = $this->M_pembelian->v_npb();
 
 		$this->load->view('pembelian/template/head');
 		$this->load->view('pembelian/template/navbar');
 		$this->load->view('pembelian/template/sidebar',$data);
-		$this->load->view('pembelian/nota_penerimaan_barang/view');
+		$this->load->view('pembelian/nota_penerimaan_barang/view',$isi);
 		$this->load->view('pembelian/template/footer');
 	}
 	
+	public function u_npb($id='')
+	{
+		$data['menutitle'] 	= 'Edit Nota Penerimaan Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Nota Penerimaan Barang';
+
+		$isi['isi'] = $this->M_pembelian->ve_npb($id);
+		$isi['isi_detail'] = $this->M_pembelian->ve_detl_npb($id);
+		$isi['get_spb'] = $this->M_pembelian->get_spbnpb();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/nota_penerimaan_barang/edit',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+
+	public function npb_u($id)
+	{
+		$this->form_validation->set_rules('kode','Kode','required');
+		if($this->form_validation->run() == TRUE){
+
+			// Table utama penerimaan
+			// $idnpb 		= $this->input->post('kode');
+			$jnskurs 	= $this->input->post('kurs');
+			$jmlkurs 	= $this->input->post('jmlkurs');
+			$lunas 		= $this->input->post('pelunasan');
+			$kdspb 		= $this->input->post('kdspb');
+			$nospb 		= $this->input->post('nospb');
+			$hrjt 		= $this->input->post('hrijt');
+			$tgljt 		= $this->input->post('tgljt');
+			$ket 		= $this->input->post('ket');
+			$byangkut 	= $this->input->post('byangkut');
+			$subasing 	= $this->input->post('subtotasing');
+			$subrp 		= $this->input->post('subtotrp');
+			$appnasing 	= $this->input->post('ppnasing');
+			$appnrp		= $this->input->post('ppnrp');
+			$totaasing 	= $this->input->post('totasing');
+			$totrp 		= $this->input->post('totrp');
+
+			// Table Detail Penerimaan 
+			$id_dtlterima 	= $this->input->post('dtl_idterima');
+			// $hrgasing 		= $this->input->post('dtl_hargaasing');
+			$hrgrp 			= $this->input->post('dtl_hargarp');
+			$jml1 			= $this->input->post('dtl_jml1');
+			$sat1 			= $this->input->post('dtl_sat1');
+			$jml2 			= $this->input->post('dtl_jml2');
+			$sat2 			= $this->input->post('dtl_sat2');
+			$jmlasing 		= $this->input->post('dtl_jmlasing');
+			$jmlrp 			= $this->input->post('dtl_jmlrp');
+			$ppnasing 		= $this->input->post('dtl_ppnasing');
+			$ppnrp 			= $this->input->post('dtl_ppnrp');
+			$byangkut_dtl 	= $this->input->post('dtl_angkut');
+			$tothrgasing 	= $this->input->post('dtl_tothrgasing');
+			$tothrgrp 		= $this->input->post('dtl_tothrgrp');
+
+			$totjmlasing 	= $subasing!= null?$subasing : 0;
+			$totjmlrp		= $subrp!= null?$subrp : 0;
+			$totppnasing 	= $appnasing!= null?$appnasing : 0;
+			$totppnrp 		= $appnrp!= null?$appnrp : 0;
+			$totangkut		= $byangkut!= null?$byangkut : 0;
+			$totasinghrg	= $totaasing!= null?$totaasing : 0;
+			$totrphrg		= $totrp!= null?$totrp : 0;
+			$tgljtnya 		= $tgljt!= null? $tgljt : "0000-00-00";
+
+			$sql1 = $this->M_pembelian->e_npb($id,$jnskurs,$jmlkurs,$lunas,$kdspb,$nospb,$hrjt,$tgljtnya,$ket,$totangkut,$totjmlrp,$totppnrp,$totrphrg,$totjmlasing,$totppnasing,$totasinghrg);
+
+			$data2 = array();
+			
+			for ($i=0; $i < sizeof($id_dtlterima); $i++) { 
+				$data2[] = array(  'id_dtl_penerimaan' 		=> $id_dtlterima[$i],
+								   /*'' => $hrgasing[$i],*/
+								   'harga_dtlterima' 		=> $hrgrp[$i],
+								   'jml1_dtlterima' 		=> $jml1[$i],
+								   'sat1_dtlterima' 		=> $sat1[$i],
+								   'jml2_dtlterima' 		=> $jml2[$i],
+								   'sat2_dtlterima' 		=> $sat2[$i],
+								   'k_subtotal_dtlterima' 	=> $jmlasing[$i],
+								   'subtotal_dtlterima' 	=> $jmlrp[$i],
+								   'k_ppn_dtlterima' 		=> $ppnasing[$i],
+								   'ppn_dtlterima' 			=> $ppnrp[$i],
+								   'angkut_dtlterima' 		=> $byangkut_dtl[$i],
+								   'k_totalharga_dtlterima' => $tothrgasing[$i],
+								   'totalharga_dtlterima' 	=> $tothrgrp[$i]
+				);
+			}		
+
+			$sql2 = $this->db->update_batch('tbl_dtl_penerimaan', $data2, 'id_dtl_penerimaan');
+
+			$allsql = array($sql1,$sql2); 
+			if($allsql){ // Jika sukses
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('pembelian/v_npb','refresh');
+			}else{ // Jika gagal
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('pembelian/v_npb','refresh');
+			}
+
+		}else{
+			$this->session->set_flashdata('warning', 'Maaf Detail NPB tidak ditemukan');
+			redirect('pembelian/v_npb','refresh');
+		}
+	}
+	public function v_konfnpb($id)
+	{
+		$id 	= $this->input->post('kode');
+		$ubah 	= $this->input->post('ubah');
+
+		$data 	= array('verif_terima' => $ubah);
+		$sql 	= $this->M_pembelian->v_konfnpb($id,$data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil Terverifikasi');
+			redirect('pembelian/v_npb','refresh');
+		}else{ // Jika gagal
+			// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal Terverivikasi');
+			redirect('pembelian/v_npb','refresh');
+		}
+	}
+
 	// ------------------------------------------------------------
 	// ========================================================================================================================================
 }
