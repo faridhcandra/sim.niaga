@@ -50,6 +50,12 @@
                 <p>Jenis Barang Akuntansi</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="<?php echo site_url('gudang/v_barangakt');?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Data Barang</p>
+              </a>
+            </li>
             <!-- <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -105,7 +111,7 @@
           </a>
           <ul class="nav nav-treeview">
            <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?php echo site_url('gudang/v_penerimaan')?>" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Penerimaan</p>
             </a>

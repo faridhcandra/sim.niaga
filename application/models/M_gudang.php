@@ -22,6 +22,53 @@ class M_gudang extends CI_Model {
 	{
 		return $this->db->order_by('abs(id_jnsbrng) asc')->get('tbl_jenis_barang'); 
 	}
+	function get_idsupplier()
+	{
+		return $this->db->order_by('id_supplier','asc')->get('tbl_supplier');
+	}
+	function get_units()
+	{
+		$hasil = $this->db->query("SELECT * FROM tbl_unit");
+		return $hasil;
+	}
+	function get_supplier()
+	{
+		$sql = "SELECT id_supplier,nm_supplier
+				FROM tbl_supplier";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	function get_notabeli()
+	{
+		$sql = "SELECT a.id_pembelian,a.nota_beli,a.id_unit,c.nm_unit,a.id_bagian,b.nm_bagian
+				FROM tbl_pembelian AS a
+				JOIN tbl_bagian AS b ON a.id_bagian=b.id_bagian
+				JOIN tbl_unit AS c ON a.id_unit=c.id_unit";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	function get_dtlbeli()
+	{
+				$sql = "SELECT a.id_dtl_pembelian,a.id_pembelian,a.id_barang,b.nm_barang,b.id_group,c.nm_group,b.id_jnsbrngakt,d.no_jnsbrngakt,d.nm_jnsbrngakt,a.nota_dtl_beli,a.ppn_dtl_beli,a.total_dtl_beli,a.totalhrg_dtl_beli,a.hrg_renc_beli,
+					b.sat1_barang,b.sat2_barang,e.nm_satuan AS nm_satuan1,g.nm_satuan AS nm_satuan2,a.id_user
+				FROM tbl_dtl_pembelian AS a
+				JOIN tbl_nama_barang AS b ON a.id_barang=b.id_barang
+				JOIN tbl_group AS c ON b.id_group=c.id_group
+				JOIN tbl_barang_akutansi AS d ON b.id_jnsbrngakt=d.id_jnsbrngakt
+				JOIN tbl_satuan AS e ON b.sat1_barang=e.id_satuan
+				JOIN tbl_satuan AS g ON b.sat2_barang=g.id_satuan
+				JOIN tbl_pembelian AS f ON a.id_pembelian=f.id_pembelian
+				WHERE f.selesai_beli='T'";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+
+	function get_rptrm($id)
+	{
+		$sql = "SELECT subtotal_terima,ppn_terima,totalharga_terima FROM tbl_penerimaan WHERE id_penerimaan='$id'";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
 	// ==============================================
 	// ======================================================== DATA MASTER ===================================================================
 	// ------------ Kode Rekening Akuntansi ---------------
@@ -98,6 +145,34 @@ class M_gudang extends CI_Model {
 			$this->db->where('id_jnsbrngakt',$id)->delete('tbl_barang_akutansi');
 		}
 	// ----------------------------------------------------
+	// ---------------- Jenis Barang Akuntansi ------------
+		public function v_brngakt()
+		{
+			$sql = "SELECT a.id_barang,a.nm_barang,b.nm_jnsbrng,c.nm_satuan,d.no_jnsbrngakt,d.nm_jnsbrngakt,e.id_rekening
+					FROM tbl_nama_barang AS a 
+					 JOIN tbl_jenis_barang AS b ON a.id_jnsbrng=b.id_jnsbrng
+					 JOIN tbl_satuan AS c ON a.sat1_barang=c.id_satuan
+					LEFT JOIN tbl_barang_akutansi AS d ON a.id_jnsbrngakt=d.id_jnsbrngakt
+					LEFT JOIN tbl_rekening AS e ON d.no_rekening=e.no_rekening
+					ORDER BY a.id_barang ASC, ABS(a.nm_barang)";
+			$data = $this->db->query($sql);
+			return $data->result();
+		}
+		
+		function cari_kodeakt()
+		{
+			$hasil = $this->db->query("SELECT a.id_jnsbrngakt,a.nm_jnsbrngakt,a.no_rekening,b.id_rekening
+							FROM tbl_barang_akutansi AS a
+							JOIN tbl_rekening AS b ON a.no_rekening=b.no_rekening");
+			return $hasil; 
+		}
+
+		function v_edit_barangakt($id,$data)
+		{
+		$this->db->where('id_barang', $id)
+				 ->update('tbl_nama_barang',$data);
+		}
+	// ----------------------------------------------------
 	// ========================================================================================================================================
 		
 	// ======================================================== Verifikasi Data ===============================================================
@@ -143,6 +218,143 @@ class M_gudang extends CI_Model {
 		}
 	// ------------------------------------------------------------
 	// ========================================================================================================================================
+
+	// ============================================================ Transaksi =================================================================
+	// --------------------- Penerimaan -------------------------
+	public function v_penerimaan()
+	{
+		$sql = "SELECT d.id_dtl_penerimaan,a.id_penerimaan,a.nota_terima,a.id_pembelian,e.nota_beli,a.tgl_terima,a.id_supplier,
+				b.nm_supplier,a.id_bagian,c.nm_bagian,a.srtjalan_terima,
+				a.tgljalan_terima,a.tgljt_terima,a.ket_terima
+				FROM tbl_penerimaan AS a
+				JOIN tbl_supplier AS b ON a.id_supplier=b.id_supplier
+				JOIN tbl_bagian AS c ON a.id_bagian=c.id_bagian
+				JOIN tbl_dtl_penerimaan AS d ON a.id_penerimaan=a.id_penerimaan
+				JOIN tbl_pembelian AS e ON a.id_pembelian=e.id_pembelian
+				GROUP BY a.id_penerimaan
+				order by a.tgl_terima desc";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	function k_penerimaan()
+	{
+ 		$CI =& get_instance();
+		$CI->load->database('default');
+		//rancangan kode GL
+		$kode_TR="TR".date('ym')."%";
+		$sql="SELECT SUBSTRING(MAX(id_penerimaan),7,4) AS maxNo FROM tbl_penerimaan where id_penerimaan like('$kode_TR')";
+		$row = $CI->db->query($sql);
+		foreach ($row->result_array() as $rowmax)
+		{	
+		}
+		//buat noPO baru dengan noPO terbesar+1
+		$noTR_tmp		=$rowmax['maxNo'];
+		$noTR			=$noTR_tmp+1;	
+		$kode_tanggal	=date("ym");
+		if(strlen($noTR)==1){
+			$kode_penerimaan="TR".$kode_tanggal."000".$noTR;
+		}elseif(strlen($noTR)==2){
+			$kode_penerimaan="TR".$kode_tanggal."00".$noTR;
+		}elseif(strlen($noTR)==3){
+			$kode_penerimaan="TR".$kode_tanggal."0".$noTR;
+		}elseif(strlen($noTR)==4){
+			$kode_penerimaan="TR".$kode_tanggal.$noTR;
+		}
+		
+		return $kode_penerimaan;
+	}
+
+	function s_penerimaan($data)
+	{
+		return $this->db->insert('tbl_penerimaan', $data);
+	}
+	function s_dtl_penerimaan_batch($data)
+	{
+		return $this->db->insert_batch('tbl_dtl_penerimaan', $data);
+	}
+	function v_dtl_idtrm($id)
+	{
+		$this->db->select('a.id_penerimaan,a.tgl_terima,a.nota_terima,b.nm_supplier');
+		$this->db->from('tbl_penerimaan as a');
+		$this->db->join('tbl_supplier as b', 'a.id_supplier = b.id_supplier');
+		$this->db->where('a.id_penerimaan', $id);
+		$this->db->limit(1);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+
+	function v_dtl_penerimaan($id)
+	{
+		$this->db->select('a.id_dtl_penerimaan,a.id_penerimaan,b.nm_barang,c.no_jnsbrngakt,a.jml1_dtlterima,a.tgl_dtlterima,
+		a.harga_dtlterima,a.ppn_dtlterima,a.subtotal_dtlterima,a.totalharga_dtlterima');
+		$this->db->from('tbl_dtl_penerimaan as a');
+		$this->db->join('tbl_nama_barang as b', 'a.id_barang = b.id_barang');
+		$this->db->join('tbl_barang_akutansi as c', 'a.id_jnsbrngakt = c.id_jnsbrngakt');
+		$this->db->where('a.id_penerimaan', $id);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+
+	function ve_penerimaan($id)
+	{
+		$this->db->select('a.id_dtl_penerimaan,a.id_penerimaan,a.tgl_dtlterima,a.jml1_dtlterima,a.jml2_dtlterima,
+							a.sat1_dtlterima,g.nm_satuan AS nm_satuan1,a.sat2_dtlterima,h.nm_satuan  AS nm_satuan2,
+							,a.harga_dtlterima,a.subtotal_dtlterima,a.ppn_dtlterima,a.totalharga_dtlterima,
+							a.id_dtl_pembelian,a.id_barang,d.nm_barang,
+							a.id_group,e.nm_group,a.id_jnsbrngakt,f.no_jnsbrngakt');
+		$this->db->from('tbl_dtl_penerimaan as a');
+		$this->db->join('tbl_penerimaan as b', 'a.id_penerimaan=b.id_penerimaan');
+		$this->db->join('tbl_dtl_pembelian as c', 'a.id_dtl_pembelian=c.id_dtl_pembelian');
+		$this->db->join('tbl_nama_barang as d', 'a.id_barang=d.id_barang');
+		$this->db->join('tbl_group as e', 'a.id_group=e.id_group');
+		$this->db->join('tbl_barang_akutansi as f', 'a.id_jnsbrngakt=f.id_jnsbrngakt');
+		$this->db->join('tbl_satuan as g', 'a.sat1_dtlterima=g.id_satuan');
+		$this->db->join('tbl_satuan as h', 'a.sat2_dtlterima=h.id_satuan');
+		$this->db->where('a.id_dtl_penerimaan', $id);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+	function e_penerimaan($id,$data)
+	{
+		$this->db->where('id_penerimaan',$id)->update('tbl_penerimaan', $data);
+	}
+	function e_dtl_penerimaan($id,$data)
+	{
+		$this->db->where('id_penerimaan',$id)->update('tbl_dtl_penerimaan', $data);
+	}
+
+	function e_dtlpenerimaan($id,$id2,$ppn_terima,$subtotal_dtlterima,$totalharga_dtlterima)
+	{
+		$this->db->query( "update tbl_penerimaan a join tbl_dtl_penerimaan b on a.id_penerimaan=b.id_penerimaan
+	 					   set a.subtotal_terima 		= (a.subtotal_terima-b.subtotal_dtlterima)+$subtotal,
+	 					   a.ppn_terima			= (a.ppn_terima-b.ppn_dtlterima)+$ppn,
+						   a.totalharga_terima 	= (a.totalharga_terima-b.totalharga_dtlterima)+$total
+	 					   where a.id_penerimaan = '$id' and b.id_dtl_penerimaan = '$id2'");
+	}
+	// ------------------------------------------------------------
+	// ========================================================================================================================================
+	
+	function h_penerimaan($id)
+	{
+		$this->db->where('id_penerimaan', $id)->delete('tbl_penerimaan');
+	}
+	function h_dtlpenerimaan($id)
+	{
+		$this->db->where('id_penerimaan', $id)->delete('tbl_dtl_penerimaan');
+	}
+
 }
 
 /* End of file M_gudang.php */
