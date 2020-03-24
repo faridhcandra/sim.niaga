@@ -108,6 +108,7 @@
 					<div class="row">
 					<div class="col-md-12">
 						<div class="form-group float-right">
+							<a href="<?php echo site_url('pembelian/v_pembelian');?>" class="btn btn-secondary btn-sm" onclick="return confirm('Yakin Cancel ?')">Batal</a>
 							<input type="submit" class="btn btn-primary btn-sm toaster" value="Simpan">
 						</div>
 					</div>

@@ -661,8 +661,8 @@ class Stok extends CI_Controller {
 		$this->form_validation->set_rules('id_brngkel','id_brngkel','required');
 		if($this->form_validation->run() == TRUE){
 				$data = array(
-							'stok_brngkel' => $this->input->post('stok_brngkel'),
-							'tgl_brngkel' => $this->input->post('tgl_brngkel'),						
+							'jumlah_brngkel' => $this->input->post('jumlahkel'),
+							'tgl_brngkel' => $this->input->post('tgl_keluar'),						
 							 );
 				$sql = $this->M_stok->e_brngkel($id, $data);
 				$allsql = array($sql);

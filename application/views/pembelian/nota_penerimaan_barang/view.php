@@ -65,7 +65,7 @@
 																			<td>Subtotal Asing</td>
 																			<td>PPn Asing</td>
 																			<td>Total Asing</td>
-																		</tr>
+																		</tr>root
 																	</thead>
 																	<tbody>
 																		<tr></tr>

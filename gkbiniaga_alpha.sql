@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 24, 2020 at 08:33 AM
+-- Generation Time: Mar 24, 2020 at 10:42 AM
 -- Server version: 5.7.10-log
 -- PHP Version: 5.6.17
 
@@ -308,6 +308,30 @@ CREATE TABLE `tbl_dtl_penerimaan` (
 INSERT INTO `tbl_dtl_penerimaan` (`id_dtl_penerimaan`, `id_penerimaan`, `nota_dtlterima`, `tgl_dtlterima`, `id_barang`, `jml1_dtlterima`, `jml2_dtlterima`, `sat1_dtlterima`, `sat2_dtlterima`, `angkut_dtlterima`, `harga_dtlterima`, `ppn_dtlterima`, `subtotal_dtlterima`, `totalharga_dtlterima`, `k_ppn_dtlterima`, `k_subtotal_dtlterima`, `k_totalharga_dtlterima`, `id_dtl_pembelian`, `nota_dtl_beli`, `lunas_dtlterima`, `id_group`, `id_jnsbrngakt`, `input_dtlterima`, `kdpajak_dtlterima`, `pajak_dtlterima`) VALUES
 (1, 'NPB20030001', '', '2020-03-06', 'A', '10.00', '0.00', 2, 37, '2500.00', '1000.00', '1000.00', '10000.00', '11000.00', '0.00', '0.00', '0.00', 1, '0001/pemb-weav/I/01/2020', 'T', 1, 1, '2020-03-19 08:51:21', '01.050.4563.258', 'Y'),
 (2, 'NPB20030001', '', '2020-03-06', 'NH', '10.00', '0.00', 1, 37, '2500.00', '1000.00', '1000.00', '10000.00', '11000.00', '0.00', '0.00', '0.00', 1, '0001/pemb-weav/I/01/2020', 'T', 1, 1, '2020-03-19 09:34:43', '01.050.4563.258', 'Y');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dtl_pengecekan`
+--
+
+CREATE TABLE `tbl_dtl_pengecekan` (
+  `id_cek` varchar(15) NOT NULL,
+  `id_penyerahan` varchar(15) DEFAULT NULL,
+  `id_penerimaan` varchar(15) DEFAULT NULL,
+  `id_pembelian` varchar(15) DEFAULT NULL,
+  `id_bagian` varchar(8) DEFAULT NULL,
+  `id_unit` varchar(8) DEFAULT NULL,
+  `nota_cek` varchar(50) DEFAULT NULL,
+  `tgl_cek` date DEFAULT NULL,
+  `jml_cek` int(11) DEFAULT NULL,
+  `jml_lolos_cek` int(11) DEFAULT NULL,
+  `surat_jalan` varchar(20) DEFAULT NULL,
+  `tgl_jalan` date DEFAULT NULL,
+  `ket_cek` text,
+  `tgl_lunas` date DEFAULT NULL,
+  `id_user` tinyint(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -711,7 +735,6 @@ INSERT INTO `tbl_penerimaan` (`id_penerimaan`, `id_pembelian`, `id_supplier`, `i
 CREATE TABLE `tbl_pengecekan` (
   `id_cek` varchar(15) NOT NULL,
   `id_penyerahan` varchar(15) DEFAULT NULL,
-  `id_penerimaan` varchar(15) DEFAULT NULL,
   `id_pembelian` varchar(15) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
   `id_unit` varchar(8) DEFAULT NULL,
@@ -1105,6 +1128,12 @@ ALTER TABLE `tbl_dtl_pembelian`
 --
 ALTER TABLE `tbl_dtl_penerimaan`
   ADD PRIMARY KEY (`id_dtl_penerimaan`);
+
+--
+-- Indexes for table `tbl_dtl_pengecekan`
+--
+ALTER TABLE `tbl_dtl_pengecekan`
+  ADD PRIMARY KEY (`id_cek`);
 
 --
 -- Indexes for table `tbl_dtl_permintaan`

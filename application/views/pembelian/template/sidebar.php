@@ -79,8 +79,8 @@
             </li>                             
           </ul>
         </li>
-        <li class="nav-item has-treeview <?php if($url =="v_verpesbaru") { echo "menu-open";}?>">
-          <a href="#" class="nav-link <?php if($url =="v_verpesbaru") { echo "active";}?>">
+        <li class="nav-item has-treeview <?php if($url =="v_verpesbaru" OR $url == "v_stok") { echo "menu-open";}?>">
+          <a href="#" class="nav-link <?php if($url =="v_verpesbaru" OR $url == "v_stok") { echo "active";}?>">
             <i class="nav-icon fas fa-shopping-bag"></i>
             <p>
               Verifikasi Data
@@ -96,7 +96,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?php echo site_url('pembelian/v_stok');?>" class="nav-link <?php if($url =="v_stok") { echo "active";}?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Lihat Stok Barang</p>
               </a>

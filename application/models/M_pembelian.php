@@ -297,6 +297,20 @@ class M_pembelian extends CI_Model {
 				 ->update('tbl_dtl_permintaan',$data);
 	}
 // ------------------------------------------------------------
+// --------------- Stok Barang ------------------
+	public function v_stok()
+	{
+		$sql = "SELECT a.id_stok,a.id_barang,c.nm_barang,a.id_brngmsk,
+				SUM(a.stok_masuk) AS sisa_stok,SUM(a.stok_keluar) AS stok_keluar,a.id_bagian 
+				FROM tbl_stok_barang AS a 
+				JOIN tbl_nama_barang AS c ON a.id_barang=c.id_barang
+				JOIN tbl_barang_masuk AS b ON a.id_brngmsk=b.id_brngmsk
+				GROUP BY a.id_barang
+				ORDER BY ABS(c.nm_barang) ASC";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+// -----------------------------------------
 // ========================================================================================================================================
 
 // ====================================================== Data Transaksi ==================================================================

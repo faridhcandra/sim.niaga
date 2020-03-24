@@ -800,6 +800,22 @@ class Pembelian extends CI_Controller {
 		}
 	}
 	// ------------------------------------------------------------
+	// ----------------------- Stok Barang ------------------------
+	public function v_stok()
+	{
+		$data['menutitle'] = 'Data Stok Barang';
+		$data['menu'] = 'Transaksi';
+		$data['submenu'] = 'Stok Barang';
+
+		$isi['isi'] = $this->M_pembelian->v_stok();
+
+		$this->load->view('pembelian/template/head');
+		$this->load->view('pembelian/template/navbar');
+		$this->load->view('pembelian/template/sidebar',$data);
+		$this->load->view('pembelian/stok_barang/view',$isi);
+		$this->load->view('pembelian/template/footer');
+	}
+	// ------------------------------------------------------------
 	// ========================================================================================================================================
 
 	// ========================================================== Data Transaksi ==============================================================
