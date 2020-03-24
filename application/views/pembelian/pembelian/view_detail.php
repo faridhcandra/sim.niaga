@@ -13,7 +13,7 @@
 							<div class="bg-success text-white text-center">
 								<?php foreach ($judul as $i) { ?>
 								<label>No Beli: <?php echo $i->nota_beli?></label> | 
-								<label>Tanggal Beli: <?php echo date("d/m/Y",strtotime($i->tgl_beli))?></label>
+								<label>Tanggal Beli: <?php echo set_tanggal($i->tgl_beli)?></label>
 								<?php } ?>
 							</div>
 						</div>
@@ -25,21 +25,21 @@
 							  <div class="col-md-2"></div>
 			                  <div class="col-md-3">
 			                    <div class="description-block border-right">
-			                      <h5 class="description-header">Rp.<?php echo number_format($s->total_beli,2,',','.')?></h5>
+			                      <h5 class="description-header">Rp.<?php echo set_number($s->total_beli)?></h5>
 			                      <span>Sub Total</span>
 			                    </div>
 			                  </div>
 			                  <!-- /.col -->
 			                  <div class="col-md-3">
 			                    <div class="description-block border-right">
-			                      <h5 class="description-header">Rp.<?php echo number_format($s->ppn_beli,2,',','.')?></h5>
+			                      <h5 class="description-header">Rp.<?php echo set_number($s->ppn_beli)?></h5>
 			                      <span>PPN</span>
 			                    </div>
 			                  </div>
 			                  <!-- /.col -->
 			                  <div class="col-md-3">
 			                    <div class="description-block">
-			                      <h5 class="description-header">Rp.<?php echo number_format($s->totalhrg_beli,2,',','.')?></h5>
+			                      <h5 class="description-header">Rp.<?php echo set_number($s->totalhrg_beli)?></h5>
 			                      <span>Total</span>
 			                    </div>
 			                  </div>
@@ -76,10 +76,10 @@
 											<tr>
 												<td><?php echo $row->id_dtl_pembelian?></td>
 												<td><?php echo $row->nm_barang?></td>
-												<td><?php echo date("d/m/Y",strtotime($row->tgl_renc_beli))?></td>
-												<td><?php echo $row->jml_dtl_minta?></td>
-												<td><?php echo $row->jml_renc_beli?></td>
-												<td><?php echo $row->hrg_renc_beli?></td>
+												<td><?php echo set_tanggal($row->tgl_renc_beli)?></td>
+												<td><?php echo set_number($row->jml_dtl_minta)?></td>
+												<td><?php echo set_number($row->jml_renc_beli)?></td>
+												<td><?php echo set_number($row->hrg_renc_beli)?></td>
 												<td><?php echo $row->ket_dtl_beli?></td>
 												<td>
 													<?php if($row->langsung_beli == 'Y'){ ?>

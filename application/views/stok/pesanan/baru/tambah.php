@@ -14,7 +14,7 @@
 							<div class="col-md-3">
 								<div class="form-group">
 									<label style="font-size: 11pt;">No Permintaan</label>
-									<input class="form-control form-control-sm" type="text" name="nopesbaru" placeholder="ex : xxx/kdunit/bln/thn" required="" autocomplete="off" autofocus="">
+									<input class="form-control form-control-sm" type="text" name="nopesbaru" id="nota_pesbar" placeholder="ex : xxx/kdunit/bln/thn" required="" autocomplete="off" autofocus="">
 									<input hidden="" class="form-control form-control-sm" type="text" name="kd" value="<?php echo $kode?>">
 								</div>
 							</div>
@@ -80,6 +80,9 @@
 <!-- /.content -->
 <script type="text/javascript">
     $(document).ready(function(){
+    	$('#nota_pesbar').keyup(function(){
+	        $(this).val($(this).val().toUpperCase());
+	    });
     	// Get Bagian per unit
         var unit = $("#unit_pemesan").val();
         $.ajax({

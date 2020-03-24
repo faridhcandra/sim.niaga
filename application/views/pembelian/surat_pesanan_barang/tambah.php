@@ -14,7 +14,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label style="font-size: 11pt;">No SPB</label>
-								<input class="form-control form-control-sm" type="text" name="nospb" placeholder="ex: xxx/spb/kdunit/bln/thn" required="" autocomplete="off" autofocus="">
+								<input class="form-control form-control-sm" type="text" name="nospb" id="nota_spb" placeholder="ex: xxx/spb/kdunit/bln/thn" required="" autocomplete="off" autofocus="">
 								<input class="form-control form-control-sm" type="text" name="kode" hidden="" value="<?php echo $kode?>">
 							</div>
 						</div>
@@ -192,7 +192,7 @@
 </div>
 <!-- modal -->
 <div class="modal fade" id="modal-supplier">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg text-sm">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Cari Data Leveransir</h5>
@@ -315,7 +315,7 @@ $(document).ready(function(){
 	+"</div>"
 	// <!-- modal -->
 	+"<div class='modal fade' id='modal-rencbeli"+nextform+"'>"
-	+    "<div class='modal-dialog modal-lg'>"
+	+    "<div class='modal-dialog modal-lg text-sm'>"
 	+      "<div class='modal-content'>"
 	+        "<div class='modal-header'>"
 	+          "<h5 class='modal-title'>Cari Data Renc. Pembelian</h5>"
@@ -461,5 +461,8 @@ $(document).ready(function(){
 	   	 return false;
 	    }
 	});
+	$('#nota_spb').keyup(function(){
+        $(this).val($(this).val().toUpperCase());
+    });
 });
 </script>

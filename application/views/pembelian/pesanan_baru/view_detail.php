@@ -13,7 +13,7 @@
 							<div class="bg-success text-white text-center">
 								<?php foreach ($judul as $i) { ?>
 								<label>No Permintaan <?php echo $i->nota_minta?></label> - 
-								<label>Tanggal Permintaan <?php echo date("d/m/Y",strtotime($i->tgl_minta))?></label>
+								<label>Tanggal Permintaan <?php echo set_tanggal($i->tgl_minta)?></label>
 								<?php } ?>
 							</div>
 						</div>
@@ -46,7 +46,7 @@
 											<tr>
 												<td><?php echo $row->id_dtl_permintaan?></td>
 												<td><?php echo $row->nm_barang?></td>
-												<td><?php echo date("d/m/Y",strtotime($row->tgl_dtl_perlu))?></td>
+												<td><?php echo set_tanggal($row->tgl_dtl_perlu)?></td>
 												<td><?php echo $row->jml_dtl_minta?></td>
 												<td><?php echo $row->ket_dtl_minta?></td>
 												<td><?php echo $row->stkunit_dtl_minta?></td>

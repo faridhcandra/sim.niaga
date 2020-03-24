@@ -14,7 +14,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label style="font-size: 11pt;">No Pembelian</label>
-								<input class="form-control form-control-sm" type="text" name="nobeli" placeholder="ex: xxx/kdunit/bln/thn" required="" autocomplete="off" autofocus="">
+								<input class="form-control form-control-sm" type="text" name="nobeli" id="nota_beli" placeholder="ex: xxx/kdunit/bln/thn" required="" autocomplete="off" autofocus="">
 								<input class="form-control form-control-sm" type="text" name="kode" hidden="" value="<?php echo $kode?>">
 							</div>
 						</div>
@@ -122,7 +122,7 @@
 </div>
 <!-- modal -->
 <div class="modal fade" id="modal-nopermin">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg text-sm">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Cari Data Permintaan</h5>
@@ -169,6 +169,9 @@
  <!-- /.modal -->
 <script type="text/javascript">
 $(document).ready(function(){
+	$('#nota_beli').keyup(function(){
+        $(this).val($(this).val().toUpperCase());
+    });
 	// tabel no permintaan
 	$(function () {
 		$("#tblpembpes").DataTable({
@@ -265,7 +268,7 @@ $(document).ready(function(){
 	+	"</div>"
 		/*<!-- modal -->*/
 	+	"<div class='modal fade' id='modal-dtlnopes"+nextform+"'>"
-	+	    "<div class='modal-dialog modal-lg'>"
+	+	    "<div class='modal-dialog modal-lg text-sm'>"
 	+	      "<div class='modal-content'>"
 	+	        "<div class='modal-header'>"
 	+	          "<h5 class='modal-title'>Cari Data Pesanan</h5>"

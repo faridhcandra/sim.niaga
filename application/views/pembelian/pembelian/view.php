@@ -29,9 +29,9 @@
 										<tbody>
 											<?php foreach ($isi as $row) {?>
 											<tr>
-												<td><?php echo date("d/m/Y",strtotime($row->tgl_beli))?></td>
+												<td><?php echo set_tanggal($row->tgl_beli)?></td>
 												<td><?php echo $row->nota_beli?></td>
-												<td><?php echo date("d/m/Y",strtotime($row->tgl_minta))?></td>
+												<td><?php echo set_tanggal($row->tgl_minta)?></td>
 												<td><?php echo $row->nota_minta?></td>
 												<td><?php echo $row->nm_bagian?></td>
 												<!-- <td><?php echo $row->nm_unit?></td> -->

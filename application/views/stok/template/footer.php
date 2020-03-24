@@ -4,7 +4,7 @@
   <i>Copyright &copy; 2014-2019 <b>Adminlte.io</b>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      Developed By <b>GKBI</b></i>
+      Developed By <b><?php echo config_item('web_developed');?></b></i>
     </div>
   </footer>
 </div>
