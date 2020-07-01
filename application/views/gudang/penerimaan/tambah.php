@@ -10,7 +10,7 @@
 					<div class="card-body">
 						<?php echo validation_errors();?>
 						<?php echo form_open('gudang/penerimaan_t');?>
-						<table width="100%">
+						<table width="100%" class="table-responsive-md">
 							<tr>
 								<td width="11%" valign="top"><label style="font-size: 11pt;">Nota Penerimaan</label></td>
 								<td>
@@ -73,7 +73,7 @@
 								</td>
 								<td valign="top"><label style="font-size: 11pt;">Tanggal Cek</label></td>
 								<td>
-									<div class="col-md-8">
+									<div class="col-md-10">
 										<div class="form-group">
 											<input class="form-control form-control-sm" type="date" name="tgl_cek" required="" value="<?php echo date('Y-m-d');?>">
 										</div>
@@ -101,7 +101,7 @@
 								</td>
 								<td valign="top"><label style="font-size: 11pt;">Tanggal Jalan</label></td>
 								<td>
-									<div class="col-md-8">
+									<div class="col-md-10">
 										<div class="form-group">
 											<input class="form-control form-control-sm" type="date" name="tgljln_terima" required="" value="<?php echo date('Y-m-d');?>">
 										</div>
@@ -129,7 +129,7 @@
 								</td>
 								<td valign="top"><label style="font-size: 11pt;">Tanggal JT</label></td>
 								<td>
-									<div class="col-md-8">
+									<div class="col-md-10">
 										<div class="form-group" >
 											<input class="form-control form-control-sm" type="date" name="tgljt_terima" required="" value="<?php echo date('Y-m-d');?>">
 										</div>
@@ -219,7 +219,7 @@
 	          </button>
 	        </div>
 	        <div class="modal-body">
-	        	<table id="carisup" class="table table-sm table-bordered table-hover dataTable" role="grid">
+	        	<table id="carisup" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid">
 	        		<thead>
 	        			<tr>
 		        			<th>ID Supplier</th>
@@ -257,7 +257,7 @@
           </button>
         </div>
         <div class="modal-body">
-        	<table id="carinota" class="table table-sm table-bordered table-hover dataTable" role="grid">
+        	<table id="carinota" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid">
         		<thead>
         			<tr>
 	        			<th>Nota Pembelian</th>

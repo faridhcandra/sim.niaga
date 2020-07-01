@@ -87,7 +87,7 @@
 					          </button>
 					        </div>
 					        <div class="modal-body">
-					        	<table id="etblrencbeli" class="table table-sm table-bordered table-hover dataTable" role="grid">
+					        	<table id="etblrencbeli" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid">
 					        		<thead>
 					        			<tr>
 						        			<th>Id</th>

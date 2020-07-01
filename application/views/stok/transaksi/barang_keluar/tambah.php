@@ -126,7 +126,7 @@
           </button>
         </div>
         <div class="modal-body">
-        	<table id="caribrg" class="table table-sm table-bordered table-hover dataTable" role="grid">
+        	<table id="caribrg" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid">
         		<thead>
         			<tr>
 	        			<th>ID Barang</th>

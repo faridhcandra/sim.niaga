@@ -476,7 +476,7 @@
           </button>
         </div>
         <div class="modal-body">
-        	<table id="tblspbnpb" class="table table-sm table-bordered table-hover dataTable" role="grid">
+        	<table id="tblspbnpb" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid">
         		<thead>
         			<tr>
 	        			<th>No Surat Pesanan Barang</th>

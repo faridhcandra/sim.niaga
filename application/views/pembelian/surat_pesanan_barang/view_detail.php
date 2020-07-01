@@ -57,7 +57,7 @@
 						<div class="example1_wrapper" class="dataTables_wrapper">
 							<div class="row">
 								<div class="col-md-12">
-									<table id="example2" width="100%" class="table table-sm table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+									<table id="example2" width="100%" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid" aria-describedby="example2_info">
 										<thead>
 											<tr class="bg-Light">
 												<td colspan="8">SPB</td>

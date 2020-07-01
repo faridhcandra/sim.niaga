@@ -678,6 +678,40 @@ class Gudang extends CI_Controller {
 		}
 	}
     // ----------------------------------------------------------
+	// --------------------- Pengecekan -------------------------
+	public function v_pengecekan()
+	{
+		$data['menutitle'] = 'Data Pengecekan';
+		$data['menu'] = 'Transaksi';
+		$data['submenu'] = 'Pengecekan';
+
+		// $isi['isi'] = $this->M_gudang->v_penerimaan();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/pengecekan/view');
+		$this->load->view('gudang/template/footer');
+	}
+
+	public function t_pengecekan()
+	{
+		$data['menutitle'] = 'Data Tambah Pengecekan';
+		$data['menu'] = 'Transaksi';
+		$data['submenu'] = 'Tambah Pengecekan';
+
+		// $isi['isi'] = $this->M_gudang->v_penerimaan();
+		$isi['get_supplier'] = $this->M_gudang->get_suppliercek();
+		$isi['get_notabeli'] = $this->M_gudang->get_notabeli();
+		$isi['get_dtlbeli'] = $this->M_gudang->get_cekdtlbeli();
+		
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/pengecekan/tambah',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+    // ----------------------------------------------------------
 	// ========================================================================================================================================
 }
 

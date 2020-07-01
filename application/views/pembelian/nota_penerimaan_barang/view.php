@@ -11,7 +11,7 @@
 						<div class="example1_wrapper" class="dataTables_wrapper">
 							<div class="row">
 								<div class="col-md-12">
-									<table id="example2" class="table table-sm table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+									<table id="example2" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid" aria-describedby="example2_info">
 										<thead>
 											<tr>
 												<td>No Terima</td>
@@ -52,7 +52,7 @@
 													          </button>
 													        </div>
 													        <div class="modal-body">
-													        	<table id="example2" class="table table-sm table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+													        	<table id="example2" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid" aria-describedby="example2_info">
 																	<thead>
 																		<tr>
 																			<td>No Terima</td>
@@ -65,7 +65,7 @@
 																			<td>Subtotal Asing</td>
 																			<td>PPn Asing</td>
 																			<td>Total Asing</td>
-																		</tr>root
+																		</tr>
 																	</thead>
 																	<tbody>
 																		<tr></tr>
@@ -141,6 +141,7 @@
 										</tbody>
 										</table>
 									</div>
+								</div>
 								</div>
 							</div>
 						</div>

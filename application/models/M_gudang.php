@@ -49,7 +49,7 @@ class M_gudang extends CI_Model {
 	}
 	function get_dtlbeli()
 	{
-				$sql = "SELECT a.id_dtl_pembelian,a.id_pembelian,a.id_barang,b.nm_barang,b.id_group,c.nm_group,b.id_jnsbrngakt,d.no_jnsbrngakt,d.nm_jnsbrngakt,a.nota_dtl_beli,a.ppn_dtl_beli,a.total_dtl_beli,a.totalhrg_dtl_beli,a.hrg_renc_beli,
+				$sql = "SELECT a.id_dtl_pembelian,a.id_pembelian,a.id_barang,b.nm_barang,b.id_group,c.nm_group,b.id_jnsbrngakt,d.no_jnsbrngakt,d.nm_jnsbrngakt,a.nota_dtl_beli,a.ppn_dtl_beli,a.total_dtl_beli,a.totalhrg_dtl_beli,a.hrg_renc_beli,a.ket_dtl_beli,
 					b.sat1_barang,b.sat2_barang,e.nm_satuan AS nm_satuan1,g.nm_satuan AS nm_satuan2,a.id_user
 				FROM tbl_dtl_pembelian AS a
 				JOIN tbl_nama_barang AS b ON a.id_barang=b.id_barang
@@ -66,6 +66,12 @@ class M_gudang extends CI_Model {
 	function get_rptrm($id)
 	{
 		$sql = "SELECT subtotal_terima,ppn_terima,totalharga_terima FROM tbl_penerimaan WHERE id_penerimaan='$id'";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	function get_suppliercek()
+	{
+		$sql = "SELECT id_supplier,nm_supplier,attn_supplier,almt_supplier FROM tbl_supplier order by ABS(id_supplier) asc ";
 		$data = $this->db->query($sql);
 		return $data->result();
 	}
@@ -343,9 +349,7 @@ class M_gudang extends CI_Model {
 						   a.totalharga_terima 	= (a.totalharga_terima-b.totalharga_dtlterima)+$total
 	 					   where a.id_penerimaan = '$id' and b.id_dtl_penerimaan = '$id2'");
 	}
-	// ------------------------------------------------------------
-	// ========================================================================================================================================
-	
+
 	function h_penerimaan($id)
 	{
 		$this->db->where('id_penerimaan', $id)->delete('tbl_penerimaan');
@@ -354,7 +358,23 @@ class M_gudang extends CI_Model {
 	{
 		$this->db->where('id_penerimaan', $id)->delete('tbl_dtl_penerimaan');
 	}
-
+	// ------------------------------------------------------------
+	// ---------------------- Pengecekan --------------------------
+	function get_cekdtlbeli()
+	{
+				$sql = "SELECT a.id_dtl_pembelian,a.id_pembelian,a.id_barang,b.nm_barang,b.id_group,a.nota_dtl_beli,a.ket_dtl_beli,b.sat1_barang,b.sat2_barang,e.nm_satuan AS nm_satuan1,g.nm_satuan AS nm_satuan2,a.id_user,d.nm_unit,a.jml_renc_beli
+				FROM tbl_dtl_pembelian AS a
+				JOIN tbl_nama_barang AS b ON a.id_barang=b.id_barang
+				JOIN tbl_satuan AS e ON b.sat1_barang=e.id_satuan
+				JOIN tbl_satuan AS g ON b.sat2_barang=g.id_satuan
+				JOIN tbl_pembelian AS f ON a.id_pembelian=f.id_pembelian
+				JOIN tbl_unit AS d ON f.id_unit=d.id_unit
+				WHERE a.lunas_dtl_beli='T'";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	// ------------------------------------------------------------
+	// ========================================================================================================================================
 }
 
 /* End of file M_gudang.php */

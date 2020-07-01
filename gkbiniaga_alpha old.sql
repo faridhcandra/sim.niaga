@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 01, 2020 at 09:15 AM
+-- Generation Time: Apr 09, 2020 at 09:43 AM
 -- Server version: 5.7.10-log
 -- PHP Version: 5.6.17
 
@@ -723,7 +723,7 @@ CREATE TABLE `tbl_penerimaan` (
 --
 
 INSERT INTO `tbl_penerimaan` (`id_penerimaan`, `id_pembelian`, `id_supplier`, `id_bagian`, `id_unit`, `tgl_terima`, `nota_terima`, `ppn_terima`, `subtotal_terima`, `totalharga_terima`, `k_ppn_terima`, `k_subtotal_terima`, `k_totalharga_terima`, `biaya_angkut_terima`, `jml_kurs_terima`, `nota_beli`, `srtjalan_terima`, `tgljalan_terima`, `id_spb`, `nota_spb`, `ket_terima`, `id_cek`, `nota_cek`, `tgl_cek`, `kurs_terima`, `verif_terima`, `tglverif_terima`, `lunas_terima`, `id_jnsbrng`, `harijt_terima`, `tgljt_terima`, `fakturpjk_terima`, `tglfaktur_terima`, `id_user`) VALUES
-('NPB20030001', 'PB20020002', 'A2', '512', 'weav', '2020-03-06', '0001/WEAV/GD/I/2020', '2000.00', '20000.00', '27000.00', '0.00', '0.00', '0.00', '5000.00', '0.00', '0001/pemb-weav/I/01/2020', 'JLN2003/BJMLA', '2020-03-05', '', '', 'NO AGD 5200 ', '-', '-', NULL, 'RP', 'T', NULL, 'T', 1, 0, '2020-03-06', '01.050.4563.258', '2020-03-06', NULL);
+('NPB20030001', 'PB20020002', 'A2', '512', 'weav', '2020-03-06', '0001/WEAV/GD/I/2020', '2000.00', '20000.00', '27000.00', '0.00', '0.00', '0.00', '5000.00', '0.00', '0001/pemb-weav/I/01/2020', 'JLN2003/BJMLA', '2020-03-05', '', '', 'NO AGD 5200 S', '-', '-', NULL, 'RP', 'T', NULL, 'T', 1, 0, '2020-03-06', '01.050.4563.258', '2020-03-06', NULL);
 
 -- --------------------------------------------------------
 
