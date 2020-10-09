@@ -488,6 +488,11 @@ class M_gudang extends CI_Model {
 	{
 		$this->db->where('id_dtl_cek',$id)->update('tbl_dtl_pengetesan', $data);
 	}
+	function v_konftest($id,$data)
+	{
+		$this->db->where('id_cek', $id)
+				 ->update('tbl_pengetesan',$data);
+	}
 
 	// fungsi get pengecekan
 	function get_cekdtlbeli()

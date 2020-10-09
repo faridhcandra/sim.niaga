@@ -948,6 +948,25 @@ class Gudang extends CI_Controller {
 			redirect('gudang/v_pengetesan','refresh');
 		}
 	}
+
+	public function v_konftest($id)
+	{
+		$id 	= $this->input->post('kode');
+		$ubah 	= $this->input->post('ubah');
+
+		$data 	= array('selesai_cek' => $ubah);
+		$sql 	= $this->M_gudang->v_konftest($id,$data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			// echo "<script>alert('Data berhasil diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			$this->session->set_flashdata('success', 'Data berhasil diubah');
+			redirect('gudang/v_pengetesan','refresh');
+		}else{ // Jika gagal
+			// echo "<script>alert('Data gagal diubah');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+			$this->session->set_flashdata('error', 'Data gagal diubah');
+			redirect('gudang/v_pengetesan','refresh');
+		}
+	}
     // ----------------------------------------------------------
 	// ========================================================================================================================================
 }
