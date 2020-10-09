@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar elevation-4 sidebar-dark-danger text-sm">
   <!-- Brand Logo -->
-  <a href="<?php echo base_url();?>" class="brand-link">
+  <a href="<?php echo site_url('stok');?>" class="brand-link">
     <img src="<?php echo base_url();?>assets/dist/img/logos.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
     style="opacity: .8">
     <span class="brand-text text-white font-weight-light" style="font-size: 15.5px;">SIM Stok Barang</span>

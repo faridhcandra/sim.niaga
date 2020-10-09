@@ -248,7 +248,7 @@ class M_gudang extends CI_Model {
 		$CI->load->database('default');
 		//rancangan kode GL
 		$kode_TR="TR".date('ym')."%";
-		$sql="SELECT SUBSTRING(MAX(id_penerimaan),7,4) AS maxNo FROM tbl_penerimaan where id_penerimaan like('$kode_TR')";
+		$sql="SELECT SUBSTRING(MAX(id_penerimaan),8,4) AS maxNo FROM tbl_penerimaan where id_penerimaan like('$kode_TR')";
 		$row = $CI->db->query($sql);
 		foreach ($row->result_array() as $rowmax)
 		{	
@@ -360,16 +360,146 @@ class M_gudang extends CI_Model {
 	}
 	// ------------------------------------------------------------
 	// ---------------------- Pengecekan --------------------------
+	public function v_pengetesan()
+	{
+		$sql = "SELECT a.id_cek,a.tgl_cek,a.nota_cek,a.srtjalan_cek,a.tgljalan_cek,a.ket_cek,a.selesai_cek,b.nm_supplier,e.nota_beli,c.nm_bagian,d.nm_unit
+				FROM tbl_pengetesan AS a
+				JOIN tbl_supplier AS b ON a.id_supplier=b.id_supplier
+				JOIN tbl_bagian AS c ON a.id_bagian=c.id_bagian
+				JOIN tbl_unit AS d ON a.id_unit=d.id_unit
+				JOIN tbl_pembelian AS e ON a.id_pembelian=e.id_pembelian
+				GROUP BY a.id_cek
+				order by a.tgl_cek desc";
+		$data = $this->db->query($sql);
+		return $data->result();
+	}
+	function k_pengetesan()
+	{
+ 		$CI =& get_instance();
+		$CI->load->database('default');
+		//rancangan kode GL
+		$kode_CK="CK".date('ym')."%";
+		$sql="SELECT SUBSTRING(MAX(id_cek),9,4) AS maxNo FROM tbl_pengetesan where id_cek like('$kode_CK')";
+		$row = $CI->db->query($sql);
+		foreach ($row->result_array() as $rowmax)
+		{	
+		}
+		//buat noPO baru dengan noPO terbesar+1
+		$noCK_tmp		=$rowmax['maxNo'];
+		$noCK			=$noCK_tmp+1;	
+		$kode_tanggal	=date("ym");
+		if(strlen($noCK)==1){
+			$kode_pengetesan="CK".$kode_tanggal."0000".$noCK;
+		}elseif(strlen($noCK)==2){
+			$kode_pengetesan="CK".$kode_tanggal."000".$noCK;
+		}elseif(strlen($noCK)==3){
+			$kode_pengetesan="CK".$kode_tanggal."00".$noCK;
+		}elseif(strlen($noCK)==4){
+			$kode_pengetesan="CK".$kode_tanggal."0".$noCK;
+		}elseif(strlen($noCK)==5){
+			$kode_pengetesan="CK".$kode_tanggal.$noCK;
+		}
+		
+		return $kode_pengetesan;
+	}
+
+	function s_pengetesan($data)
+	{
+		return $this->db->insert('tbl_pengetesan', $data);
+	}
+	function s_dtl_pengetesan_batch($data)
+	{
+		return $this->db->insert_batch('tbl_dtl_pengetesan', $data);
+	}
+
+	function v_dtl_idcek($id)
+	{
+		$this->db->select('a.id_cek,a.tgl_cek,a.nota_cek,b.nm_supplier');
+		$this->db->from('tbl_pengetesan as a');
+		$this->db->join('tbl_supplier as b', 'a.id_supplier = b.id_supplier');
+		$this->db->where('a.id_cek', $id);
+		$this->db->limit(1);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+
+	function v_dtl_pengetesan($id)
+	{
+		$this->db->select('a.id_dtl_cek,a.id_cek,a.id_barang,b.nm_barang,a.jml_cek1,c.nm_satuan as sat1,a.jml_cek2,d.nm_satuan as sat2,a.tgl_dtl_lunas,a.ket_dtl_cek,a.nota_dtl_beli');
+		$this->db->from('tbl_dtl_pengetesan as a');
+		$this->db->join('tbl_nama_barang as b', 'a.id_barang = b.id_barang');
+		$this->db->join('tbl_satuan as c', 'b.sat1_barang = c.id_satuan');
+		$this->db->join('tbl_satuan as d', 'b.sat2_barang = d.id_satuan');
+		$this->db->where('a.id_cek', $id);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+
+	function ve_pengetesan($id)
+	{
+		$this->db->select('a.id_cek,a.nota_cek,a.tgl_cek,a.id_pembelian,a.nota_beli,a.id_supplier,b.nm_supplier,a.id_bagian,d.nm_bagian,a.id_unit,c.nm_unit,a.srtjalan_cek,a.tgljalan_cek,a.ket_cek');
+		$this->db->from('tbl_pengetesan as a');
+		$this->db->join('tbl_supplier as b', 'a.id_supplier = b.id_supplier');
+		$this->db->join('tbl_unit as c', 'a.id_unit = c.id_unit');
+		$this->db->join('tbl_bagian as d', 'a.id_bagian = d.id_bagian');
+		$this->db->where('a.id_cek', $id);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+
+	function ve_dtl_pengetesan($id)
+	{
+		$this->db->select('a.id_dtl_cek,a.id_cek,a.id_dtl_pembelian,a.nota_dtl_beli,a.id_barang,b.nm_barang,a.lulus_dtl_cek,a.tgl_dtl_lunas,a.jml_cek1,a.jml_cek2,d.nm_satuan as sat1,e.nm_satuan as sat2,a.ket_dtl_cek');
+		$this->db->from('tbl_dtl_pengetesan as a');
+		$this->db->join('tbl_nama_barang as b', 'a.id_barang = b.id_barang');
+		$this->db->join('tbl_dtl_pembelian as c', 'a.id_dtl_pembelian = c.id_dtl_pembelian');
+		$this->db->join('tbl_satuan as d', 'b.sat1_barang = d.id_satuan');
+		$this->db->join('tbl_satuan as e', 'b.sat2_barang = e.id_satuan');
+		$this->db->where('a.id_dtl_cek', $id);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+	}
+
+	function e_pengetesan($id,$data)
+	{
+		$this->db->where('id_cek',$id)->update('tbl_pengetesan', $data);
+	}
+	function e_pengetesandtl($id,$data)
+	{
+		$this->db->where('id_cek',$id)->update('tbl_dtl_pengetesan', $data);
+	}
+	function e_dtl_pengetesan($id,$data)
+	{
+		$this->db->where('id_dtl_cek',$id)->update('tbl_dtl_pengetesan', $data);
+	}
+
+	// fungsi get pengecekan
 	function get_cekdtlbeli()
 	{
-				$sql = "SELECT a.id_dtl_pembelian,a.id_pembelian,a.id_barang,b.nm_barang,b.id_group,a.nota_dtl_beli,a.ket_dtl_beli,b.sat1_barang,b.sat2_barang,e.nm_satuan AS nm_satuan1,g.nm_satuan AS nm_satuan2,a.id_user,d.nm_unit,a.jml_renc_beli
-				FROM tbl_dtl_pembelian AS a
-				JOIN tbl_nama_barang AS b ON a.id_barang=b.id_barang
-				JOIN tbl_satuan AS e ON b.sat1_barang=e.id_satuan
-				JOIN tbl_satuan AS g ON b.sat2_barang=g.id_satuan
-				JOIN tbl_pembelian AS f ON a.id_pembelian=f.id_pembelian
-				JOIN tbl_unit AS d ON f.id_unit=d.id_unit
-				WHERE a.lunas_dtl_beli='T'";
+		$sql = "SELECT a.id_dtl_pembelian,a.id_pembelian,a.id_barang,b.nm_barang,b.id_group,a.nota_dtl_beli,a.ket_dtl_beli,b.sat1_barang,b.sat2_barang,e.nm_satuan AS nm_satuan1,g.nm_satuan AS nm_satuan2,a.id_user,d.nm_unit,a.jml_renc_beli
+		FROM tbl_dtl_pembelian AS a
+		JOIN tbl_nama_barang AS b ON a.id_barang=b.id_barang
+		JOIN tbl_satuan AS e ON b.sat1_barang=e.id_satuan
+		JOIN tbl_satuan AS g ON b.sat2_barang=g.id_satuan
+		JOIN tbl_pembelian AS f ON a.id_pembelian=f.id_pembelian
+		JOIN tbl_unit AS d ON f.id_unit=d.id_unit
+		WHERE a.lunas_dtl_beli='T'";
 		$data = $this->db->query($sql);
 		return $data->result();
 	}

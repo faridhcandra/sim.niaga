@@ -1,0 +1,89 @@
+/*Style body*/
+/*===========================================================*/
+.home{
+    background-color: #e7e7e4;
+}
+.container{
+    padding-top: 30px;
+}
+.container .row .btn a{
+	color: #000;
+	text-decoration: none;
+}
+.container .row .btn a:hover{
+	color: #fff;
+}
+/*===========================================================*/
+
+/*Login*/
+/*==========================================================*/
+.login-container{
+    margin-top: 10%;
+    margin-bottom: 10%;
+    padding: 0px 0px 0px 350px;
+}
+.login-form{
+    background-color: #fff;
+    padding: 2%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form h3{
+    text-align: center;
+    color: #333;
+}
+.login-container form{
+    padding: 10% 12% 10% 12%;
+}
+/*=============================================================*/
+
+/*style home*/
+/*===============================================================*/
+.nav-item::after{
+    content:'';
+    display:block;
+    width:0px;
+    height:2px;
+    background:#E5E4E2;
+    transition: 0.2s;
+}
+.nav-item:hover::after{
+    width:100%;
+}
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+.dropdown-menu a:hover {
+    background-color: #e6e6e6;
+    color: #1a8cff;
+}
+.ini {
+    background-color: red;
+}
+/*===============================================================
+/ DRoP DOWN SUB MENU
+/****************************************************************/
+.dropdown-submenu {
+    position:relative;
+}  
+.dropdown-submenu > a:after {
+  border-color: transparent transparent transparent #333;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  content: " ";
+  display: block;
+  float: right;  
+  height: 0;     
+  margin-right: -10px;
+  margin-top: 5px;
+  width: 0;
+} 
+.dropdown-submenu:hover>a:after {
+    border-left-color:#555;
+ }
+  
+/*===============================================================*/

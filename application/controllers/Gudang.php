@@ -535,6 +535,7 @@ class Gudang extends CI_Controller {
 		$isi['judul'] = $this->M_gudang->v_dtl_idtrm($id);
 		$isi['isi'] = $this->M_gudang->v_dtl_penerimaan($id);
 		$isi['get_rptrm'] = $this->M_gudang->get_rptrm($id);
+		$isi['isi'] = $this->M_gudang->v_dtl_penerimaan($id);
 
 		$this->load->view('gudang/template/head');
 		$this->load->view('gudang/template/navbar');
@@ -679,28 +680,29 @@ class Gudang extends CI_Controller {
 	}
     // ----------------------------------------------------------
 	// --------------------- Pengecekan -------------------------
-	public function v_pengecekan()
+	public function v_pengetesan()
 	{
-		$data['menutitle'] = 'Data Pengecekan';
+		$data['menutitle'] = 'Data Pengetesan';
 		$data['menu'] = 'Transaksi';
-		$data['submenu'] = 'Pengecekan';
+		$data['submenu'] = 'Pengetesan';
 
-		// $isi['isi'] = $this->M_gudang->v_penerimaan();
+		$isi['isi'] = $this->M_gudang->v_pengetesan();
 
 		$this->load->view('gudang/template/head');
 		$this->load->view('gudang/template/navbar');
 		$this->load->view('gudang/template/sidebar',$data);
-		$this->load->view('gudang/pengecekan/view');
+		$this->load->view('gudang/pengetesan/view', $isi);
 		$this->load->view('gudang/template/footer');
 	}
 
-	public function t_pengecekan()
+	public function t_pengetesan()
 	{
-		$data['menutitle'] = 'Data Tambah Pengecekan';
+		$data['menutitle'] = 'Data Tambah Pengetesan';
 		$data['menu'] = 'Transaksi';
-		$data['submenu'] = 'Tambah Pengecekan';
+		$data['submenu'] = 'Tambah Pengetesan';
 
 		// $isi['isi'] = $this->M_gudang->v_penerimaan();
+		$isi['kode'] = $this->M_gudang->k_pengetesan();
 		$isi['get_supplier'] = $this->M_gudang->get_suppliercek();
 		$isi['get_notabeli'] = $this->M_gudang->get_notabeli();
 		$isi['get_dtlbeli'] = $this->M_gudang->get_cekdtlbeli();
@@ -708,8 +710,243 @@ class Gudang extends CI_Controller {
 		$this->load->view('gudang/template/head');
 		$this->load->view('gudang/template/navbar');
 		$this->load->view('gudang/template/sidebar',$data);
-		$this->load->view('gudang/pengecekan/tambah',$isi);
+		$this->load->view('gudang/pengetesan/tambah',$isi);
 		$this->load->view('gudang/template/footer');
+	}
+
+	public function pengetesan_t()
+	{
+		$cek = $this->db->query("SELECT * FROM tbl_pengetesan where nota_cek='".$this->input->post('notacek', TRUE)."' ")->num_rows();
+		if($cek <= 0){
+			// Utama pengecekan
+			$kode_cek 			= $this->input->post('kode',TRUE);
+			$nota_cek 			= $this->input->post('notacek',TRUE);
+			$kdlev_cek 			= $this->input->post('kdlev',TRUE);
+			$tgl_cek 			= $this->input->post('tglcek',TRUE);
+			$nosurat_cek 		= $this->input->post('nosurat',TRUE);
+			$tglsurat_cek		= $this->input->post('tglcek_surat',TRUE);
+			$noatbeli_cek 		= $this->input->post('ceknotabeli',TRUE);
+			$kdbeli_cek 		= $this->input->post('cekkdbeli',TRUE);
+			$kdunit_cek 		= $this->input->post('cekkdunit',TRUE);
+			$kdbag_cek 			= $this->input->post('cekkdbagian',TRUE);
+			$ket_cek 			= $this->input->post('cekket',TRUE);
+
+			// Detail Pengecekan
+			$kddtlpembelian_cek = $this->input->post('kdcekdtlpemb',TRUE);
+			$notadtlbeli_cek	= $this->input->post('notadtlpembcek',TRUE);
+			$kdbrng_cek  		= $this->input->post('kdbrngcek',TRUE);
+			$jmlbrng1_cek 		= $this->input->post('jmldtlpembcek1',TRUE);
+			$jmlbrng2_cek 		= $this->input->post('jmldtlpembcek2',TRUE);
+			$lulus_cek 			= $this->input->post('lulusdtlcek',TRUE);
+			$tgllulus_cek 		= $this->input->post('tgldtlcek',TRUE);
+			$ketdtl_cek 		= $this->input->post('ketdtlcek',TRUE);
+			
+
+			$data1 = array( 'id_cek' 		=> $kode_cek,
+							'nota_cek' 		=> $nota_cek,
+							'tgl_cek' 		=> $tgl_cek,
+							'id_pembelian' 	=> $kdbeli_cek,
+							'nota_beli' 	=> $noatbeli_cek,
+							'id_supplier' 	=> $kdlev_cek,
+							'id_bagian' 	=> $kdbag_cek,
+							'id_unit' 		=> $kdunit_cek,
+							'srtjalan_cek' 	=> $nosurat_cek,
+							'tgljalan_cek' 	=> $tglsurat_cek,
+							'ket_cek' 		=> $ket_cek
+
+			);
+			$sql1 = $this->M_gudang->s_pengetesan($data1);
+
+			$data2 = array();
+			$i = 0;
+			if(is_array($kddtlpembelian_cek)){
+				foreach ($kddtlpembelian_cek as $datadtlpemb) {
+					array_push($data2, array(
+						'id_cek' 			=> $kode_cek,
+						'nota_dtl_cek' 		=> $nota_cek,
+						'tgl_dtl_cek'		=> $tgl_cek,
+						'id_dtl_pembelian' 	=> $datadtlpemb,
+						'nota_dtl_beli' 	=> $notadtlbeli_cek[$i],
+						'id_barang' 		=> $kdbrng_cek[$i],
+						'jml_cek1' 			=> $jmlbrng1_cek[$i],
+						'jml_cek2' 			=> $jmlbrng2_cek[$i],
+						'ket_dtl_cek' 		=> $ketdtl_cek[$i],
+						'lulus_dtl_cek' 	=> $lulus_cek[$i],
+						'tgl_dtl_lunas' 	=> $tgllulus_cek[$i]
+					));
+					$i++;
+				}
+			}
+			$sql2 = $this->M_gudang->s_dtl_pengetesan_batch($data2);
+
+			$allsql = array($sql1,$sql2);
+			if($allsql){ // Jika sukses
+				// echo "<script>alert('Data berhasil disimpan');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('gudang/v_pengetesan','refresh');
+			}else{ // Jika gagal
+				// echo "<script>alert('Data gagal disimpan');window.location = '".site_url('pembelian/v_pembelian')."';</script>";
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('gudang/v_pengetesan','refresh');
+			}
+
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf No Nota Pengetesan Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('gudang/v_pengetesan').'")';
+			echo '</script>';
+		}
+	}
+
+	public function v_dtl_cek($id)
+	{
+		$data['menutitle'] 	= 'Detail Data Pengetesan';
+		$data['menu'] 		= 'Pengetesan';
+		$data['submenu'] 	= 'Pengetesan';
+
+		$isi['judul']	 	= $this->M_gudang->v_dtl_idcek($id);
+		$isi['isi'] 		= $this->M_gudang->v_dtl_pengetesan($id);
+		/*$isi['get_rptrm'] 	= $this->M_gudang->get_rptrm($id);*/
+		$get_id				= $this->M_gudang->v_dtl_pengetesan($id);
+
+		foreach ($get_id as $s) {
+			$id_ne = $s->id_cek;
+		}
+		$isi['get_idtest'] = $id_ne;
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/pengetesan/view_detail',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+
+	public function u_pengetesan($id='')
+	{
+		$data['menutitle'] 	= 'Edit Pengetesan Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Edit Pengetesan';
+
+		$isi['isi'] 		= $this->M_gudang->ve_pengetesan($id);
+		$isi['get_supplier'] = $this->M_gudang->get_suppliercek();
+		$isi['get_notabeli'] = $this->M_gudang->get_notabeli();
+		// $isi['get_dtlbeli'] = $this->M_gudang->get_cekdtlbeli();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/pengetesan/edit',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+
+	public function pengetesan_u($id)
+	{
+		$this->form_validation->set_rules('kode','kode','required');
+		if($this->form_validation->run() == TRUE){
+
+			$nota_cek 			= $this->input->post('notacek',TRUE);
+			$kdlev_cek 			= $this->input->post('kdlev',TRUE);
+			$tgl_cek 			= $this->input->post('tglcek',TRUE);
+			$nosurat_cek 		= $this->input->post('nosurat',TRUE);
+			$tglsurat_cek		= $this->input->post('tglcek_surat',TRUE);
+			$notabeli_cek 		= $this->input->post('ceknotabeli',TRUE);
+			$kdbeli_cek 		= $this->input->post('cekkdbeli',TRUE);
+			$kdunit_cek 		= $this->input->post('cekkdunit',TRUE);
+			$kdbag_cek 			= $this->input->post('cekkdbagian',TRUE);
+			$ket_cek 			= $this->input->post('cekket',TRUE);
+
+			$data = array(	'nota_cek' 		=> $nota_cek,
+							'tgl_cek' 		=> $tgl_cek,
+							'id_pembelian' 	=> $kdbeli_cek,
+							'nota_beli' 	=> $notabeli_cek,
+							'id_supplier' 	=> $kdlev_cek,
+							'id_bagian' 	=> $kdbag_cek,
+							'id_unit' 		=> $kdunit_cek,
+							'srtjalan_cek' 	=> $nosurat_cek,
+							'tgljalan_cek' 	=> $tglsurat_cek,
+							'ket_cek' 		=> $ket_cek
+						 );
+
+			$sql = $this->M_gudang->e_pengetesan($id, $data);
+			
+			$data2 = array( 'nota_dtl_cek' 	=> $nota_cek,
+							'tgl_dtl_cek'	=> $tgl_cek
+						  );
+
+			$sql2 = $this->M_gudang->e_pengetesandtl($id,$data2);
+
+			$allsql = array($sql,$sql2); 
+			if($allsql){ // Jika sukses
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('gudang/v_dtl_cek/'.$id,'refresh');
+			}else{ // Jika gagal
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('gudang/u_pengetesan/'.$id,'refresh');
+			}
+		}else{
+			$this->session->set_flashdata('warning', 'Maaf No Pengetesan tidak ditemukan');
+			redirect('gudang/v_pengetesan','refresh');
+		}
+	}
+
+	public function u_pengetesandtl($id='')
+	{
+		$data['menutitle'] 	= 'Edit Detail Pengetesan Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Edit Detail Pengetesan';
+
+		$isi['isi'] 		= $this->M_gudang->ve_dtl_pengetesan($id);
+		$isi['get_dtlbeli'] = $this->M_gudang->get_cekdtlbeli();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/pengetesan/edit_detail',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+
+	public function pengetesandtl_u($id)
+	{
+		$this->form_validation->set_rules('kdcekdtlpemb','Kdcekdtlpemb','required');
+		if($this->form_validation->run() == TRUE){
+
+			$kdcek 				= $this->input->post('kdcek',TRUE);
+			// Detail Pengecekan
+			$kddtlpembelian_cek = $this->input->post('kdcekdtlpemb',TRUE);
+			$notadtlbeli_cek	= $this->input->post('notadtlpembcek',TRUE);
+			$kdbrng_cek  		= $this->input->post('kdbrngcek',TRUE);
+			$jmlbrng1_cek 		= $this->input->post('jmldtlpembcek1',TRUE);
+			$jmlbrng2_cek 		= $this->input->post('jmldtlpembcek2',TRUE);
+			$lulus_cek 			= $this->input->post('lulusdtlcek',TRUE);
+			$tgllulus_cek 		= $this->input->post('tgldtlcek',TRUE);
+			$ketdtl_cek 		= $this->input->post('ketdtlcek',TRUE);
+
+			$data = array(	'id_dtl_pembelian' 	=> $kddtlpembelian_cek,
+							'nota_dtl_beli' 	=> $notadtlbeli_cek,
+							'id_barang' 		=> $kdbrng_cek,
+							'jml_cek1' 			=> $jmlbrng1_cek,
+							'jml_cek2' 			=> $jmlbrng2_cek,
+							'ket_dtl_cek' 		=> $ketdtl_cek,
+							'lulus_dtl_cek' 	=> $lulus_cek,
+							'tgl_dtl_lunas' 	=> $tgllulus_cek
+						 );
+
+			$sql = $this->M_gudang->e_dtl_pengetesan($id, $data);
+
+			$allsql = array($sql); 
+			if($allsql){ // Jika sukses
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('gudang/v_dtl_cek/'.$kdcek,'refresh');
+			}else{ // Jika gagal
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('gudang/u_pengetesan/'.$kdcek,'refresh');
+			}
+		}else{
+			$this->session->set_flashdata('warning', 'Maaf No Pengetesan tidak ditemukan');
+			redirect('gudang/v_pengetesan','refresh');
+		}
 	}
     // ----------------------------------------------------------
 	// ========================================================================================================================================

@@ -63,7 +63,7 @@
 										</div>
 									</div>	
 								</td>
-								<td valign="top"><label style="font-size: 11pt;">Nota Cek</label></td>
+								<td valign="top"><label style="font-size: 11pt;">Nota Test</label></td>
 								<td>
 									<div class="col-md-12">
 										<div class="form-group">
@@ -71,7 +71,7 @@
 										</div>
 									</div>
 								</td>
-								<td valign="top"><label style="font-size: 11pt;">Tanggal Cek</label></td>
+								<td valign="top"><label style="font-size: 11pt;">Tanggal Test</label></td>
 								<td>
 									<div class="col-md-10">
 										<div class="form-group">
@@ -188,8 +188,8 @@
 								</div>
 							</div>
 						</div> 
-						<hr>
-						<br>
+						<b><i style="font-size: 14px;">* Silahkan klik (Tambah Form) untuk Menambahkan detail penerimaan barang</i></b>
+						<hr style="border: 1px solid green;">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group float-right"> 

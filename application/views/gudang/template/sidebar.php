@@ -1,3 +1,6 @@
+<?php
+  $url = $this->uri->segment(2);
+?>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar elevation-4 sidebar-dark-primary">
   <!-- Brand Logo -->
@@ -28,8 +31,8 @@
             <p>Halaman Utama</p>
           </a>
         </li>
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
+        <li class="nav-item has-treeview <?php if($url =="v_koderekakt" OR $url =="v_jenisbrngakt" OR $url =="v_barangakt") { echo "menu-open";}?>">
+          <a href="#" class="nav-link <?php if($url =="v_koderekakt" OR $url =="v_jenisbrngakt" OR $url =="v_barangakt") { echo "active";}?>">
             <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
             <i class="nav-icon fas fa-hdd"></i>
             <p>
@@ -39,19 +42,19 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?php echo site_url('gudang/v_koderekakt');?>" class="nav-link">
+              <a href="<?php echo site_url('gudang/v_koderekakt');?>" class="nav-link <?php if($url =="v_koderekakt") { echo "active";}?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Kode Rekening Akuntansi</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo site_url('gudang/v_jenisbrngakt');?>" class="nav-link">
+              <a href="<?php echo site_url('gudang/v_jenisbrngakt');?>" class="nav-link <?php if($url =="v_jenisbrngakt") { echo "active";}?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Jenis Barang Akuntansi</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo site_url('gudang/v_barangakt');?>" class="nav-link">
+              <a href="<?php echo site_url('gudang/v_barangakt');?>" class="nav-link <?php if($url =="v_barangakt") { echo "active";}?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Data Barang</p>
               </a>
@@ -64,8 +67,8 @@
             </li> -->
           </ul>
         </li>
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
+        <li class="nav-item has-treeview <?php if($url =="v_verpesbaru") { echo "menu-open";}?>">
+          <a href="#" class="nav-link <?php if($url =="v_verpesbaru") { echo "active";}?>">
             <i class="nav-icon fas fa-shopping-bag"></i>
             <p>
               Verifikasi Data
@@ -74,7 +77,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?php echo site_url('gudang/v_verpesbaru');?>" class="nav-link">
+              <a href="<?php echo site_url('gudang/v_verpesbaru');?>" class="nav-link <?php if($url =="v_verpesbaru") { echo "active";}?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Pesanan Baru</p>
                 <span class="right badge badge-danger">New</span>
@@ -100,8 +103,8 @@
             </li>                           
           </ul>
         </li>
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
+        <li class="nav-item has-treeview <?php if($url =="v_penerimaan" OR $url =="v_pengetesan") { echo "menu-open";}?>">
+          <a href="#" class="nav-link <?php if($url =="v_penerimaan" OR $url =="v_pengetesan") { echo "active";}?>">
             <!-- <i class="nav-icon fas fa-copy"></i> -->
             <i class="nav-icon fas fa-sync-alt"></i>
             <p>
@@ -111,15 +114,15 @@
           </a>
           <ul class="nav nav-treeview">
            <li class="nav-item">
-            <a href="<?php echo site_url('gudang/v_penerimaan')?>" class="nav-link">
+            <a href="<?php echo site_url('gudang/v_penerimaan')?>" class="nav-link <?php if($url =="v_penerimaan") { echo "active";}?>">
               <i class="far fa-circle nav-icon"></i>
               <p>Penerimaan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?php echo site_url('gudang/v_pengecekan')?>" class="nav-link">
+            <a href="<?php echo site_url('gudang/v_pengetesan')?>" class="nav-link <?php if($url =="v_pengetesan") { echo "active";}?>">
               <i class="far fa-circle nav-icon"></i>
-              <p>Pengecekaan</p>
+              <p>Pengetesan</p>
             </a>
           </li>
           <li class="nav-item">
@@ -154,7 +157,7 @@
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Pengecekan</p>
+              <p>Pengetesan</p>
             </a>
           </li>
         </ul>

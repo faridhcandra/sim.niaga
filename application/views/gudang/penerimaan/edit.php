@@ -26,7 +26,7 @@
 								<td colspan="3">
 									<div class="col-md-3">
 										<div class="form-group">
-											<input class="form-control form-control-sm" type="date" name="tgl_terima"required="" value="<?php echo $row->tgl_terima?>">
+											<input class="form-control form-control-sm" type="date" name="tgl_terima" required="" value="<?php echo $row->tgl_terima?>">
 										</div>
 									</div>
 								</td>
@@ -46,7 +46,7 @@
 								<td colspan="4">
 									<div class="col-md-12">
 										<div class="form-group">			
-											<input list='supplier'class=" form-control form-control-sm" type='text' class='form-control form-control-sm' name='supp' id="enm_sup" value="<?php echo $row->nm_supplier?>" readonly="">
+											<input list='supplier' class=" form-control form-control-sm" type='text' class='form-control form-control-sm' name='supp' id="enm_sup" value="<?php echo $row->nm_supplier?>" readonly="">
 										</div>
 									</div>
 								</td>

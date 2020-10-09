@@ -15,14 +15,14 @@
 									<table id="example2" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid" aria-describedby="example2_info">
 										<thead>
 											<tr>
-												<td width="9%;">Tgl Terima</td>
+												<td width="12%;">Tgl Terima</td>
 												<td width="14%;">Nota Penerimaan</td>
 												<td width="14%;">Leveransir</td>
 												<td width="16%;">Nota Pembelian</td>		         					
 												<td width="8%;">Bagian</td>	
-												<td width="10%;">Surat Jalan</td>
-												<td width="9%;">Tgl Jalan</td>		         					
-												<td width="10%;">Tgl JT</td>		    					
+												<td width="10%;">Surat & Tgl Jalan</td>
+												<!-- <td width="9%;">Tgl Jalan</td> -->		         					
+												<td width="16%;">Tgl Jat Tempo</td>		    					
 												<td width="10%;">Ket</td>			         					
 												<td align="center" width="8%">Aksi</td>
 											</tr>
@@ -35,8 +35,11 @@
 												<td><?php echo $row->nm_supplier?></td>
 												<td><?php echo $row->nota_beli?></td>
 												<td><?php echo $row->nm_bagian?></td>
-												<td><?php echo $row->srtjalan_terima?></td>
-												<td><?php echo $row->tgljalan_terima?></td>
+												<td align="center" style="font-size: 16px;">
+													<!-- <?php echo $row->srtjalan_terima?><br><i><?php echo $row->tgljalan_terima?></i> -->
+													<span class="badge bg-dark" data-toggle="tooltip" title="Tanggal : <?php echo date("d-m-Y",strtotime($row->tgljalan_terima))?>"><?php echo $row->srtjalan_terima?></span>
+												</td>
+												<!-- <td><?php echo $row->tgljalan_terima?></td> -->
 												<td><?php echo $row->tgljt_terima?></td>
 												<td><?php echo $row->ket_terima?></td>
 												<td class="project-actions text-center">
