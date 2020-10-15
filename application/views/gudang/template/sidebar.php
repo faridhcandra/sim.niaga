@@ -103,8 +103,8 @@
             </li>                           
           </ul>
         </li>
-        <li class="nav-item has-treeview <?php if($url =="v_penerimaan" OR $url =="v_pengetesan") { echo "menu-open";}?>">
-          <a href="#" class="nav-link <?php if($url =="v_penerimaan" OR $url =="v_pengetesan") { echo "active";}?>">
+        <li class="nav-item has-treeview <?php if($url =="v_penerimaan" OR $url =="v_pengetesan" OR $url =="v_bonbarang") { echo "menu-open";}?>">
+          <a href="#" class="nav-link <?php if($url =="v_penerimaan" OR $url =="v_pengetesan" OR $url =="v_bonbarang") { echo "active";}?>">
             <!-- <i class="nav-icon fas fa-copy"></i> -->
             <i class="nav-icon fas fa-sync-alt"></i>
             <p>
@@ -126,9 +126,15 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="<?php echo site_url('gudang/v_bonbarang') ?>" class="nav-link <?php if($url =="v_bonbarang") { echo "active";}?>">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Bon Barang</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Penyerahaan</p>
+              <p>Pengeluaran</p>
             </a>
           </li>
         </ul>
@@ -151,13 +157,19 @@
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Penyerahaan</p>
+              <p>Pengetesan</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Pengetesan</p>
+              <p>Bon Barang</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Pengeluaran</p>
             </a>
           </li>
         </ul>

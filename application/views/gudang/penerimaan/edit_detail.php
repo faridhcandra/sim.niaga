@@ -147,7 +147,8 @@
 						<br>
 						<div class="row">
 							<div class="col-md-12">
-								<div class="form-group float-right"> 
+								<div class="form-group float-right">
+									<a href="<?php echo site_url('gudang/v_dtl_terima/'.$row->id_penerimaan);?>" class="btn btn-secondary btn-sm" onclick="return confirm('Yakin Cancel ?')">Batal</a> 
 									<input type="submit" class="btn btn-primary btn-sm toaster" value="Simpan">
 								</div>
 							</div>

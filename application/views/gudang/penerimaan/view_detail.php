@@ -7,7 +7,7 @@
 					<div class="card-header">
 						<h3 class="card-title">Data Penerimaan</h3>
 						<div class="btn-group float-right"><!-- 
-							<a href="#" class="btn btn-sm bg-gradient-info">&nbsp;Ubah Penerimaan</a>&nbsp; -->
+							<a href="#" class="btn btn-sm bg-gradient-info">&nbsp;Ubah Penerimaan</a>&nbsp; --><a href="<?php echo site_url('gudang/u_penerimaan/'.$get_idterima);?>" class="btn btn-sm bg-gradient-info">&nbsp;Ubah Nota Penerimaan</a>&nbsp;
 							<a href="<?php echo site_url('gudang/v_penerimaan');?>" class="btn btn-sm bg-gradient-primary">&nbsp;Kembali</a>
 						</div>
 					</div>
@@ -26,7 +26,7 @@
 						<div class="col-md-12">
 							<div class="row">
 							<?php foreach ($get_rptrm as $s) { ?>
-							  <div class="col-md-2"></div>
+							  <div class="col-md-2"></div>  
 			                  <div class="col-md-3">
 			                    <div class="description-block border-right">
 			                      <h5 class="description-header">Rp.<?php echo number_format($s->subtotal_terima,2,',','.')?></h5>

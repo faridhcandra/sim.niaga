@@ -311,11 +311,25 @@ class M_gudang extends CI_Model {
 
 	function ve_penerimaan($id)
 	{
-		$this->db->select('a.id_dtl_penerimaan,a.id_penerimaan,a.tgl_dtlterima,a.jml1_dtlterima,a.jml2_dtlterima,
-							a.sat1_dtlterima,g.nm_satuan AS nm_satuan1,a.sat2_dtlterima,h.nm_satuan  AS nm_satuan2,
-							,a.harga_dtlterima,a.subtotal_dtlterima,a.ppn_dtlterima,a.totalharga_dtlterima,
-							a.id_dtl_pembelian,a.id_barang,d.nm_barang,
-							a.id_group,e.nm_group,a.id_jnsbrngakt,f.no_jnsbrngakt');
+		$this->db->select('a.id_penerimaan,a.tgl_terima,a.nota_terima,a.id_supplier,b.nm_supplier,a.nota_beli,a.id_pembelian,a.nota_cek,a.tgl_cek,a.id_unit,c.nm_unit,a.srtjalan_terima,a.tgljalan_terima,a.id_bagian,d.nm_bagian,a.id_jnsbrng,a.tgljt_terima,a.ket_terima');
+		$this->db->from('tbl_penerimaan as a');
+		$this->db->join('tbl_supplier as b', 'a.id_supplier = b.id_supplier');
+		$this->db->join('tbl_unit as c', 'a.id_unit = c.id_unit');
+		$this->db->join('tbl_bagian as d', 'a.id_bagian = d.id_bagian');
+		$this->db->join('tbl_jenis_barang as e', 'a.id_jnsbrng = e.id_jnsbrng');
+		$this->db->where('a.id_penerimaan', $id);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return array();
+		}
+
+	}
+
+	function ve_dtlpenerimaan($id)
+	{
+		$this->db->select('a.id_dtl_penerimaan,a.id_penerimaan,a.tgl_dtlterima,a.jml1_dtlterima,a.jml2_dtlterima,a.sat1_dtlterima,g.nm_satuan AS nm_satuan1,a.sat2_dtlterima,h.nm_satuan  AS nm_satuan2,a.harga_dtlterima,a.subtotal_dtlterima,a.ppn_dtlterima,a.totalharga_dtlterima, a.id_dtl_pembelian,a.id_barang,d.nm_barang, a.id_group,e.nm_group,a.id_jnsbrngakt,f.no_jnsbrngakt');
 		$this->db->from('tbl_dtl_penerimaan as a');
 		$this->db->join('tbl_penerimaan as b', 'a.id_penerimaan=b.id_penerimaan');
 		$this->db->join('tbl_dtl_pembelian as c', 'a.id_dtl_pembelian=c.id_dtl_pembelian');
@@ -508,6 +522,9 @@ class M_gudang extends CI_Model {
 		$data = $this->db->query($sql);
 		return $data->result();
 	}
+	// ------------------------------------------------------------
+	// ---------------------- Bon Barang --------------------------
+	
 	// ------------------------------------------------------------
 	// ========================================================================================================================================
 }

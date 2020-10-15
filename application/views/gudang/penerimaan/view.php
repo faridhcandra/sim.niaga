@@ -15,16 +15,16 @@
 									<table id="example2" class="table table-sm table-bordered table-responsive-md table-hover dataTable" role="grid" aria-describedby="example2_info">
 										<thead>
 											<tr>
-												<td width="12%;">Tgl Terima</td>
-												<td width="14%;">Nota Penerimaan</td>
+												<td width="10%;">Tgl Terima</td>
+												<td width="12%;">Nota Penerimaan</td>
 												<td width="14%;">Leveransir</td>
-												<td width="16%;">Nota Pembelian</td>		         					
+												<td width="12%;">Nota Pembelian</td>		         					
 												<td width="8%;">Bagian</td>	
 												<td width="10%;">Surat & Tgl Jalan</td>
 												<!-- <td width="9%;">Tgl Jalan</td> -->		         					
 												<td width="16%;">Tgl Jat Tempo</td>		    					
 												<td width="10%;">Ket</td>			         					
-												<td align="center" width="8%">Aksi</td>
+												<td align="center" width="12%">Aksi</td>
 											</tr>
 										</thead>
 										<tbody>
@@ -43,9 +43,12 @@
 												<td><?php echo $row->tgljt_terima?></td>
 												<td><?php echo $row->ket_terima?></td>
 												<td class="project-actions text-center">
-													<a href="<?php echo site_url('gudang/u_penerimaan/'.$row->id_penerimaan)?>" data-toggle="tooltip" data-placement="top" title="Ubah Penerimaan"><i class="fas fa-pencil-alt fa-sm fa-green"></i></a>&nbsp;
-													<a data-toggle="tooltip" title="Detail Penerimaan" href="<?php echo site_url('gudang/v_dtl_terima/'.$row->id_penerimaan)?>"><i class="fas fa-align-justify fa-sm"></i></a>&nbsp;
-													<a href="<?php echo site_url('gudang/penerimaan_h/'.$row->id_penerimaan)?>" data-toggle="tooltip" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a>&nbsp;
+													<!-- <a href="<?php echo site_url('gudang/u_penerimaan/'.$row->id_penerimaan)?>" data-toggle="tooltip" data-placement="top" title="Ubah Penerimaan"><i class="fas fa-pencil-alt fa-sm fa-green"></i></a>&nbsp; -->
+													<a data-toggle="tooltip" title="Cetak Nota" href="#"><i class="fas fa-print fa-sm"></i></a>
+ 													&nbsp;
+													<a data-toggle="tooltip" title="Detail Penerimaan" href="<?php echo site_url('gudang/v_dtl_terima/'.$row->id_penerimaan)?>"><i class="fas fa-align-justify fa-sm"></i></a>
+													&nbsp;
+													<a href="<?php echo site_url('gudang/penerimaan_h/'.$row->id_penerimaan)?>" data-toggle="tooltip" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a>
 												</td>
 												</tr>
 												<?php } ?> 

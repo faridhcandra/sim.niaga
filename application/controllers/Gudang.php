@@ -535,7 +535,12 @@ class Gudang extends CI_Controller {
 		$isi['judul'] = $this->M_gudang->v_dtl_idtrm($id);
 		$isi['isi'] = $this->M_gudang->v_dtl_penerimaan($id);
 		$isi['get_rptrm'] = $this->M_gudang->get_rptrm($id);
-		$isi['isi'] = $this->M_gudang->v_dtl_penerimaan($id);
+
+		$get_id = $this->M_gudang->v_dtl_penerimaan($id);
+		foreach ($get_id as $s) {
+			$id_ne = $s->id_penerimaan;
+		}
+		$isi['get_idterima'] = $id_ne;
 
 		$this->load->view('gudang/template/head');
 		$this->load->view('gudang/template/navbar');
@@ -606,7 +611,7 @@ class Gudang extends CI_Controller {
 		$data['menu'] 		= 'Transaksi';
 		$data['submenu'] 	= 'Edit Detail Penerimaan';
 
-		$isi['isi'] = $this->M_gudang->ve_penerimaan($id);
+		$isi['isi'] = $this->M_gudang->ve_dtlpenerimaan($id);
 		$isi['get_dtlbeli'] = $this->M_gudang->get_dtlbeli();
 
 		$this->load->view('gudang/template/head');
@@ -966,6 +971,40 @@ class Gudang extends CI_Controller {
 			$this->session->set_flashdata('error', 'Data gagal diubah');
 			redirect('gudang/v_pengetesan','refresh');
 		}
+	}
+    // ----------------------------------------------------------
+    // --------------------- Bon Barang -------------------------
+    public function v_bonbarang()
+	{
+		$data['menutitle'] = 'Data Bon Barang';
+		$data['menu'] = 'Transaksi';
+		$data['submenu'] = 'Bon Barang';
+
+		// $isi['isi'] = $this->M_gudang->v_pengetesan();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/bon_barang/view');
+		$this->load->view('gudang/template/footer');
+	}
+
+	public function t_bonbarang()
+	{
+		$data['menutitle'] = 'Data Tambah Bon Barang';
+		$data['menu'] = 'Transaksi';
+		$data['submenu'] = 'Tambah Bon Barang';
+
+		/*$isi['kode'] = $this->M_gudang->k_pengetesan();
+		$isi['get_supplier'] = $this->M_gudang->get_suppliercek();
+		$isi['get_notabeli'] = $this->M_gudang->get_notabeli();
+		$isi['get_dtlbeli'] = $this->M_gudang->get_cekdtlbeli();*/
+		
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/bon_barang/tambah');
+		$this->load->view('gudang/template/footer');
 	}
     // ----------------------------------------------------------
 	// ========================================================================================================================================

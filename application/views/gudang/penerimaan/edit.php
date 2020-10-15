@@ -24,7 +24,7 @@
 								</td>
 								<td width="11%" valign="top"><label style="font-size: 11pt;">Tanggal Terima</label></td>
 								<td colspan="3">
-									<div class="col-md-3">
+									<div class="col-md-4">
 										<div class="form-group">
 											<input class="form-control form-control-sm" type="date" name="tgl_terima" required="" value="<?php echo $row->tgl_terima?>">
 										</div>
@@ -74,7 +74,7 @@
 								</td>
 								<td valign="top"><label style="font-size: 11pt;">Tanggal Cek</label></td>
 								<td>
-									<div class="col-md-8">
+									<div class="col-md-12">
 										<div class="form-group">
 											<input class="form-control form-control-sm" type="date" name="tgl_cek" required="" value="<?php echo $row->tgl_cek?>">
 										</div>
@@ -102,7 +102,7 @@
 								</td>
 								<td valign="top"><label style="font-size: 11pt;">Tanggal Jalan</label></td>
 								<td>
-									<div class="col-md-8">
+									<div class="col-md-12">
 										<div class="form-group">
 											<input class="form-control form-control-sm" type="date" name="tgljalan_terima" value="<?php echo $row->tgljalan_terima?>" required="">
 										</div>
@@ -129,7 +129,7 @@
 								</td>
 								<td valign="top"><label style="font-size: 11pt;">Tanggal JT</label></td>
 								<td>
-									<div class="col-md-8">
+									<div class="col-md-12">
 										<div class="form-group" >
 											<input class="form-control form-control-sm" type="date" name="tgljt_terima" required=""value="<?php echo $row->tgljt_terima?>">
 										</div>
@@ -151,6 +151,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group float-right"> 
+									<a href="<?php echo site_url('gudang/v_dtl_terima/'.$row->id_penerimaan);?>" class="btn btn-secondary btn-sm" onclick="return confirm('Yakin Cancel ?')">Batal</a>
 									<input type="submit" class="btn btn-primary btn-sm toaster" value="Simpan">
 								</div>
 							</div>
