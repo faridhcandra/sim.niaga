@@ -43,7 +43,7 @@
 	 													&nbsp;
 	 													<a data-toggle="modal" data-target="#e<?php echo $row->id_cek?>" href=""><i class="far fa-check-circle" data-toggle="tooltip" data-placement="top" title="Ubah Status"></i></a>
 	 													&nbsp;
-	 													<a href="<?php echo site_url('gudang//'.$row->id_cek)?>" data-toggle="tooltip" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a>
+	 													<a href="<?php echo site_url('gudang/pengetesan_h/'.$row->id_cek)?>" data-toggle="tooltip" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a>
 														<div class="text-left">
 														<!-- modal -->
 														<div class="modal fade" id="e<?php echo $row->id_cek?>">

@@ -86,7 +86,8 @@
 							<input type="button" class="btn btn-warning btn-sm" value="Reset Form" id="reset-cek">
 						</div>
 					</div>
-					<hr style="border: 1px solid blue;">
+					<hr>
+					<b><i style="font-size: 14px;">* Silahkan klik (Tambah Form) untuk Menambahkan detail pengetesan barang</i></b>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group float-right">

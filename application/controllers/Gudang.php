@@ -132,6 +132,95 @@ class Gudang extends CI_Controller {
 		}
 	}
 	// -------------------------------------------------------------
+	// ------------------- Group / Mesin -----------------
+	public function v_grpmesin()
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Group / Mesin';
+
+		$isi['isi'] = $this->M_gudang->v_grpmesin();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/group_mesin/view',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+	public function grpmesin_t()
+	{
+		$cek = $this->db->query("SELECT * FROM tbl_group_mesin where nm_grpmesin='".$this->input->post('grpmesin',TRUE)."'")->num_rows();
+		if($cek <= 0){
+			$data = array (	'nm_grpmesin' => $this->input->post('grpmesin',TRUE)
+						  );
+			$sql = $this->M_gudang->s_grpmesin($data);
+
+			$allsql = array($sql);
+			if($allsql){ // Jika sukses
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('gudang/v_grpmesin','refresh');
+			}else{ // Jika gagal
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('gudang/v_grpmesin','refresh');
+			}
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf Nama group / Mesin Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('gudang/v_grpmesin').'")';
+			echo '</script>';
+		}
+	}
+	public function u_grpmesin($id='')
+	{
+		$data['menutitle'] = 'Data Master';
+		$data['menu'] = 'Data Master';
+		$data['submenu'] = 'Ubah Group / Mesin';
+
+		$isi['isi'] = $this->M_gudang->ve_grpmesin($id);
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/group_mesin/edit',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+	public function grpmesin_u($id)
+	{
+		$this->form_validation->set_rules('kode','Kode','required');
+		if($this->form_validation->run() == TRUE){
+				$data = array(	'nm_grpmesin' => $this->input->post('grpmesin')							
+							 );
+				$sql = $this->M_gudang->e_grpmesin($id, $data);
+				
+				$allsql = array($sql);
+				if($allsql){ // Jika sukses
+					$this->session->set_flashdata('success', 'Data berhasil diubah');
+					redirect('gudang/v_grpmesin','refresh');
+				}else{ // Jika gagal
+					$this->session->set_flashdata('error', 'Data gagal diubah');
+					redirect('gudang/v_grpmesin','refresh');
+				}
+		}else{
+			$this->session->set_flashdata('warning', 'Maaf Kode Group / Mesin tidak ditemukan');
+					redirect('gudang/v_grpmesin','refresh');
+		}
+	}
+	public function h_grpmesin($id)
+	{
+		$data = array( 'hapus_grpmesin' => 'Y');
+		$sql = $this->M_gudang->h_grpmesin($id, $data);
+		$allsql = array($sql);
+		if($allsql){ // Jika sukses
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('gudang/v_grpmesin','refresh');
+		}else{ // Jika gagal
+			$this->session->set_flashdata('error', 'Data gagal diubah');
+			redirect('gudang/v_grpmesin','refresh');
+		}
+	}
+	// -------------------------------------------------------------
 	// --------------------- Jenis BArang Akuntansi ----------------
 	public function v_jenisbrngakt()
 	{
@@ -154,8 +243,9 @@ class Gudang extends CI_Controller {
 		$data['submenu'] = 'Tambah Jenis Barang Akuntansi';
 
 		// $isi['isi'] = $this->M_gudang->v_koderekakt();
+		$isi['get_grpmesin'] = $this->M_gudang->get_grpmesin();
 		$isi['get_rek'] = $this->M_gudang->get_rekening();
-		$isi['get_unit'] = $this->M_gudang->get_unit();
+		$isi['get_bagian'] = $this->M_gudang->get_bagian();
 		$isi['get_jenis'] = $this->M_gudang->get_jenis_barang();
 
 		$this->load->view('gudang/template/head');
@@ -166,11 +256,12 @@ class Gudang extends CI_Controller {
 	}
 	public function jenisbrngakt_t()
 	{
-			$kd 	= $this->input->post('kode');
-			$nm 	= $this->input->post('nama');
-			$brng 	= $this->input->post('barang');
-			$unit 	= $this->input->post('unit');
-			$rek 	= $this->input->post('rek');
+			$kd 		= $this->input->post('kode');
+			$nm 		= $this->input->post('nama');
+			$brng 		= $this->input->post('barang');
+			$bagian 	= $this->input->post('bagian');
+			$grpmesin 	= $this->input->post('grpmesin');
+			$rek 		= $this->input->post('rek');
 			$data = array();
 			$i = 0;
 			if(is_array($kd)){
@@ -178,11 +269,12 @@ class Gudang extends CI_Controller {
 					$cek = $this->db->query("SELECT * FROM tbl_barang_akutansi where no_jnsbrngakt='$datakd' ")->num_rows();
 					if($cek <= 0){
 						array_push($data, array(
-							'no_jnsbrngakt'	=> $datakd,
-							'nm_jnsbrngakt'	=> $nm[$i],
-							'id_jnsbrng'	=> $brng[$i],
-							'id_unit'		=> $unit[$i],
-							'no_rekening'	=> $rek[$i]
+							'no_jnsbrngakt'			=> $datakd,
+							'nm_jnsbrngakt'			=> $nm[$i],
+							'id_jnsbrng'			=> $brng[$i],
+							'id_bagian'				=> $bagian[$i],
+							'no_rekening'			=> $rek[$i],
+							'grpmesin_jnsbrngakt'	=> $grpmesin[$i]
 						));
 						$i++;
 					}else{
@@ -215,8 +307,9 @@ class Gudang extends CI_Controller {
 		$data['submenu'] = 'Ubah Jenis Barang Akuntansi';
 
 		$isi['isi'] = $this->M_gudang->ve_jenisbrngakt($id);
+		$isi['get_grpmesin'] = $this->M_gudang->get_grpmesin();
 		$isi['get_rek'] = $this->M_gudang->get_rekening();
-		$isi['get_unit'] = $this->M_gudang->get_unit();
+		$isi['get_bagian'] = $this->M_gudang->get_bagian();
 		$isi['get_jenis'] = $this->M_gudang->get_jenis_barang();
 
 		$this->load->view('gudang/template/head');
@@ -229,11 +322,12 @@ class Gudang extends CI_Controller {
 	{
 		$this->form_validation->set_rules('kode','Kode','required');
 		if($this->form_validation->run() == TRUE){
-			$data = array(	'no_jnsbrngakt' => $this->input->post('kode'),
-							'id_jnsbrng' 	=> $this->input->post('barang'),
-							'id_unit' 		=> $this->input->post('unit'),
-							'no_rekening' 	=> $this->input->post('rek'),
-							'nm_jnsbrngakt' => $this->input->post('nama')
+			$data = array(	'no_jnsbrngakt'			=> $this->input->post('kode'),
+							'id_jnsbrng' 			=> $this->input->post('barang'),
+							'id_bagian' 			=> $this->input->post('bagian'),
+							'no_rekening' 			=> $this->input->post('rek'),
+							'nm_jnsbrngakt' 		=> $this->input->post('nama'),
+							'grpmesin_jnsbrngakt' 	=> $this->input->post('grpmesin')
 						 );
 			$sql = $this->M_gudang->e_jenisbrngakt($id, $data);
 			
@@ -972,6 +1066,21 @@ class Gudang extends CI_Controller {
 			redirect('gudang/v_pengetesan','refresh');
 		}
 	}
+
+	public function pengetesan_h($id)
+	{
+		$data = array( "hapus" => "Y");
+		$a = $this->M_gudang->h_pengetesan($id,$data);
+		$b = $this->M_gudang->h_pengetesandtl($id,$data);
+		$all = array($a,$b);
+		if($all){ // Jika sukses
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('gudang/v_pengetesan','refresh');
+		}else{ // Jika gagal
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('gudang/v_pengetesan','refresh');
+		}
+	}
     // ----------------------------------------------------------
     // --------------------- Bon Barang -------------------------
     public function v_bonbarang()
@@ -980,12 +1089,12 @@ class Gudang extends CI_Controller {
 		$data['menu'] = 'Transaksi';
 		$data['submenu'] = 'Bon Barang';
 
-		// $isi['isi'] = $this->M_gudang->v_pengetesan();
+		$isi['isi'] = $this->M_gudang->v_bonbarang();
 
 		$this->load->view('gudang/template/head');
 		$this->load->view('gudang/template/navbar');
 		$this->load->view('gudang/template/sidebar',$data);
-		$this->load->view('gudang/bon_barang/view');
+		$this->load->view('gudang/bon_barang/view', $isi);
 		$this->load->view('gudang/template/footer');
 	}
 
@@ -995,16 +1104,245 @@ class Gudang extends CI_Controller {
 		$data['menu'] = 'Transaksi';
 		$data['submenu'] = 'Tambah Bon Barang';
 
-		/*$isi['kode'] = $this->M_gudang->k_pengetesan();
-		$isi['get_supplier'] = $this->M_gudang->get_suppliercek();
-		$isi['get_notabeli'] = $this->M_gudang->get_notabeli();
-		$isi['get_dtlbeli'] = $this->M_gudang->get_cekdtlbeli();*/
+		$isi['kode'] = $this->M_gudang->k_bonbarang();
+		$isi['get_bagian'] = $this->M_gudang->get_bagian();
+		$isi['get_kdbrngaktbon'] = $this->M_gudang->get_kdbrngaktbon();
 		
 		$this->load->view('gudang/template/head');
 		$this->load->view('gudang/template/navbar');
 		$this->load->view('gudang/template/sidebar',$data);
-		$this->load->view('gudang/bon_barang/tambah');
+		$this->load->view('gudang/bon_barang/tambah',$isi);
 		$this->load->view('gudang/template/footer');
+	}
+	public function bonbarang_t()
+	{
+		$cek = $this->db->query("SELECT * FROM tbl_mutasi where nota_mutasi='".$this->input->post('notabon', TRUE)."' ")->num_rows();
+		if($cek <= 0){
+
+			// Utama Bon
+			$kdbon 			= $this->input->post('kode',TRUE);
+			$notabon		= $this->input->post('notabon',TRUE);
+			$tglbon 		= $this->input->post('tglbon',TRUE);
+			$kdunitbon		= $this->input->post('kdunit_bon',TRUE);			
+			$kdbagbon		= $this->input->post('kdbagbon',TRUE);
+
+			// detail Bon
+			$dtlkdaktbon 	= $this->input->post('kdaktbrng',TRUE);
+			$dtlkdtranbon	= $this->input->post('kdtrans_bon',TRUE);
+			$dtljml1bon 	= $this->input->post('jml1_bon',TRUE);
+			$dtljml2bon		= $this->input->post('jml2_bon',TRUE);
+			$dtlsat1bon 	= $this->input->post('sat1_bon',TRUE);
+			$dtlsat2bon 	= $this->input->post('sat2_bon',TRUE);
+			$dtlkel1bon 	= $this->input->post('keluar1_bon',TRUE);
+			$dtlkel2bon 	= $this->input->post('keluar2_bon',TRUE);
+			$dtlketbon 		= $this->input->post('ket_bon',TRUE);
+			$dtlkdbagbon	= $this->input->post('kdbagdtl_bon',TRUE);
+
+			$data1 = array( 'id_mutasi' 		=> $kdbon,
+							'nota_mutasi' 		=> $notabon,
+							'tgl_mutasi' 		=> $tglbon,
+							'id_unit' 			=> $kdunitbon,
+							'id_bagian' 		=> $kdbagbon
+
+			);
+			$sql1 = $this->M_gudang->s_bonbarang($data1);
+
+			$data2 = array();
+			$i = 0;
+			if(is_array($dtlkdaktbon)){
+				foreach ($dtlkdaktbon as $datadtlkdakt) {
+					array_push($data2, array(
+						'tgl_dtlmutasi' 		=> $tglbon,
+						'id_barang' 			=> $datadtlkdakt,
+						'id_mutasi' 			=> $kdbon,
+						'nota_dtlmutasi'		=> $notabon,
+						'jml1_dtlmutasi' 		=> $dtljml1bon[$i],
+						'jml2_dtlmutasi' 		=> $dtljml2bon[$i],
+						'sat1_dtlmutasi' 		=> $dtlsat1bon[$i],
+						'sat2_dtlmutasi' 		=> $dtlsat2bon[$i],
+						'keluar1_dtlmutasi'		=> $dtlkel1bon[$i],
+						'keluar2_dtlmutasi'		=> $dtlkel2bon[$i],
+						'id_kdtransaksi' 		=> $dtlkdtranbon[$i],
+						'id_bagian' 			=> $dtlkdbagbon[$i],
+						'ket_dtlmutasi' 		=> $dtlketbon[$i],
+						'tglinput_dtlmutasi' 	=> date_create()->format('Y-m-d H:i:s')
+					));
+					$i++;
+				}
+			}
+			$sql2 = $this->M_gudang->s_dtl_bonbarang_batch($data2);
+
+			$allsql = array($sql1,$sql2);
+			if($allsql){ // Jika sukses
+				$this->session->set_flashdata('success', 'Data berhasil disimpan');
+				redirect('gudang/v_bonbarang','refresh');
+			}else{ // Jika gagal
+				$this->session->set_flashdata('error', 'Data gagal disimpan');
+				redirect('gudang/v_bonbarang','refresh');
+			}
+
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Maaf No Nota Bon Sudah Ada")';
+			echo '</script>';
+			echo '<script language="javascript">';
+			echo 'window.location=("'.site_url('gudang/v_bonbarang').'")';
+			echo '</script>';
+		}
+	}
+
+	public function v_dtl_bonbarang($id)
+	{
+		$data['menutitle'] 	= 'Detail Data Bon Barang';
+		$data['menu'] 		= 'Bon Barang';
+		$data['submenu'] 	= 'Bon Barang';
+
+		$isi['judul']	 	= $this->M_gudang->v_dtl_idmutasi($id);
+		$isi['isi'] 		= $this->M_gudang->v_dtl_bonbarang($id);
+		$get_id				= $this->M_gudang->v_dtl_bonbarang($id);
+
+		foreach ($get_id as $s) {
+			$id_ne = $s->id_mutasi;
+		}
+		$isi['get_idbon'] = $id_ne;
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/bon_barang/view_detail',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+
+	public function u_bonbarang($id='')
+	{
+		$data['menutitle'] 	= 'Edit Bon Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Edit Bon Barang';
+
+		$isi['isi'] 		= $this->M_gudang->ve_bonbarang($id);
+		$isi['get_bagian'] 	= $this->M_gudang->get_bagian();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/bon_barang/edit',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+
+	public function bonbarang_u($id)
+	{
+		$this->form_validation->set_rules('kode','kode','required');
+		if($this->form_validation->run() == TRUE){
+
+			// Utama Bon
+			$notabon		= $this->input->post('notabon',TRUE);
+			$tglbon 		= $this->input->post('tglbon',TRUE);
+			$kdunitbon		= $this->input->post('kdunit_bon',TRUE);			
+			$kdbagbon		= $this->input->post('kdbagbon',TRUE);
+
+			$data = array(	'nota_mutasi' 		=> $notabon,
+							'tgl_mutasi' 		=> $tglbon,
+							'id_unit' 			=> $kdunitbon,
+							'id_bagian' 		=> $kdbagbon
+						 );
+
+			$sql = $this->M_gudang->e_bonbarang($id,$data);
+			
+			$data2 = array( 'nota_dtlmutasi' 	=> $notabon,
+							'tgl_dtlmutasi'		=> $tglbon
+						  );
+
+			$sql2 = $this->M_gudang->e_bonbarangdtl($id,$data2);
+
+			$allsql = array($sql,$sql2); 
+			if($allsql){ // Jika sukses
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('gudang/v_dtl_bonbarang/'.$id,'refresh');
+			}else{ // Jika gagal
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('gudang/u_bonbarang/'.$id,'refresh');
+			}
+		}else{
+			$this->session->set_flashdata('warning', 'Maaf No Pengetesan tidak ditemukan');
+			redirect('gudang/v_bonbarang','refresh');
+		}
+	}
+
+	public function u_dtlbonbarang($id='')
+	{
+		$data['menutitle'] 	= 'Edit Detail Bon Barang';
+		$data['menu'] 		= 'Transaksi';
+		$data['submenu'] 	= 'Edit Detail Bon Barang';
+
+		$isi['isi'] 				= $this->M_gudang->ve_dtl_bonbarang($id);
+		$isi['get_kdbrngaktbon'] 	= $this->M_gudang->get_kdbrngaktbon();
+
+		$this->load->view('gudang/template/head');
+		$this->load->view('gudang/template/navbar');
+		$this->load->view('gudang/template/sidebar',$data);
+		$this->load->view('gudang/bon_barang/edit_detail',$isi);
+		$this->load->view('gudang/template/footer');
+	}
+
+	public function dtlbonbarang_u($id)
+	{
+		$this->form_validation->set_rules('kode','kode','required');
+		if($this->form_validation->run() == TRUE){
+			$ids = $this->input->post('kodebon',TRUE);
+
+			// detail Bon
+			$dtlkdaktbon 	= $this->input->post('kdaktbrng',TRUE);
+			$dtlkdtranbon	= $this->input->post('kdtrans_bon',TRUE);
+			$dtljml1bon 	= $this->input->post('jml1_bon',TRUE);
+			$dtljml2bon		= $this->input->post('jml2_bon',TRUE);
+			$dtlsat1bon 	= $this->input->post('sat1_bon',TRUE);
+			$dtlsat2bon 	= $this->input->post('sat2_bon',TRUE);
+			$dtlkel1bon 	= $this->input->post('keluar1_bon',TRUE);
+			$dtlkel2bon 	= $this->input->post('keluar2_bon',TRUE);
+			$dtlketbon 		= $this->input->post('ket_bon',TRUE);
+			$dtlkdbagbon	= $this->input->post('kdbagdtl_bon',TRUE);
+
+			$data = array(	'id_barang' 			=> $dtlkdaktbon,
+							'jml1_dtlmutasi' 		=> $dtljml1bon,
+							'jml2_dtlmutasi' 		=> $dtljml2bon,
+							'sat1_dtlmutasi' 		=> $dtlsat1bon,
+							'sat2_dtlmutasi' 		=> $dtlsat2bon,
+							'keluar1_dtlmutasi'		=> $dtlkel1bon,
+							'keluar2_dtlmutasi'		=> $dtlkel2bon,
+							'id_kdtransaksi' 		=> $dtlkdtranbon,
+							'id_bagian' 			=> $dtlkdbagbon,
+							'ket_dtlmutasi' 		=> $dtlketbon,
+						 );
+
+			$sql = $this->M_gudang->e_dtl_bonbarang($id,$data);
+
+			$allsql = array($sql); 
+			if($allsql){ // Jika sukses
+				$this->session->set_flashdata('success', 'Data berhasil diubah');
+				redirect('gudang/v_dtl_bonbarang/'.$ids,'refresh');
+			}else{ // Jika gagal
+				$this->session->set_flashdata('error', 'Data gagal diubah');
+				redirect('gudang/u_bonbarang/'.$id,'refresh');
+			}
+		}else{
+			$this->session->set_flashdata('warning', 'Maaf No Pengetesan tidak ditemukan');
+			redirect('gudang/v_bonbarang','refresh');
+		}
+	}
+
+	public function bonbarang_h($id)
+	{
+		$data = array( "hapus" => "Y");
+		$a = $this->M_gudang->h_bonbarang($id,$data);
+		$b = $this->M_gudang->h_bonbarangdtl($id,$data);
+		$all = array($a,$b);
+		if($all){ // Jika sukses
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect('gudang/v_bonbarang','refresh');
+		}else{ // Jika gagal
+			$this->session->set_flashdata('error', 'Data gagal dihapus');
+			redirect('gudang/v_bonbarang','refresh');
+		}
 	}
     // ----------------------------------------------------------
 	// ========================================================================================================================================

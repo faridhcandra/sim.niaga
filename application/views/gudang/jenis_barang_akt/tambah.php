@@ -36,11 +36,22 @@
 							</div>
 							<div class="col-md-2">
 								<div class="form-group">
-									<label style="font-size: 11pt;">Unit</label>
-									<input list="unitbrngakt" type="text" class="form-control form-control-sm" name="unit[]" required="">
+									<label style="font-size: 11pt;">Bagian</label>
+									<input list="unitbrngakt" type="text" class="form-control form-control-sm" name="bagian[]" required="">
 									<datalist id="unitbrngakt">
-										<?php foreach ($get_unit->result() as $a): ?>
-											<option value="<?php echo $a->id_unit;?>"><?php echo $a->nm_unit;?></option>
+										<?php foreach($get_bagian as $s): ?>
+											<option value="<?php echo $s->id_bagian;?>"><?php echo $s->nm_bagian;?></option>
+										<?php endforeach ?>
+									</datalist>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label style="font-size: 11pt;">Group / Mesin</label>
+									<input list="grpmesinbrngakt" type="text" class="form-control form-control-sm" name="grpmesin[]" required="">
+									<datalist id="grpmesinbrngakt">
+										<?php foreach ($get_grpmesin->result() as $a): ?>
+											<option value="<?php echo $a->id_grpmesin;?>"><?php echo $a->nm_grpmesin;?></option>
 										<?php endforeach ?>
 									</datalist>
 								</div>
@@ -119,11 +130,22 @@
 		+"</div>"
 		+"<div class='col-md-2'>"
 		+	"<div class='form-group'>"
-		+		"<label style='font-size: 11pt;'>Unit</label>"
-		+		"<input list='unitbrngakt' type='text' class='form-control form-control-sm' name='unit[]' required=''>"
+		+		"<label style='font-size: 11pt;'>Bagian</label>"
+		+		"<input list='unitbrngakt' type='text' class='form-control form-control-sm' name='bagian[]' required=''>"
 		+		"<datalist id='unitbrngakt'>"
-		+			"<?php foreach ($get_unit->result() as $a): ?>"
-		+				"<option value='<?php echo $a->id_unit;?>'><?php echo $a->nm_unit;?></option>"
+		+			"<?php foreach ($get_bagian as $s): ?>"
+		+				"<option value='<?php echo $s->id_bagian;?>'><?php echo $s->nm_bagian;?></option>"
+		+			"<?php endforeach ?>"
+		+		"</datalist>"
+		+	"</div>"
+		+"</div>"
+		+"<div class='col-md-2'>"
+		+	"<div class='form-group'>"
+		+		"<label style='font-size: 11pt;'>Group / Mesin</label>"
+		+		"<input list='grpmesinbrngakt' type='text' class='form-control form-control-sm' name='grpmesin[]' required=''>"
+		+		"<datalist id='grpmesinbrngakt'>"
+		+			"<?php foreach ($get_grpmesin->result() as $a): ?>"
+		+				"<option value='<?php echo $a->id_grpmesin;?>'><?php echo $a->nm_grpmesin;?></option>"
 		+			"<?php endforeach ?>"
 		+		"</datalist>"
 		+	"</div>"

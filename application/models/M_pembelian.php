@@ -152,7 +152,7 @@ class M_pembelian extends CI_Model {
 
 		public function ve_barang($id)
 		{
-			$sql = "SELECT a.id_barang,a.nm_barang,b.nm_jnsbrng,a.kel_barang,a.no_barang,a.sat1_barang,a.sat2_barang,a.id_group,a.id_jnsbrng,a.ket_barang,c.nm_satuan,f.nm_group,d.nm_satuan as nm_satuan2 FROM tbl_nama_barang as a 
+			$sql = "SELECT a.id_barang,a.nm_barang,a.ppn_barang,a.harga_barang,b.nm_jnsbrng,a.kel_barang,a.no_barang,a.sat1_barang,a.sat2_barang,a.id_group,a.id_jnsbrng,a.ket_barang,c.nm_satuan,f.nm_group,d.nm_satuan as nm_satuan2 FROM tbl_nama_barang as a 
 				join tbl_jenis_barang as b on a.id_jnsbrng=b.id_jnsbrng 
 				join tbl_satuan as c on a.sat1_barang=c.id_satuan 
 				join tbl_satuan as d on a.sat2_barang=d.id_satuan

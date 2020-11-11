@@ -18,7 +18,7 @@
 										<td width="10%;">ID Barang</td>
 										<td width="20%;">Nama Barang</td>
 										<td width="13%;">Jenis Barang</td>
-										<td width="13%;">Unit</td>	
+										<td width="13%;">Bagian</td>	
 										<td width="10%;">Group/Mesin</td>
 										<td width="11%;">Rek</td>	         					
 										<td width="8%;" align="right">Aksi</td>
@@ -30,8 +30,8 @@
 										<td><?php echo $row->no_jnsbrngakt?></td>
 										<td><?php echo $row->nm_jnsbrngakt?></td>
 										<td><?php echo $row->nm_jnsbrng?></td>
-										<td><?php echo $row->nm_unit?></td>
-										<td><?php echo $row->group_jnsbrngakt?></td>
+										<td><?php echo $row->nm_bagian?></td>
+										<td><?php echo $row->nm_grpmesin?></td>
 										<td data-toggle="tooltip" data-placement="top" title="<?php echo $row->nm_rekening;?>"><?php echo $row->id_rekening?></td>
 										<td class="project-actions text-center">
 										 <a  data-toggle="tooltip" data-placement="top" title="Ubah" href="<?php echo site_url('gudang/u_jenisbrngakt/'.$row->id_jnsbrngakt)?>"><i class="fas fa-pencil-alt fa-sm"></i></a>&ensp;

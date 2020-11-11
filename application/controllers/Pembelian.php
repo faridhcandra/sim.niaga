@@ -399,6 +399,8 @@ class Pembelian extends CI_Controller {
 							'no_barang' => $this->input->post('no_barang'),
 							'sat1_barang' => $this->input->post('sat1'),
 							'sat2_barang' => $this->input->post('sat2'),
+							'ppn_barang'	=> $this->input->post('ppn_barang'),
+							'harga_barang'	=> $this->input->post('harga_barang'),
 							'updated_barang' => date('Y-m-d')
                				);
 			$sql = $this->M_pembelian->s_barang($data);
@@ -455,6 +457,8 @@ class Pembelian extends CI_Controller {
 							'no_barang' => $this->input->post('no_barang'),
 							'sat1_barang' => $this->input->post('sat1'),
 							'sat2_barang' => $this->input->post('sat2'),
+							'ppn_barang'	=> $this->input->post('ppn_barang'),
+							'harga_barang'	=> $this->input->post('harga_barang'),
 							'updated_barang' => date('Y-m-d')							
 							 );
 				$sql = $this->M_pembelian->e_barang($id, $data);

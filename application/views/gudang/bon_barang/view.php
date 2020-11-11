@@ -24,29 +24,23 @@
 											</tr>
 										</thead>
 										<tbody>
-												<!-- <?php $i=0; foreach ($isi as $row){ $i++;?>
+											<?php $i=0; foreach ($isi as $row){ $i++;?>
 												<tr>
-													<td><?php echo $row->tgl_terima?></td>
-													<td><?php echo $row->nota_terima?></td>
-													<td><?php echo $row->nm_supplier?></td>
-													<td><?php echo $row->nota_beli?></td>
+													<td><?php echo $row->tgl_mutasi?></td>
+													<td><?php echo $row->nota_mutasi?></td>
 													<td><?php echo $row->nm_bagian?></td>
-													<td align="center" style="font-size: 16px;">
-														<span class="badge bg-dark" data-toggle="tooltip" title="Tanggal : <?php echo date("d-m-Y",strtotime($row->tgljalan_terima))?>"><?php echo $row->srtjalan_terima?></span>
-													</td>
-													<td><?php echo $row->tgljt_terima?></td>
-													<td><?php echo $row->ket_terima?></td>
+													<td><?php echo $row->nm_unit?></td>
 													<td class="project-actions text-center">
 														<a data-toggle="tooltip" title="Cetak Nota" href="#"><i class="fas fa-print fa-sm"></i></a>
 	 													&nbsp;
-														<a data-toggle="tooltip" title="Detail Penerimaan" href="<?php echo site_url('gudang/v_dtl_terima/'.$row->id_penerimaan)?>"><i class="fas fa-align-justify fa-sm"></i></a>
+														<a data-toggle="tooltip" title="Detail Bon Barang" href="<?php echo site_url('gudang/v_dtl_bonbarang/'.$row->id_mutasi)?>"><i class="fas fa-align-justify fa-sm"></i></a>
 														&nbsp;
-														<a href="<?php echo site_url('gudang/penerimaan_h/'.$row->id_penerimaan)?>" data-toggle="tooltip" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a>
+														<a href="<?php echo site_url('gudang/bonbarang_h/'.$row->id_mutasi)?>" data-toggle="tooltip" title="Hapus"  onclick="return confirm('Konfirmasi Hapus Data ?')" ><i class="fas fa-trash fa-sm"></i></a>
 													</td>
 												</tr>
-												<?php } ?>  -->
-											</tbody>
-										</table>
+											<?php } ?>
+										</tbody>
+									</table>
 									</div>
 								</div>
 							</div>

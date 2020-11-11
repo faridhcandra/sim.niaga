@@ -104,20 +104,20 @@
 							</div>
 						</div>
 					</div>
-					<!--<div class="row">
+					<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+						<label  style="font-size: 11pt;">Harga Barang</label>
+							<input class="form-control form-control-sm" type="number" name="harga_barang" placeholder="Harga Barang" id="eharga_barang" required="" value="<?php echo $row->harga_barang?>">
+						</div>
+					</div>
 					 <div class="col-md-3">
 						<div class="form-group">
-						<label>HPP Barang</label>
-							<input class="form-control form-control-sm" type="text" name="hpp_barang" placeholder="HPP Barang" required="" autocomplete="off">
+						<label style="font-size: 11pt;">PPN Barang</label>
+							<input class="form-control form-control-sm" type="number" name="ppn_barang" readonly="" placeholder="PPN Barang" id="eppn_barang" value="<?php echo $row->ppn_barang?>">
 						</div>
+					</div>					
 					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-						<label>Harga Barang</label>
-							<input class="form-control form-control-sm" type="text" name="harga_barang" placeholder="Harga Barang" required="" autocomplete="off">
-						</div>
-					</div>
-					</div> -->
 					<hr>
 					<div class="row">
 						<div class="col-md-12">
@@ -135,3 +135,12 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#eharga_barang").keyup(function(){
+	   var a = parseFloat($("#eharga_barang").val());
+	   var b = parseFloat((a * 10)/100);
+	   $("#eppn_barang").val(b);
+	});
+});
+</script>

@@ -31,8 +31,8 @@
             <p>Halaman Utama</p>
           </a>
         </li>
-        <li class="nav-item has-treeview <?php if($url =="v_koderekakt" OR $url =="v_jenisbrngakt" OR $url =="v_barangakt") { echo "menu-open";}?>">
-          <a href="#" class="nav-link <?php if($url =="v_koderekakt" OR $url =="v_jenisbrngakt" OR $url =="v_barangakt") { echo "active";}?>">
+        <li class="nav-item has-treeview <?php if($url =="v_koderekakt" OR $url =="v_jenisbrngakt" OR $url =="v_barangakt" OR $url =="v_grpmesin") { echo "menu-open";}?>">
+          <a href="#" class="nav-link <?php if($url =="v_koderekakt" OR $url =="v_jenisbrngakt" OR $url =="v_barangakt" OR $url =="v_grpmesin") { echo "active";}?>">
             <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
             <i class="nav-icon fas fa-hdd"></i>
             <p>
@@ -45,6 +45,12 @@
               <a href="<?php echo site_url('gudang/v_koderekakt');?>" class="nav-link <?php if($url =="v_koderekakt") { echo "active";}?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Kode Rekening Akuntansi</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo site_url('gudang/v_grpmesin');?>" class="nav-link <?php if($url =="v_grpmesin") { echo "active";}?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Group / Mesin</p>
               </a>
             </li>
             <li class="nav-item">

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 09, 2020 at 01:26 PM
+-- Generation Time: Nov 03, 2020 at 10:51 AM
 -- Server version: 5.7.10-log
 -- PHP Version: 5.6.17
 
@@ -75,18 +75,20 @@ CREATE TABLE `tbl_barang_akutansi` (
   `id_jnsbrngakt` tinyint(9) NOT NULL,
   `no_jnsbrngakt` varchar(20) NOT NULL,
   `id_jnsbrng` varchar(15) DEFAULT NULL,
-  `id_unit` varchar(8) DEFAULT NULL,
+  `id_bagian` varchar(8) DEFAULT NULL,
   `no_rekening` tinyint(3) DEFAULT NULL,
   `nm_jnsbrngakt` varchar(50) DEFAULT NULL,
-  `group_jnsbrngakt` varchar(50) DEFAULT NULL
+  `grpmesin_jnsbrngakt` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbl_barang_akutansi`
 --
 
-INSERT INTO `tbl_barang_akutansi` (`id_jnsbrngakt`, `no_jnsbrngakt`, `id_jnsbrng`, `id_unit`, `no_rekening`, `nm_jnsbrngakt`, `group_jnsbrngakt`) VALUES
-(1, 'A', '1', 'ex', 1, 'A1', NULL);
+INSERT INTO `tbl_barang_akutansi` (`id_jnsbrngakt`, `no_jnsbrngakt`, `id_jnsbrng`, `id_bagian`, `no_rekening`, `nm_jnsbrngakt`, `grpmesin_jnsbrngakt`) VALUES
+(1, 'A', '1', '711.1', 3, 'Palu Besar', '6'),
+(2, 'A.I', '2', '310', 1, 'Alkaline A3', '2'),
+(3, 'NH', '1', '610', 1, 'Natrium Hipoklorit', '10');
 
 -- --------------------------------------------------------
 
@@ -214,22 +216,40 @@ CREATE TABLE `tbl_dtl_mikeluar` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_dtl_mutasi_gudang`
+-- Table structure for table `tbl_dtl_mutasi`
 --
 
-CREATE TABLE `tbl_dtl_mutasi_gudang` (
-  `id_dtl_mutasi_gudang` int(11) NOT NULL,
-  `id_mutasi_gudang` varchar(10) NOT NULL,
-  `id_jnsbrngakt` varchar(15) NOT NULL,
-  `id_barang` varchar(20) NOT NULL,
-  `nota_dtl_mutasi_gudang` varchar(50) NOT NULL,
-  `jumlah_dtl_mutasi_gudang` int(11) NOT NULL,
-  `id_kdtransaksi` varchar(5) NOT NULL,
-  `terima_dtl_mutasi_gudang` int(11) NOT NULL,
-  `keluar_dtl_mutasi_gudang` int(11) NOT NULL,
-  `ket_dtl_mutasi_gudang` varchar(200) NOT NULL,
-  `input_dtl_mutasi_gudang` datetime NOT NULL
+CREATE TABLE `tbl_dtl_mutasi` (
+  `id_dtlmutasi` int(11) NOT NULL,
+  `tgl_dtlmutasi` date NOT NULL,
+  `id_mutasi` varchar(12) NOT NULL,
+  `id_barang` tinyint(9) NOT NULL,
+  `nota_dtlmutasi` varchar(20) NOT NULL,
+  `jml1_dtlmutasi` decimal(11,2) NOT NULL,
+  `jml2_dtlmutasi` decimal(11,2) NOT NULL,
+  `sat1_dtlmutasi` varchar(20) NOT NULL,
+  `sat2_dtlmutasi` varchar(20) NOT NULL,
+  `id_kdtransaksi` int(2) NOT NULL,
+  `terima1_dtlmutasi` decimal(11,2) NOT NULL,
+  `terima2_dtlmutasi` decimal(11,2) NOT NULL,
+  `keluar1_dtlmutasi` decimal(11,2) NOT NULL,
+  `keluar2_dtlmutasi` decimal(11,2) NOT NULL,
+  `saldo1_dtlmutasi` decimal(11,2) NOT NULL,
+  `saldo2_dtlmutasi` decimal(11,2) NOT NULL,
+  `id_bagian` varchar(8) NOT NULL,
+  `ket_dtlmutasi` text NOT NULL,
+  `tglinput_dtlmutasi` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `hapus` enum('Y','T') NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_dtl_mutasi`
+--
+
+INSERT INTO `tbl_dtl_mutasi` (`id_dtlmutasi`, `tgl_dtlmutasi`, `id_mutasi`, `id_barang`, `nota_dtlmutasi`, `jml1_dtlmutasi`, `jml2_dtlmutasi`, `sat1_dtlmutasi`, `sat2_dtlmutasi`, `id_kdtransaksi`, `terima1_dtlmutasi`, `terima2_dtlmutasi`, `keluar1_dtlmutasi`, `keluar2_dtlmutasi`, `saldo1_dtlmutasi`, `saldo2_dtlmutasi`, `id_bagian`, `ket_dtlmutasi`, `tglinput_dtlmutasi`, `hapus`) VALUES
+(1, '2020-10-21', 'MT201000001', 3, '0001/BON/X/2020', '200.00', '200.00', '10', '10', 2, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '610', 'OKE SHIAP', '2020-10-21 13:43:08', 'T'),
+(2, '2020-10-22', 'MT201000002', 2, '0002/BON/X/2020', '101.00', '100.00', '4', '4', 2, '0.00', '0.00', '20.00', '0.00', '0.00', '0.00', '310', 'OKE', '2020-10-22 09:03:11', 'T'),
+(3, '2020-10-22', 'MT201000002', 1, '0002/BON/X/2020', '50.00', '20.00', '11', '8', 2, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '711.1', 'SIAP', '2020-10-22 09:03:11', 'T');
 
 -- --------------------------------------------------------
 
@@ -329,18 +349,19 @@ CREATE TABLE `tbl_dtl_pengetesan` (
   `ket_dtl_cek` text NOT NULL,
   `lulus_dtl_cek` enum('T','Y') NOT NULL,
   `tgl_dtl_lunas` date DEFAULT NULL,
-  `id_user` tinyint(2) DEFAULT NULL
+  `id_user` tinyint(2) DEFAULT NULL,
+  `hapus` enum('Y','T') NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbl_dtl_pengetesan`
 --
 
-INSERT INTO `tbl_dtl_pengetesan` (`id_dtl_cek`, `id_cek`, `nota_dtl_cek`, `tgl_dtl_cek`, `id_penerimaan`, `id_dtl_pembelian`, `nota_dtl_beli`, `id_barang`, `jml_cek1`, `jml_cek2`, `ket_dtl_cek`, `lulus_dtl_cek`, `tgl_dtl_lunas`, `id_user`) VALUES
-(1, 'CK201000002', '0002/CEK/X/2020', '2020-10-03', '', 3, '0002/PEMB/IX/2020', 'A.I', '900.50', '900.00', 'iya', '', '0000-00-00', NULL),
-(2, 'CK201000002', '0002/CEK/X/2020', '2020-10-03', '', 4, '0002/PEMB/IX/2020', 'NH', '200.00', '200.00', 'iya2', '', '0000-00-00', NULL),
-(3, 'CK201000003', '0001/CEK/x/2020', '2020-10-06', '', 1, '0001/PEMB/XI/2020', 'A', '200.00', '200.00', 'siap', '', '0000-00-00', NULL),
-(4, 'CK201000003', '0001/CEK/x/2020', '2020-10-06', '', 2, '0001/PEMB/XI/2020', 'NH', '300.00', '300.00', 'pke', '', '0000-00-00', NULL);
+INSERT INTO `tbl_dtl_pengetesan` (`id_dtl_cek`, `id_cek`, `nota_dtl_cek`, `tgl_dtl_cek`, `id_penerimaan`, `id_dtl_pembelian`, `nota_dtl_beli`, `id_barang`, `jml_cek1`, `jml_cek2`, `ket_dtl_cek`, `lulus_dtl_cek`, `tgl_dtl_lunas`, `id_user`, `hapus`) VALUES
+(1, 'CK201000002', '0002/CEK/X/2020', '2020-10-03', '', 3, '0002/PEMB/IX/2020', 'A.I', '900.50', '900.00', 'iya', '', '0000-00-00', NULL, 'T'),
+(2, 'CK201000002', '0002/CEK/X/2020', '2020-10-03', '', 4, '0002/PEMB/IX/2020', 'NH', '200.00', '200.00', 'iya2', '', '0000-00-00', NULL, 'T'),
+(3, 'CK201000003', '0001/CEK/x/2020', '2020-10-06', '', 1, '0001/PEMB/XI/2020', 'A', '200.00', '200.00', 'siap', '', '0000-00-00', NULL, 'T'),
+(4, 'CK201000003', '0001/CEK/x/2020', '2020-10-06', '', 2, '0001/PEMB/XI/2020', 'NH', '300.00', '300.00', 'pke', '', '0000-00-00', NULL, 'T');
 
 -- --------------------------------------------------------
 
@@ -440,6 +461,34 @@ INSERT INTO `tbl_group` (`id_group`, `nm_group`, `rek_group`) VALUES
 (6, 'JASA-SP', 'LAIN-LAIN'),
 (7, 'MESIN', 'LAIN-LAIN'),
 (8, 'SPART', 'LAIN-LAIN');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_group_mesin`
+--
+
+CREATE TABLE `tbl_group_mesin` (
+  `id_grpmesin` int(11) NOT NULL,
+  `nm_grpmesin` varchar(100) NOT NULL,
+  `hapus_grpmesin` enum('Y','N') NOT NULL DEFAULT 'N'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_group_mesin`
+--
+
+INSERT INTO `tbl_group_mesin` (`id_grpmesin`, `nm_grpmesin`, `hapus_grpmesin`) VALUES
+(1, 'ADKU', 'N'),
+(2, 'ADMINISTRASI', 'N'),
+(3, 'AIR', 'N'),
+(4, 'AJL', 'N'),
+(5, 'SHUTTLE', 'N'),
+(6, 'UTILITY', 'N'),
+(7, 'WEAVING', 'N'),
+(8, 'URT', 'N'),
+(9, 'SATPAM', 'N'),
+(10, 'FINISHING', 'N');
 
 -- --------------------------------------------------------
 
@@ -570,7 +619,7 @@ CREATE TABLE `tbl_mikeluar` (
   `tgl_mikeluar` date DEFAULT NULL,
   `nota_mikeluar` varchar(20) DEFAULT NULL,
   `id_supplier` varchar(15) DEFAULT NULL,
-  `id_pengecekan` varchar(15) DEFAULT NULL,
+  `id_cek` varchar(15) DEFAULT NULL,
   `id_barang` varchar(15) DEFAULT NULL,
   `id_unit` varchar(8) DEFAULT NULL,
   `id_bagian` varchar(8) DEFAULT NULL,
@@ -585,16 +634,25 @@ CREATE TABLE `tbl_mikeluar` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_mutasi_gudang`
+-- Table structure for table `tbl_mutasi`
 --
 
-CREATE TABLE `tbl_mutasi_gudang` (
-  `id_mutasi_gudang` varchar(10) NOT NULL,
-  `tgl_mutasi_gudang` date NOT NULL,
-  `nota_mutasi_gudang` varchar(20) NOT NULL,
+CREATE TABLE `tbl_mutasi` (
+  `id_mutasi` varchar(12) NOT NULL,
+  `nota_mutasi` varchar(20) NOT NULL,
+  `tgl_mutasi` date NOT NULL,
   `id_unit` varchar(8) NOT NULL,
-  `id_bagian` varchar(8) NOT NULL
+  `id_bagian` varchar(8) NOT NULL,
+  `hapus` enum('Y','T') NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_mutasi`
+--
+
+INSERT INTO `tbl_mutasi` (`id_mutasi`, `nota_mutasi`, `tgl_mutasi`, `id_unit`, `id_bagian`, `hapus`) VALUES
+('MT201000001', '0001/BON/X/2020', '2020-10-21', 'fin', '610', 'T'),
+('MT201000002', '0002/BON/X/2020', '2020-10-22', 'per', '310', 'T');
 
 -- --------------------------------------------------------
 
@@ -613,7 +671,7 @@ CREATE TABLE `tbl_nama_barang` (
   `no_barang` varchar(5) DEFAULT NULL,
   `sat1_barang` varchar(20) DEFAULT NULL,
   `sat2_barang` varchar(20) DEFAULT NULL,
-  `hpp_barang` decimal(15,2) DEFAULT '0.00',
+  `ppn_barang` decimal(15,2) DEFAULT '0.00',
   `harga_barang` decimal(15,2) DEFAULT '0.00',
   `updated_barang` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -622,11 +680,11 @@ CREATE TABLE `tbl_nama_barang` (
 -- Dumping data for table `tbl_nama_barang`
 --
 
-INSERT INTO `tbl_nama_barang` (`id_barang`, `id_jnsbrng`, `id_jnsbrngakt`, `id_group`, `nm_barang`, `kel_barang`, `ket_barang`, `no_barang`, `sat1_barang`, `sat2_barang`, `hpp_barang`, `harga_barang`, `updated_barang`) VALUES
-('A', '2', '1', 2, 'Palu Besar', 'weav', 'weaving', 'a1', '6', '6', '0.00', '0.00', '2020-07-01 09:43:54'),
-('A.I', '2', '1', 4, 'Alkaline A3', 'person', 'PERSONALIA', 'A1', '4', '11', '0.00', '0.00', '2020-07-01 09:43:56'),
-('NH', '1', '1', 3, 'Natrium Hipoklorit', 'weav', 'Bahan Campuran Pemutih', 'a2', '10', '10', '900.00', '1500.00', '2020-07-01 09:43:58'),
-('sas', '3', '1', 1, 'Barang 2', 'GF', 'dsfe', 's3', '15', '15', '0.00', '0.00', '2020-07-01 09:43:59');
+INSERT INTO `tbl_nama_barang` (`id_barang`, `id_jnsbrng`, `id_jnsbrngakt`, `id_group`, `nm_barang`, `kel_barang`, `ket_barang`, `no_barang`, `sat1_barang`, `sat2_barang`, `ppn_barang`, `harga_barang`, `updated_barang`) VALUES
+('A', '2', '1', 2, 'Palu Besar', 'weav', 'weaving', 'a1', '6', '6', '1000.00', '10000.00', '2020-10-28 00:00:00'),
+('A.I', '2', '2', 4, 'Alkaline A3', 'person', 'PERSONALIA', 'A1', '4', '4', '200.00', '2000.00', '2020-10-28 00:00:00'),
+('NH', '1', '3', 3, 'Natrium Hipoklorit', 'weav', 'Bahan Campuran Pemutih', 'a2', '10', '10', '150.00', '1500.00', '2020-10-28 09:23:52'),
+('sas', '3', '1', 1, 'Barang 2', 'GF', 'dsfe', 's3', '15', '15', '500.00', '5000.00', '2020-10-28 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -732,7 +790,7 @@ CREATE TABLE `tbl_penerimaan` (
 --
 
 INSERT INTO `tbl_penerimaan` (`id_penerimaan`, `id_pembelian`, `id_supplier`, `id_bagian`, `id_unit`, `tgl_terima`, `nota_terima`, `ppn_terima`, `subtotal_terima`, `totalharga_terima`, `k_ppn_terima`, `k_subtotal_terima`, `k_totalharga_terima`, `biaya_angkut_terima`, `jml_kurs_terima`, `nota_beli`, `srtjalan_terima`, `tgljalan_terima`, `id_spb`, `nota_spb`, `ket_terima`, `id_cek`, `nota_cek`, `tgl_cek`, `kurs_terima`, `verif_terima`, `tglverif_terima`, `lunas_terima`, `id_jnsbrng`, `harijt_terima`, `tgljt_terima`, `fakturpjk_terima`, `tglfaktur_terima`, `id_user`) VALUES
-('TR20090001', 'PB20090002', 'AAB', '513', 'weav', '2020-09-25', '0001/TERIMA/IX/2020', '100000.00', '1000000.00', '1100500.00', '0.00', '0.00', '0.00', '500.00', '0.00', '0002/PEMB/IX/2020', '0005/JLN/PAIJO/IX/2020', '2020-09-25', '', '', 'siap bro', NULL, '0001/CEK/IX/2020', '2020-09-25', 'RP', 'T', NULL, 'T', 1, 0, '2020-09-25', NULL, NULL, NULL);
+('TR20090001', 'PB20090002', 'AAB', '513', 'weav', '2020-09-25', '0001/TERIMA/IX/2020', '100000.00', '1000000.00', '1100500.00', '0.00', '0.00', '0.00', '500.00', '0.00', '0002/PEMB/IX/2020', '0005/JLN/PAIJO/IX/2020', '2020-09-25', '', '', 'siap bro', NULL, '0001/CEK/IX/2020', '2020-09-25', 'RP', 'Y', NULL, 'T', 1, 0, '2020-09-25', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -756,16 +814,17 @@ CREATE TABLE `tbl_pengetesan` (
   `ket_cek` text,
   `selesai_cek` enum('T','Y') NOT NULL,
   `tgl_lunas` date DEFAULT NULL,
-  `id_user` tinyint(2) DEFAULT NULL
+  `id_user` tinyint(2) DEFAULT NULL,
+  `hapus` enum('Y','T') NOT NULL DEFAULT 'T'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbl_pengetesan`
 --
 
-INSERT INTO `tbl_pengetesan` (`id_cek`, `nota_cek`, `tgl_cek`, `id_pembelian`, `nota_beli`, `id_penerimaan`, `nota_terima`, `id_supplier`, `id_bagian`, `id_unit`, `srtjalan_cek`, `tgljalan_cek`, `ket_cek`, `selesai_cek`, `tgl_lunas`, `id_user`) VALUES
-('CK201000002', '0002/CEK/X/2020', '2020-10-03', 'PB20090002 ', '0002/PEMB/IX/2020', '', '', 'A2', '513', 'weav', '0001/JLN/X/2020', '2020-10-01', 'oke dah', 'T', NULL, NULL),
-('CK201000003', '0001/CEK/x/2020', '2020-10-06', 'PB20090001 ', '0001/PEMB/XI/2020', '', '', 'AAB', '513', 'weav', '005/JLN/X/2020', '2020-10-02', 'okde dah', 'T', NULL, NULL);
+INSERT INTO `tbl_pengetesan` (`id_cek`, `nota_cek`, `tgl_cek`, `id_pembelian`, `nota_beli`, `id_penerimaan`, `nota_terima`, `id_supplier`, `id_bagian`, `id_unit`, `srtjalan_cek`, `tgljalan_cek`, `ket_cek`, `selesai_cek`, `tgl_lunas`, `id_user`, `hapus`) VALUES
+('CK201000002', '0002/CEK/X/2020', '2020-10-03', 'PB20090002 ', '0002/PEMB/IX/2020', '', '', 'A2', '513', 'weav', '0001/JLN/X/2020', '2020-10-01', 'oke dah', 'T', NULL, NULL, 'T'),
+('CK201000003', '0001/CEK/x/2020', '2020-10-06', 'PB20090001 ', '0001/PEMB/XI/2020', '', '', 'AAB', '513', 'weav', '005/JLN/X/2020', '2020-10-02', 'okde dah', 'T', NULL, NULL, 'T');
 
 -- --------------------------------------------------------
 
@@ -1129,10 +1188,10 @@ ALTER TABLE `tbl_dtl_mikeluar`
   ADD PRIMARY KEY (`id_dtlmikeluar`);
 
 --
--- Indexes for table `tbl_dtl_mutasi_gudang`
+-- Indexes for table `tbl_dtl_mutasi`
 --
-ALTER TABLE `tbl_dtl_mutasi_gudang`
-  ADD PRIMARY KEY (`id_dtl_mutasi_gudang`);
+ALTER TABLE `tbl_dtl_mutasi`
+  ADD PRIMARY KEY (`id_dtlmutasi`);
 
 --
 -- Indexes for table `tbl_dtl_pembelian`
@@ -1171,6 +1230,12 @@ ALTER TABLE `tbl_group`
   ADD PRIMARY KEY (`id_group`);
 
 --
+-- Indexes for table `tbl_group_mesin`
+--
+ALTER TABLE `tbl_group_mesin`
+  ADD PRIMARY KEY (`id_grpmesin`);
+
+--
 -- Indexes for table `tbl_jenis_barang`
 --
 ALTER TABLE `tbl_jenis_barang`
@@ -1199,6 +1264,12 @@ ALTER TABLE `tbl_metode_bayar`
 --
 ALTER TABLE `tbl_mikeluar`
   ADD PRIMARY KEY (`id_mikeluar`);
+
+--
+-- Indexes for table `tbl_mutasi`
+--
+ALTER TABLE `tbl_mutasi`
+  ADD PRIMARY KEY (`id_mutasi`);
 
 --
 -- Indexes for table `tbl_nama_barang`
@@ -1292,17 +1363,17 @@ ALTER TABLE `tbl_unit`
 -- AUTO_INCREMENT for table `tbl_barang_akutansi`
 --
 ALTER TABLE `tbl_barang_akutansi`
-  MODIFY `id_jnsbrngakt` tinyint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_jnsbrngakt` tinyint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tbl_dtl_barang_keluar`
 --
 ALTER TABLE `tbl_dtl_barang_keluar`
   MODIFY `id_dtlbrngkel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
--- AUTO_INCREMENT for table `tbl_dtl_mutasi_gudang`
+-- AUTO_INCREMENT for table `tbl_dtl_mutasi`
 --
-ALTER TABLE `tbl_dtl_mutasi_gudang`
-  MODIFY `id_dtl_mutasi_gudang` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tbl_dtl_mutasi`
+  MODIFY `id_dtlmutasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tbl_dtl_pembelian`
 --
@@ -1333,6 +1404,11 @@ ALTER TABLE `tbl_dtl_spb`
 --
 ALTER TABLE `tbl_group`
   MODIFY `id_group` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `tbl_group_mesin`
+--
+ALTER TABLE `tbl_group_mesin`
+  MODIFY `id_grpmesin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tbl_jenis_barang`
 --

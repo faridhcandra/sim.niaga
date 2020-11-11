@@ -16,7 +16,7 @@
 						<div class="col-md-12">
 							<div class="bg-success text-white text-center">
 								<?php foreach ($judul as $i) { ?>
-								<label>Nota pPngetesan: <?php echo $i->nota_cek?></label> | 
+								<label>Nota Pengetesan: <?php echo $i->nota_cek?></label> | 
 								<label>Supplier: <?php echo $i->nm_supplier?></label>  |
 								<label>Tanggal Pengetesan: <?php echo date("d/m/Y",strtotime($i->tgl_cek))?></label>
 								<?php } ?> 
